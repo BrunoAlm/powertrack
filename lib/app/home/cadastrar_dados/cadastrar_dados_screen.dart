@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:uitcc/app/home/cadastrar_dados/equipamentos.dart';
+import 'package:uitcc/app/home/cadastrar_dados/pesquisa_equipamentos.dart';
 import 'package:uitcc/app/home/cadastrar_dados/quais_equipamentos_expansionTile_screen.dart';
 
 class CadastrarDadosScreen extends StatefulWidget {
@@ -22,7 +23,7 @@ class _CadastrarDadosScreenState extends State<CadastrarDadosScreen> {
     PageController _controller = PageController();
     List<Widget> _paginas = [
       const IntroducaoPorQuePegarDados(),
-      const QuaisEquipamentosExpansionTileScreen(),
+      const PesquisaEquipamentos(),
       const Page2()
     ];
     return Scaffold(
@@ -31,7 +32,7 @@ class _CadastrarDadosScreenState extends State<CadastrarDadosScreen> {
           paginaAtual != 0
               ? const SizedBox()
               : Padding(
-                  padding: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(40),
                   child: IconButton(
                     onPressed: () => Modular.to.pop(),
                     icon: const Icon(Icons.arrow_back),
@@ -203,7 +204,7 @@ class Page2 extends StatelessWidget {
                   ],
                 ),
                 SizedBox(
-                  height: 700,
+                  height: 300,
                   child: ListView.builder(
                     itemCount: equipamentos.length,
                     itemBuilder: (BuildContext context, int index) {
