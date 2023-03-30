@@ -1,7 +1,7 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:uitcc/app/home_page/home_page_screen.dart';
-import 'package:uitcc/app/profile_page/profile_module.dart';
-import 'package:uitcc/app/home_page/cadastrar_dados/cadastrar_dados_screen.dart';
+import 'package:uitcc/app/home/home_page_screen.dart';
+import 'package:uitcc/app/profile/profile_module.dart';
+import 'package:uitcc/app/home/cadastrar_dados/cadastrar_dados_screen.dart';
 
 class HomeModule extends Module {
   @override

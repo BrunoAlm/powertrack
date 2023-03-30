@@ -1,8 +1,8 @@
 import 'package:flutter_modular/flutter_modular.dart';
-
-import '../home_page/home_module.dart';
+import 'package:uitcc/app/recover_password/recover_password_module.dart';
+import 'package:uitcc/app/register/register_module.dart';
+import 'package:uitcc/app/home/home_module.dart';
 import 'login_page.dart';
-import 'register_page.dart';
 
 class LoginModule extends Module {
   @override
@@ -11,7 +11,8 @@ class LoginModule extends Module {
   @override
   List<ModularRoute> get routes => [
         ChildRoute('/', child: (context, args) => const LoginPage()),
-        ChildRoute('/register', child: (context, args) => const RegisterPage()),
+        ModuleRoute('/register', module: RegisterModule()),
+        ModuleRoute('/recover-password', module: RecoverPasswordModule()),
         ModuleRoute('/home', module: HomeModule())
       ];
 }

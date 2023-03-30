@@ -27,9 +27,8 @@ class ProfilePage extends StatelessWidget {
                 ),
                 const SizedBox(width: 40),
                 ElevatedButton(
-                  onPressed: () =>
-                      Modular.to.popUntil(ModalRoute.withName('/login')),
-                  child: const Text('Desconectar'),
+                  onPressed: () {},
+                  child: const Text('Configurações'),
                 ),
               ],
             ),

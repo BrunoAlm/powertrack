@@ -1,5 +1,5 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:uitcc/app/login_page/login_module.dart';
+import 'package:uitcc/app/login/login_module.dart';
 
 class AppModule extends Module {
   @override

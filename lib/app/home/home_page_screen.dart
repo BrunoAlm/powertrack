@@ -39,11 +39,12 @@ class _HomePageState extends State<HomePage> {
           icon: const Icon(Icons.person),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
+      body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const LeituraDeEnergia(),
+            // const LeituraDeEnergia(),
             ElevatedButton(
               onPressed: () => Modular.to.pushNamed('cadastrar_dados'),
               child: const Text('Cadastrar dados'),

@@ -10,12 +10,12 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final usuarioEC = TextEditingController();
+  final emailEC = TextEditingController();
   final senhaEC = TextEditingController();
 
   @override
   void dispose() {
-    usuarioEC;
+    emailEC;
     senhaEC;
     super.dispose();
   }
@@ -45,9 +45,9 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 40),
                 CustomTextFormField(
                   maxWidth: 300,
-                  hintText: 'Usuário',
-                  controller: usuarioEC,
-                  prefixIcon: const Icon(Icons.person),
+                  hintText: 'Email',
+                  controller: emailEC,
+                  prefixIcon: const Icon(Icons.mail),
                 ),
                 const SizedBox(height: 10),
                 CustomTextFormField(
@@ -55,17 +55,19 @@ class _LoginPageState extends State<LoginPage> {
                   hintText: 'Senha',
                   controller: senhaEC,
                   prefixIcon: const Icon(Icons.lock),
+                  obscureText: true,
                 ),
                 const SizedBox(height: 15),
                 Row(
                   children: [
                     TextButton(
-                      onPressed: () => Modular.to.pushNamed('/register'),
+                      onPressed: () => Modular.to.pushNamed('/register/'),
                       child: const Text('Criar uma conta'),
                     ),
                     const Spacer(),
                     TextButton(
-                      onPressed: () => Modular.to.pushNamed('/register'),
+                      onPressed: () =>
+                          Modular.to.pushNamed('/recover-password/'),
                       child: const Text('Esqueci a senha'),
                     ),
                   ],
