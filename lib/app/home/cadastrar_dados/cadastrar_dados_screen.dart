@@ -34,6 +34,78 @@ class _CadastrarDadosScreenState extends State<CadastrarDadosScreen> {
             children: _paginas,
             scrollDirection: Axis.horizontal,
           ),
+          Positioned(
+            bottom: 0,
+            left: 38,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                paginaAtual == 0
+                    ? Container()
+                    : FloatingActionButton.extended(
+                        heroTag: 'voltar',
+                        onPressed: () {
+                          if (paginaAtual > 0) {
+                            paginaAtual--;
+                            setState(() {});
+                          }
+                          _controller.previousPage(
+                            duration: _duration,
+                            curve: _curve,
+                          );
+                        },
+                        label: const Text('Voltar'),
+                      ),
+                SizedBox(
+                  height: 50,
+                  child: Center(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: _paginas.length,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (BuildContext context, int index) {
+                        return Center(
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 4),
+                            height: index == paginaAtual ? 13 : 10,
+                            width: 20,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100),
+                              color: index == paginaAtual
+                                  ? Theme.of(context).colorScheme.inversePrimary
+                                  : Theme.of(context)
+                                      .colorScheme
+                                      .inverseSurface,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                paginaAtual == _paginas.length - 1
+                    ? FloatingActionButton.extended(
+                        heroTag: 'ok',
+                        onPressed: () {},
+                        label: const Text('OK'),
+                      )
+                    : FloatingActionButton.extended(
+                        heroTag: 'proximo',
+                        onPressed: () {
+                          _controller.nextPage(
+                              duration: _duration, curve: _curve);
+                          if (paginaAtual < _paginas.length - 1) {
+                            paginaAtual++;
+                            setState(() {});
+                          }
+                        },
+                        label: const Text('Próximo'),
+                      ),
+              ],
+            ),
+          ),
           paginaAtual != 0
               ? const SizedBox()
               : Padding(
@@ -45,75 +117,6 @@ class _CadastrarDadosScreenState extends State<CadastrarDadosScreen> {
                 ),
         ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 38),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            paginaAtual == 0
-                ? Container()
-                : FloatingActionButton.extended(
-                    heroTag: 'voltar',
-                    onPressed: () {
-                      if (paginaAtual > 0) {
-                        paginaAtual--;
-                        setState(() {});
-                      }
-                      _controller.previousPage(
-                        duration: _duration,
-                        curve: _curve,
-                      );
-                    },
-                    label: const Text('Voltar'),
-                  ),
-            SizedBox(
-              height: 50,
-              child: Center(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: _paginas.length,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (BuildContext context, int index) {
-                    return Center(
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 4),
-                        height: index == paginaAtual ? 13 : 10,
-                        width: 20,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          color: index == paginaAtual
-                              ? Theme.of(context).colorScheme.inversePrimary
-                              : Theme.of(context).colorScheme.inverseSurface,
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ),
-            paginaAtual == _paginas.length - 1
-                ? FloatingActionButton.extended(
-                    heroTag: 'ok',
-                    onPressed: () {},
-                    label: const Text('OK'),
-                  )
-                : FloatingActionButton.extended(
-                    heroTag: 'proximo',
-                    onPressed: () {
-                      _controller.nextPage(duration: _duration, curve: _curve);
-                      if (paginaAtual < _paginas.length - 1) {
-                        paginaAtual++;
-                        setState(() {});
-                      }
-                    },
-                    label: const Text('Próximo'),
-                  ),
-          ],
-        ),
-      ),
     );
   }
 }
@@ -124,7 +127,7 @@ class IntroducaoPorQuePegarDados extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(38.0),
+      padding: const EdgeInsets.symmetric(horizontal: 38.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
