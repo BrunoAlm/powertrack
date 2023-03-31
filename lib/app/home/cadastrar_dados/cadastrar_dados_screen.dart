@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:uitcc/app/home/cadastrar_dados/equipamentos.dart';
 import 'package:uitcc/app/home/cadastrar_dados/pesquisa_equipamentos.dart';
-import 'package:uitcc/app/home/cadastrar_dados/quais_equipamentos_expansionTile_screen.dart';
 
 class CadastrarDadosScreen extends StatefulWidget {
   const CadastrarDadosScreen({Key? key}) : super(key: key);
@@ -19,6 +18,7 @@ class _CadastrarDadosScreenState extends State<CadastrarDadosScreen> {
   @override
   Widget build(BuildContext context) {
     double largura = MediaQuery.of(context).size.width;
+    // ignore: avoid_print
     print(largura);
     PageController _controller = PageController();
     List<Widget> _paginas = [
@@ -29,6 +29,11 @@ class _CadastrarDadosScreenState extends State<CadastrarDadosScreen> {
     return Scaffold(
       body: Stack(
         children: [
+          PageView(
+            controller: _controller,
+            children: _paginas,
+            scrollDirection: Axis.horizontal,
+          ),
           paginaAtual != 0
               ? const SizedBox()
               : Padding(
@@ -38,11 +43,6 @@ class _CadastrarDadosScreenState extends State<CadastrarDadosScreen> {
                     icon: const Icon(Icons.arrow_back),
                   ),
                 ),
-          PageView(
-            controller: _controller,
-            children: _paginas,
-            scrollDirection: Axis.horizontal,
-          ),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -158,8 +158,6 @@ class Page2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double _altura = MediaQuery.of(context).size.height;
-
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(38.0),

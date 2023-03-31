@@ -1,38 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:uitcc/app/home/widgets/explanation_dialog.dart';
+import 'package:uitcc/app/home/cadastrar_dados/cadastrar_dados_screen.dart';
+import 'package:uitcc/app/home/cadastrar_dados/equipamentos.dart';
 
 class PesquisaEquipamentos extends StatefulWidget {
   const PesquisaEquipamentos({Key? key}) : super(key: key);
+  @override
   _PesquisaEquipamentosState createState() => _PesquisaEquipamentosState();
 }
 
 class _PesquisaEquipamentosState extends State<PesquisaEquipamentos> {
   final TextEditingController _searchController = TextEditingController();
-  final List<String> _data = [
-    'Apple',
-    'Banana',
-    'Cherry',
-    'Date',
-    'Fig',
-    'Grape',
-    'Lemon',
-    'Mango',
-    'Orange',
-    'Papaya',
-    'Peach',
-    'Plum',
-    'Raspberry',
-    'Strawberry',
-    'Watermelon',
-  ];
-  List<String> _filteredData = [];
+
+  List<String> _dadosFiltrados = [];
+  // ignore: unused_field
   bool _isLoading = false;
+  // ignore: unused_field
   bool _isActive = false;
 
   @override
   void initState() {
     super.initState();
-    _filteredData = _data;
+    _dadosFiltrados = equipamentos;
     _searchController.addListener(_performSearch);
   }
 
@@ -46,64 +34,22 @@ class _PesquisaEquipamentosState extends State<PesquisaEquipamentos> {
     setState(() {
       _isLoading = true;
       _isActive = true;
-      Future.delayed(
-        const Duration(milliseconds: 0),
-        () => showDialog(
-          context: context,
-          useSafeArea: true,
-          barrierColor: Colors.transparent,
-          builder: (BuildContext context) => Align(
-            alignment: Alignment.topCenter,
-            child: Container(
-              margin: const EdgeInsets.only(top: 250.0),
-              child: PesquisaEquipamentoDialog(filteredData: _filteredData),
-            ),
-          ),
-        ),
-      );
     });
 
     if (_searchController.text.isEmpty) {
       _isActive = false;
     }
+    _dadosFiltrados = equipamentos
+        .where((element) => element
+            .toLowerCase()
+            .contains(_searchController.text.toLowerCase()))
+        .toList();
 
-    // Simulates waiting for an API call
-    // await Future.delayed(const Duration(milliseconds: 100));
-
-    setState(() {
-      _filteredData = _data
-          .where((element) => element
-              .toLowerCase()
-              .contains(_searchController.text.toLowerCase()))
-          .toList();
-      _isLoading = false;
-    });
+    _isLoading = false;
   }
 
   @override
-  Widget build(BuildContext context) =>
-      // appBar: AppBar(
-      //   flexibleSpace: Container(
-      //     decoration: const BoxDecoration(
-      //       gradient: LinearGradient(
-      //         colors: [Colors.yellow, Colors.orange],
-      //         begin: Alignment.topLeft,
-      //         end: Alignment.bottomRight,
-      //       ),
-      //     ),
-      //   ),
-      //   title: TextField(
-      //     controller: _searchController,
-      //     style: const TextStyle(color: Colors.black),
-      //     cursorColor: Colors.black,
-      //     decoration: const InputDecoration(
-      //       hintText: 'Buscar...',
-      //       hintStyle: TextStyle(color: Colors.black54),
-      //       border: InputBorder.none,
-      //     ),
-      //   ),
-      // ),
-      Padding(
+  Widget build(BuildContext context) => Padding(
         padding: const EdgeInsets.all(38.0),
         child: Column(
           children: [
@@ -134,6 +80,11 @@ class _PesquisaEquipamentosState extends State<PesquisaEquipamentos> {
                 ),
               ),
             ),
+            _isActive
+                ? PesquisaEquipamentoDialog(
+                    filteredData: _dadosFiltrados,
+                    controller: _searchController)
+                : const SizedBox(),
             const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -163,60 +114,61 @@ class _PesquisaEquipamentosState extends State<PesquisaEquipamentos> {
                 ),
               ],
             ),
+            const SizedBox(height: 10),
+            SizedBox(
+              height: 300,
+              child: ListView.builder(
+                itemCount: equipamentosAdicionados.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: CustomWidget(
+                      nomeEquipamento: equipamentosAdicionados[index],
+                    ),
+                  );
+                },
+              ),
+            ),
           ],
-
-          // body: !_isActive
-          //     ? const Center(
-          //         child: Text('Busque alguma coisa!',
-          //             style: TextStyle(color: Colors.black)),
-          //       )
-          //     : Center(
-          //         child: Container(
-          //           height: 150,
-          //           decoration: const BoxDecoration(
-          //             gradient: LinearGradient(
-          //               colors: [Colors.yellow, Colors.orange],
-          //               begin: Alignment.topLeft,
-          //               end: Alignment.bottomRight,
-          //             ),
-          //           ),
-          //     child: ListView.builder(
-          //       itemCount: _filteredData.length,
-          //       itemBuilder: (context, index) => ListTile(
-          //         title: Text(
-          //           _filteredData[index],
-          //           style: const TextStyle(color: Colors.black),
-          //         ),
-          //         trailing: IconButton(
-          //             onPressed: () {}, icon: const Icon(Icons.add)),
-          //       ),
-          //     ),
-          //   ),
-          // ),
-          // backgroundColor: Colors.white,
         ),
       );
 }
 
-class PesquisaEquipamentoDialog extends StatelessWidget {
-  const PesquisaEquipamentoDialog({Key? key, required this.filteredData})
+List<String> equipamentosAdicionados = [];
+
+class PesquisaEquipamentoDialog extends StatefulWidget {
+  const PesquisaEquipamentoDialog(
+      {Key? key, required this.filteredData, required this.controller})
       : super(key: key);
   final List<String> filteredData;
+  final TextEditingController controller;
+
+  @override
+  State<PesquisaEquipamentoDialog> createState() =>
+      _PesquisaEquipamentoDialogState();
+}
+
+class _PesquisaEquipamentoDialogState extends State<PesquisaEquipamentoDialog> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: Container(
+      child: SizedBox(
         height: 200,
         width: 300,
-        color: Colors.red,
         child: ListView.builder(
-          itemCount: filteredData.length,
+          itemCount: widget.filteredData.length,
+          padding: const EdgeInsets.only(bottom: 20),
           itemBuilder: (context, index) => ListTile(
             title: Text(
-              filteredData[index],
+              widget.filteredData[index],
               style: const TextStyle(color: Colors.black),
             ),
-            trailing: IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
+            trailing: IconButton(
+                onPressed: () {
+                  widget.controller.notifyListeners();
+                  equipamentosAdicionados.add(widget.filteredData[index]);
+                },
+                icon: const Icon(Icons.add)),
           ),
         ),
       ),

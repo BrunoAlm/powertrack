@@ -12,7 +12,7 @@ class QuaisEquipamentosExpansionTileScreen extends StatefulWidget {
 class QuaisEquipamentosExpansionTileScreenState
     extends State<QuaisEquipamentosExpansionTileScreen> {
   bool isChecked = false;
-  final int _quantidade = 0;
+  // final int _quantidade = 0;
   final qtdEC = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -68,7 +68,6 @@ class _DropdownButtonExampleState extends State<DropdownButtonExample> {
       ),
       onChanged: (int? value) {
         // This is called when the user selects an item.
-        print(value);
         setState(() {
           dropdownValue = value!;
         });
