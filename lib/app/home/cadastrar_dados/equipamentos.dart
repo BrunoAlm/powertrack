@@ -1,4 +1,3 @@
-List<String> equipamentosAdicionados = [];
 
 final List<String> equipamentos = [
       "Aparelho de blu ray",

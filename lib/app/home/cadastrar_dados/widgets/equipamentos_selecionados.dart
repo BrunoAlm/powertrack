@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:uitcc/app/home/cadastrar_dados/equipamentos.dart';
+import 'package:uitcc/app/home/controller/equipamentos_store.dart';
 
-class SearchResult extends StatefulWidget {
-  const SearchResult({Key? key}) : super(key: key);
+class ListViewEquipamentosSelecionados extends StatefulWidget {
+  const ListViewEquipamentosSelecionados(
+      {Key? key, required this.equipamentosAdicionados})
+      : super(key: key);
+  final EquipamentosStore equipamentosAdicionados;
 
   @override
-  _SearchResultState createState() => _SearchResultState();
+  _ListViewEquipamentosSelecionadosState createState() =>
+      _ListViewEquipamentosSelecionadosState();
 }
 
-class _SearchResultState extends State<SearchResult> {
+class _ListViewEquipamentosSelecionadosState
+    extends State<ListViewEquipamentosSelecionados> {
   int _tempoUsado = 1;
   int _quantidade = 1;
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.builder(
-          itemCount: equipamentosAdicionados.length,
+          itemCount: widget.equipamentosAdicionados.value.length,
           itemBuilder: (BuildContext context, int index) {
             return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -25,7 +30,7 @@ class _SearchResultState extends State<SearchResult> {
                     SizedBox(
                       width: 125,
                       child: Text(
-                        equipamentosAdicionados[index],
+                        widget.equipamentosAdicionados.value[index],
                         style: Theme.of(context).textTheme.labelSmall,
                       ),
                     ),
