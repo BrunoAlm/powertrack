@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:uitcc/app/home/cadastrar_dados/cadastrar_dados_screen.dart';
 import 'package:uitcc/app/home/cadastrar_dados/equipamentos.dart';
+import 'package:uitcc/app/home/cadastrar_dados/widgets/search_result.dart';
+import 'package:uitcc/app/home/cadastrar_dados/widgets/search_text_field.dart';
 
 class PesquisaEquipamentos extends StatefulWidget {
   const PesquisaEquipamentos({Key? key}) : super(key: key);
@@ -39,6 +41,7 @@ class _PesquisaEquipamentosState extends State<PesquisaEquipamentos> {
     if (_searchController.text.isEmpty) {
       _isActive = false;
     }
+
     _dadosFiltrados = equipamentos
         .where((element) => element
             .toLowerCase()
@@ -58,33 +61,29 @@ class _PesquisaEquipamentosState extends State<PesquisaEquipamentos> {
               style: Theme.of(context).textTheme.headlineSmall,
             ),
             const SizedBox(height: 50),
-            SizedBox(
-              width: 300,
-              child: TextField(
-                controller: _searchController,
-                style: const TextStyle(color: Colors.black),
-                cursorColor: Colors.black,
-                decoration: InputDecoration(
-                  hintText: 'Buscar...',
-                  hintStyle: const TextStyle(color: Colors.black54),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide:
-                        BorderSide(color: Theme.of(context).primaryColor),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide:
-                        BorderSide(color: Theme.of(context).primaryColor),
-                  ),
-                ),
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                  color: _isActive
+                      ? Theme.of(context).colorScheme.primaryContainer
+                      : Colors.transparent,
+                  borderRadius: const BorderRadius.all(Radius.circular(20))),
+              child: Column(
+                children: [
+                  SizedBox(
+                      width: 300,
+                      child: SearchTextField(
+                        searchController: _searchController,
+                      )),
+                  _isActive
+                      ? PesquisaEquipamentoDialog(
+                          filteredData: _dadosFiltrados,
+                          controller: _searchController,
+                        )
+                      : const SizedBox(),
+                ],
               ),
             ),
-            _isActive
-                ? PesquisaEquipamentoDialog(
-                    filteredData: _dadosFiltrados,
-                    controller: _searchController)
-                : const SizedBox(),
             const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -115,26 +114,11 @@ class _PesquisaEquipamentosState extends State<PesquisaEquipamentos> {
               ],
             ),
             const SizedBox(height: 10),
-            SizedBox(
-              height: 300,
-              child: ListView.builder(
-                itemCount: equipamentosAdicionados.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: CustomWidget(
-                      nomeEquipamento: equipamentosAdicionados[index],
-                    ),
-                  );
-                },
-              ),
-            ),
+            const SearchResult()
           ],
         ),
       );
 }
-
-List<String> equipamentosAdicionados = [];
 
 class PesquisaEquipamentoDialog extends StatefulWidget {
   const PesquisaEquipamentoDialog(
@@ -151,25 +135,23 @@ class PesquisaEquipamentoDialog extends StatefulWidget {
 class _PesquisaEquipamentoDialogState extends State<PesquisaEquipamentoDialog> {
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: SizedBox(
-        height: 200,
-        width: 300,
-        child: ListView.builder(
-          itemCount: widget.filteredData.length,
-          padding: const EdgeInsets.only(bottom: 20),
-          itemBuilder: (context, index) => ListTile(
-            title: Text(
-              widget.filteredData[index],
-              style: const TextStyle(color: Colors.black),
-            ),
-            trailing: IconButton(
-                onPressed: () {
-                  widget.controller.notifyListeners();
-                  equipamentosAdicionados.add(widget.filteredData[index]);
-                },
-                icon: const Icon(Icons.add)),
+    return SizedBox(
+      height: 200,
+      width: 300,
+      child: ListView.builder(
+        itemCount: widget.filteredData.length,
+        padding: const EdgeInsets.only(bottom: 20),
+        itemBuilder: (context, index) => ListTile(
+          title: Text(
+            widget.filteredData[index],
+            style: const TextStyle(color: Colors.black),
           ),
+          trailing: IconButton(
+              onPressed: () {
+                widget.controller.notifyListeners();
+                equipamentosAdicionados.add(widget.filteredData[index]);
+              },
+              icon: const Icon(Icons.add)),
         ),
       ),
     );
