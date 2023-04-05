@@ -30,7 +30,7 @@ class _CadastrarDadosScreenState extends State<CadastrarDadosScreen> {
           PageView(
             controller: _controller,
             children: _paginas,
-            scrollDirection: Axis.horizontal,
+            physics: const NeverScrollableScrollPhysics(),
           ),
           Positioned(
             bottom: 25,
