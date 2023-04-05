@@ -10,7 +10,7 @@ class AppWidget extends StatelessWidget {
       title: 'Meu App',
       theme: ThemeData(
         useMaterial3: true,
-        colorSchemeSeed: const Color(0xfffff7aa),
+        colorSchemeSeed: const Color(0xFF00509D),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             shape: ContinuousRectangleBorder(
