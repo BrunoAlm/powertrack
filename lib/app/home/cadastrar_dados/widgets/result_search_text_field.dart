@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:uitcc/app/home/controller/equipamentos_store.dart';
 
@@ -10,8 +9,7 @@ class ResultSearchTextField extends StatefulWidget {
   final EquipamentosStore equipamentosStore;
 
   @override
-  State<ResultSearchTextField> createState() =>
-      _ResultSearchTextFieldState();
+  State<ResultSearchTextField> createState() => _ResultSearchTextFieldState();
 }
 
 class _ResultSearchTextFieldState extends State<ResultSearchTextField> {
@@ -30,8 +28,8 @@ class _ResultSearchTextFieldState extends State<ResultSearchTextField> {
           ),
           trailing: IconButton(
               onPressed: () {
+                // TODO: Quando tiver item igual, precisa trocar o icone e remover da lista
                 widget.equipamentosStore.adicionar(widget.filteredData[index]);
-                // equipamentosAdicionados.add(widget.filteredData[index]);
               },
               icon: const Icon(Icons.add)),
         ),

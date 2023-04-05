@@ -7,4 +7,9 @@ class EquipamentosStore extends ValueNotifier<List<String>> {
     value.add(equipamentoEscolhido);
     notifyListeners();
   }
+
+  void remover(String equipamentoEscolhido) {
+    value.remove(equipamentoEscolhido);
+    notifyListeners();
+  }
 }
