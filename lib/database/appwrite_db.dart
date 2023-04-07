@@ -23,7 +23,7 @@ class AppwriteDB {
     return client;
   }
 
-  void registerAppwriteUser({
+  Future register({
     required String name,
     required String email,
     required String password,
@@ -43,7 +43,7 @@ class AppwriteDB {
     }
   }
 
-  Future<void> login(String email, String password) async {
+  Future login(String email, String password) async {
     await account.createEmailSession(email: email, password: password);
   }
 

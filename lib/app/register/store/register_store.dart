@@ -1,15 +1,17 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
 import 'package:uitcc/app/login/states/login_state.dart';
+import 'package:uitcc/app/register/states/register_states.dart';
 import 'package:uitcc/database/appwrite_db.dart';
 
-class LoginStore extends ChangeNotifier {
+class RegisterStore extends ChangeNotifier {
   final AppwriteDB _appwrite;
+  final nameEC = TextEditingController();
   final emailEC = TextEditingController();
   final passwordEC = TextEditingController();
-  var state = ValueNotifier<LoginState>(LoadingLoginState());
+  var state = ValueNotifier<RegisterState>(LoadingRegisterState());
 
-  LoginStore(this._appwrite);
+  RegisterStore(this._appwrite);
 
   String translateMessage(String message) {
     String messageTranslated = message.toString();
@@ -29,20 +31,23 @@ class LoginStore extends ChangeNotifier {
     return messageTranslated;
   }
 
-  Future login() async {
-    state.value = LoadingLoginState();
+  Future register() async {
+    state.value = LoadingRegisterState();
     try {
-      await _appwrite.login(emailEC.text.trim(), passwordEC.text.trim());
-      state.value = SuccessLoginState();
+      await _appwrite.register(
+          name: nameEC.text.trim(),
+          email: emailEC.text.trim(),
+          password: passwordEC.text.trim());
+      state.value = SuccessRegisterState();
     } on AppwriteException catch (e) {
       print(e.message);
 
-      state.value = FailedLoginState(
+      state.value = FailedRegisterState(
         message: translateMessage(e.message!),
         code: e.code!,
       );
     }
   }
-
-  void logout() {}
 }
+
+// enum LoginState { success, failed, pending }

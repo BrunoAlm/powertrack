@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:uitcc/app/register/states/register_states.dart';
+import 'package:uitcc/app/register/store/register_store.dart';
 import 'package:uitcc/app/shared/widgets/custom_text_form_field.dart';
-import 'package:uitcc/database/appwrite_db.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -12,17 +13,42 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final nameEC = TextEditingController();
-  final emailEC = TextEditingController();
-  final passwordEC = TextEditingController();
-  final appwrite = Modular.get<AppwriteDB>();
+  final registerStore = Modular.get<RegisterStore>();
+
+  void _registerErrorDialog(String message, int code) => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Erro'),
+          content: SizedBox(
+            height: 50,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [Text('Mensagem: $message'), Text('Código: $code')],
+            ),
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: () => Modular.to.pop(),
+              child: const Text('Voltar'),
+            ),
+          ],
+        ),
+      );
 
   @override
-  void dispose() {
-    nameEC;
-    emailEC;
-    passwordEC;
-    super.dispose();
+  void initState() {
+    registerStore.state.addListener(
+      () {
+        final state = registerStore.state.value;
+        if (state is SuccessRegisterState) {
+          Modular.to.pushNamed('/home/');
+        }
+        if (state is FailedRegisterState) {
+          _registerErrorDialog(state.message, state.code);
+        }
+      },
+    );
+    super.initState();
   }
 
   @override
@@ -59,41 +85,28 @@ class _RegisterPageState extends State<RegisterPage> {
                     CustomTextFormField(
                       maxWidth: 300,
                       hintText: 'Nome',
-                      controller: nameEC,
+                      controller: registerStore.nameEC,
                       prefixIcon: const Icon(Icons.person),
                     ),
                     const SizedBox(height: 10),
                     CustomTextFormField(
                       maxWidth: 300,
                       hintText: 'Email',
-                      controller: emailEC,
+                      controller: registerStore.emailEC,
                       prefixIcon: const Icon(Icons.mail),
                     ),
                     const SizedBox(height: 10),
                     CustomTextFormField(
                       maxWidth: 300,
                       hintText: 'Senha',
-                      controller: passwordEC,
+                      controller: registerStore.passwordEC,
                       prefixIcon: const Icon(Icons.lock),
                       obscureText: true,
                     ),
                     const SizedBox(height: 40),
                     ElevatedButton(
                       onPressed: () {
-                        // logica de validar o usuário e senha
-                        // if (senhaEC.value.text == 'admin' &&
-                        //     usuarioEC.value.text == 'admin') {
-                        // } else {
-                        //   print(
-                        //       'senha:${senhaEC.value.text} usuário:${usuarioEC.value.text} ');
-                        // }
-                        // Modular.to.pushNamed('/home/');
-                        appwrite.registerAppwriteUser(
-                          name: nameEC.text,
-                          email: emailEC.text,
-                          password: passwordEC.text,
-                        );
-
+                        registerStore.register();
                         // se der certo faz push pra /home
                         // se der erro mostra popup de usuário e/ou senha incorretos
                       },
