@@ -1,5 +1,5 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:uitcc/app/profile/profile_page.dart';
+import 'package:uitcc/app/pages/profile/profile_page.dart';
 
 class ProfileModule extends Module {
   @override

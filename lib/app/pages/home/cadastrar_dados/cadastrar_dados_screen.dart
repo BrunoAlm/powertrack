@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:uitcc/app/home/cadastrar_dados/widgets/pesquisa_equipamentos.dart';
+import 'package:uitcc/app/pages/home/cadastrar_dados/widgets/pesquisa_equipamentos.dart';
 
 class CadastrarDadosScreen extends StatefulWidget {
   const CadastrarDadosScreen({Key? key}) : super(key: key);

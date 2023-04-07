@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:uitcc/app/home/cadastrar_dados/api/equipamentos.dart';
-import 'package:uitcc/app/home/cadastrar_dados/widgets/equipamentos_selecionados.dart';
-import 'package:uitcc/app/home/cadastrar_dados/widgets/result_search_text_field.dart';
-import 'package:uitcc/app/home/cadastrar_dados/widgets/search_text_field.dart';
-import 'package:uitcc/app/home/store/equipamentos_store.dart';
+import 'package:uitcc/app/pages/home/cadastrar_dados/api/equipamentos.dart';
+import 'package:uitcc/app/pages/home/cadastrar_dados/widgets/equipamentos_selecionados.dart';
+import 'package:uitcc/app/pages/home/cadastrar_dados/widgets/result_search_text_field.dart';
+import 'package:uitcc/app/pages/home/cadastrar_dados/widgets/search_text_field.dart';
+import 'package:uitcc/app/pages/home/store/equipamentos_store.dart';
 
 class PesquisaEquipamentos extends StatefulWidget {
   const PesquisaEquipamentos({Key? key}) : super(key: key);

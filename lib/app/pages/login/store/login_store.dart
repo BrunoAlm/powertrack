@@ -1,19 +1,17 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
-import 'package:uitcc/app/login/states/login_state.dart';
-import 'package:uitcc/app/register/states/register_states.dart';
-import 'package:uitcc/database/appwrite_db.dart';
+import 'package:uitcc/app/pages/login/states/login_state.dart';
+import 'package:uitcc/app/auth/appwrite_auth.dart';
 
-class RegisterStore extends ChangeNotifier {
-  final AppwriteDB _appwrite;
-  final nameEC = TextEditingController();
+class LoginStore extends ChangeNotifier {
+  final AppwriteAuth _appwrite;
   final emailEC = TextEditingController();
   final passwordEC = TextEditingController();
-  var state = ValueNotifier<RegisterState>(LoadingRegisterState());
+  var state = ValueNotifier<LoginState>(PendingLoginState());
 
-  RegisterStore(this._appwrite);
+  LoginStore(this._appwrite);
 
-  String translateMessage(String message) {
+  String _translateLoginMessage(String message) {
     String messageTranslated = message.toString();
     switch (messageTranslated) {
       case 'Invalid credentials. Please check the email and password.':
@@ -26,28 +24,25 @@ class RegisterStore extends ChangeNotifier {
         return 'Senha inválida: Precisa de pelo menos 8 caracteres';
       case 'Invalid email: Value must be a valid email address':
         return 'Insira um email válido';
+      case 'O computador remoto recusou a conexão de rede.':
+        return 'Sem conexão com o servidor!';
       default:
     }
     return messageTranslated;
   }
 
-  Future register() async {
-    state.value = LoadingRegisterState();
+  Future login() async {
+    state.value = LoadingLoginState();
     try {
-      await _appwrite.register(
-          name: nameEC.text.trim(),
-          email: emailEC.text.trim(),
-          password: passwordEC.text.trim());
-      state.value = SuccessRegisterState();
+      await _appwrite.login(emailEC.text.trim(), passwordEC.text.trim());
+      state.value = SuccessLoginState();
     } on AppwriteException catch (e) {
-      print(e.message);
-
-      state.value = FailedRegisterState(
-        message: translateMessage(e.message!),
-        code: e.code!,
+      state.value = FailedLoginState(
+        message: _translateLoginMessage(e.message!),
+        code: e.code ?? 0,
       );
     }
   }
-}
 
-// enum LoginState { success, failed, pending }
+  void logout() {}
+}

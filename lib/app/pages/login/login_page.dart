@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:uitcc/app/login/states/login_state.dart';
-import 'package:uitcc/app/login/store/login_store.dart';
+import 'package:uitcc/app/pages/login/states/login_state.dart';
+import 'package:uitcc/app/pages/login/store/login_store.dart';
 import 'package:uitcc/app/shared/widgets/custom_text_form_field.dart';
 
 class LoginPage extends StatefulWidget {
@@ -19,8 +19,9 @@ class _LoginPageState extends State<LoginPage> {
         builder: (context) => AlertDialog(
           title: const Text('Erro'),
           content: SizedBox(
-            height: 50,
+            height: 100,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [Text('Mensagem: $message'), Text('Código: $code')],
             ),
@@ -103,12 +104,22 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
                 const SizedBox(height: 35),
-                ElevatedButton(
-                  onPressed: () {
-                    loginStore.login();
-                  },
-                  child: const Text('Entrar'),
-                ),
+                AnimatedBuilder(
+                    animation: loginStore.state,
+                    builder: (context, child) {
+                      return ElevatedButton(
+                        onPressed: () {
+                          loginStore.login();
+                        },
+                        child: loginStore.state.value is LoadingLoginState
+                            ? const SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator(),
+                              )
+                            : const Text('Entrar'),
+                      );
+                    }),
                 const SizedBox(height: 55),
                 const Text("Usando energia da forma correta"),
               ],

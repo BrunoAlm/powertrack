@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:uitcc/app/register/states/register_states.dart';
-import 'package:uitcc/app/register/store/register_store.dart';
+import 'package:uitcc/app/pages/register/states/register_states.dart';
+import 'package:uitcc/app/pages/register/store/register_store.dart';
 import 'package:uitcc/app/shared/widgets/custom_text_form_field.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -20,8 +20,9 @@ class _RegisterPageState extends State<RegisterPage> {
         builder: (context) => AlertDialog(
           title: const Text('Erro'),
           content: SizedBox(
-            height: 50,
+            height: 100,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [Text('Mensagem: $message'), Text('Código: $code')],
             ),
@@ -35,13 +36,31 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       );
 
+  Future _registerSuccessDialog() async => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Sucesso!'),
+          content: const SizedBox(
+            height: 50,
+            child: Text('Usuário criado!'),
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: () => Modular.to.pop(),
+              child: const Text('Voltar'),
+            ),
+          ],
+        ),
+      );
+
   @override
   void initState() {
     registerStore.state.addListener(
-      () {
+      () async {
         final state = registerStore.state.value;
         if (state is SuccessRegisterState) {
-          Modular.to.pushNamed('/home/');
+          await _registerSuccessDialog();
+          Modular.to.popUntil(ModalRoute.withName('/'));
         }
         if (state is FailedRegisterState) {
           _registerErrorDialog(state.message, state.code);

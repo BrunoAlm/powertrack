@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uitcc/app/home/store/equipamentos_store.dart';
+import 'package:uitcc/app/pages/home/store/equipamentos_store.dart';
 
 class ListViewEquipamentosSelecionados extends StatefulWidget {
   const ListViewEquipamentosSelecionados({

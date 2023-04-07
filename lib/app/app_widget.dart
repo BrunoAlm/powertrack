@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:uitcc/database/appwrite_db.dart';
+import 'package:uitcc/app/auth/appwrite_auth.dart';
 
 class AppWidget extends StatelessWidget {
   const AppWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    Modular.get<AppwriteDB>().initClient();
+    Modular.get<AppwriteAuth>().initClient();
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Meu App',

@@ -1,17 +1,16 @@
 // ignore_for_file: avoid_print
 
 import 'package:appwrite/appwrite.dart';
-import 'package:uitcc/database/constants.dart';
+import 'package:uitcc/app/auth/constants.dart';
 
-class AppwriteDB {
-  AppwriteDB({required this.endpoint, required this.projectID});
+class AppwriteAuth {
+  AppwriteAuth({required this.endpoint, required this.projectID});
   final String endpoint;
   final String projectID;
   Client client = Client();
   late Account account = Account(client);
 
   Future<Client> initClient() async {
-    print('Appwrite client iniciado');
     client
         .setEndpoint(endpoint) // Your Appwrite Endpoint
         .setProject(projectID) // Your project ID
@@ -28,22 +27,18 @@ class AppwriteDB {
     required String email,
     required String password,
   }) async {
-    // Register User
-
-    try {
-      final user = await account.create(
-        userId: ID.unique(),
-        name: name,
-        email: email,
-        password: password,
-      );
-      print("Usuário ${user.name} criado com sucesso!");
-    } catch (e) {
-      print(e);
-    }
+    // Create user account
+    final user = await account.create(
+      userId: ID.unique(),
+      name: name,
+      email: email,
+      password: password,
+    );
+    print("Usuário ${user.name} criado com sucesso!");
   }
 
   Future login(String email, String password) async {
+    // Login user
     await account.createEmailSession(email: email, password: password);
   }
 
