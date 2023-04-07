@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:uitcc/app/login/states/login_state.dart';
+import 'package:uitcc/app/login/store/login_store.dart';
 import 'package:uitcc/app/shared/widgets/custom_text_form_field.dart';
 
 class LoginPage extends StatefulWidget {
@@ -10,14 +12,42 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final emailEC = TextEditingController();
-  final senhaEC = TextEditingController();
+  final LoginStore loginStore = Modular.get();
+
+  void _loginErrorDialog(String message, int code) => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Erro'),
+          content: SizedBox(
+            height: 50,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [Text('Mensagem: $message'), Text('Código: $code')],
+            ),
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: () => Modular.to.pop(),
+              child: const Text('Voltar'),
+            ),
+          ],
+        ),
+      );
 
   @override
-  void dispose() {
-    emailEC;
-    senhaEC;
-    super.dispose();
+  void initState() {
+    loginStore.state.addListener(
+      () {
+        final state = loginStore.state.value;
+        if (state is SuccessLoginState) {
+          Modular.to.pushNamed('/home/');
+        }
+        if (state is FailedLoginState) {
+          _loginErrorDialog(state.message, state.code);
+        }
+      },
+    );
+    super.initState();
   }
 
   @override
@@ -46,14 +76,14 @@ class _LoginPageState extends State<LoginPage> {
                 CustomTextFormField(
                   maxWidth: 300,
                   hintText: 'Email',
-                  controller: emailEC,
+                  controller: loginStore.emailEC,
                   prefixIcon: const Icon(Icons.mail),
                 ),
                 const SizedBox(height: 10),
                 CustomTextFormField(
                   maxWidth: 300,
                   hintText: 'Senha',
-                  controller: senhaEC,
+                  controller: loginStore.passwordEC,
                   prefixIcon: const Icon(Icons.lock),
                   obscureText: true,
                 ),
@@ -75,17 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 35),
                 ElevatedButton(
                   onPressed: () {
-                    // logica de validar o usuário e senha
-                    // if (senhaEC.value.text == 'admin' &&
-                    //     usuarioEC.value.text == 'admin') {
-                    // } else {
-                    //   print(
-                    //       'senha:${senhaEC.value.text} usuário:${usuarioEC.value.text} ');
-                    // }
-                    Modular.to.pushNamed('/home/');
-
-                    // se der certo faz push pra /home
-                    // se der erro mostra popup de usuário e/ou senha incorretos
+                    loginStore.login();
                   },
                   child: const Text('Entrar'),
                 ),

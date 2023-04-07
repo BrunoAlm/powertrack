@@ -1,4 +1,5 @@
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:uitcc/app/login/store/login_store.dart';
 import 'package:uitcc/app/recover_password/recover_password_module.dart';
 import 'package:uitcc/app/register/register_module.dart';
 import 'package:uitcc/app/home/home_module.dart';
@@ -6,7 +7,7 @@ import 'login_page.dart';
 
 class LoginModule extends Module {
   @override
-  List<Bind> get binds => [];
+  List<Bind> get binds => [Bind.factory((i) => LoginStore(i()))];
 
   @override
   List<ModularRoute> get routes => [

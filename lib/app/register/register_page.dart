@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:uitcc/app/shared/widgets/custom_text_form_field.dart';
+import 'package:uitcc/database/appwrite_db.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -11,15 +12,16 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final nomeEC = TextEditingController();
+  final nameEC = TextEditingController();
   final emailEC = TextEditingController();
-  final senhaEC = TextEditingController();
+  final passwordEC = TextEditingController();
+  final appwrite = Modular.get<AppwriteDB>();
 
   @override
   void dispose() {
-    nomeEC;
+    nameEC;
     emailEC;
-    senhaEC;
+    passwordEC;
     super.dispose();
   }
 
@@ -57,7 +59,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     CustomTextFormField(
                       maxWidth: 300,
                       hintText: 'Nome',
-                      controller: nomeEC,
+                      controller: nameEC,
                       prefixIcon: const Icon(Icons.person),
                     ),
                     const SizedBox(height: 10),
@@ -71,7 +73,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     CustomTextFormField(
                       maxWidth: 300,
                       hintText: 'Senha',
-                      controller: senhaEC,
+                      controller: passwordEC,
                       prefixIcon: const Icon(Icons.lock),
                       obscureText: true,
                     ),
@@ -86,6 +88,11 @@ class _RegisterPageState extends State<RegisterPage> {
                         //       'senha:${senhaEC.value.text} usuário:${usuarioEC.value.text} ');
                         // }
                         // Modular.to.pushNamed('/home/');
+                        appwrite.registerAppwriteUser(
+                          name: nameEC.text,
+                          email: emailEC.text,
+                          password: passwordEC.text,
+                        );
 
                         // se der certo faz push pra /home
                         // se der erro mostra popup de usuário e/ou senha incorretos
