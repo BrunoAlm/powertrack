@@ -1,14 +1,14 @@
-// ignore_for_file: avoid_print
-
 import 'package:appwrite/appwrite.dart';
 import 'package:uitcc/app/auth/constants.dart';
 
 class AppwriteAuth {
-  AppwriteAuth({required this.endpoint, required this.projectID});
   final String endpoint;
   final String projectID;
   Client client = Client();
   late Account account = Account(client);
+  late Databases database = Databases(client);
+
+  AppwriteAuth({required this.endpoint, required this.projectID});
 
   Future<Client> initClient() async {
     client
@@ -18,9 +18,19 @@ class AppwriteAuth {
           status: true,
         ); // For self signed certificates, only use for development
     account = Account(client);
+    print(endpoint);
 
     return client;
   }
+
+  // Future checkIsLoggedIn() async {
+  //   try {
+  //     var res = await account.get();
+  //     print(res.status);
+  //   } on AppwriteException catch (e) {
+  //     print(e.message);
+  //   }
+  // }
 
   Future register({
     required String name,
@@ -34,24 +44,28 @@ class AppwriteAuth {
       email: email,
       password: password,
     );
-    print("Usuário ${user.name} criado com sucesso!");
   }
 
   Future login(String email, String password) async {
-    // Login user
+    // create account session
     await account.createEmailSession(email: email, password: password);
   }
 
+  Future logout() async {
+    // delete account session
+    await account.deleteSessions();
+  }
+
   void fetchDatabase() async {
-    Databases databases = Databases(client);
-    Future result = databases.listDocuments(
+    final result = database.getDocument(
       databaseId: tccDatabaseId,
-      collectionId: collectionUsersId,
+      collectionId: collectionDocumentsId,
+      documentId: documentId,
     );
     result.then((response) {
-      print(response);
+      print(response.data);
     }).catchError((error) {
-      print(error.response);
+      print(error);
     });
   }
 }

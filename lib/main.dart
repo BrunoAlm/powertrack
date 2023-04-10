@@ -16,7 +16,7 @@ void main() {
       );
     },
     (error, stack) {
-      print('object');
+      print('Error: $error, Stack: $stack');
     },
   );
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:uitcc/app/pages/home/cadastrar_dados/widgets/pesquisa_equipamentos.dart';
+import 'package:uitcc/app/pages/home/cadastrar_dados/pages/equipments_introduction_page.dart';
+import 'package:uitcc/app/pages/home/cadastrar_dados/pages/register_equipments_page.dart';
 
 class CadastrarDadosScreen extends StatefulWidget {
   const CadastrarDadosScreen({Key? key}) : super(key: key);
@@ -18,13 +19,13 @@ class _CadastrarDadosScreenState extends State<CadastrarDadosScreen> {
   Widget build(BuildContext context) {
     double _largura = MediaQuery.of(context).size.width;
     double _altura = MediaQuery.of(context).size.height;
-    // ignore: avoid_print
-    print(_largura);
     PageController _controller = PageController();
+
     List<Widget> _paginas = [
-      const IntroducaoPorQuePegarDados(),
-      const PesquisaEquipamentos(),
+      const EquipmentsIntroduction(),
+      const RegisterEquipments(),
     ];
+
     return Material(
       child: SizedBox(
         height: _altura,
@@ -120,41 +121,6 @@ class _CadastrarDadosScreenState extends State<CadastrarDadosScreen> {
                   ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class IntroducaoPorQuePegarDados extends StatelessWidget {
-  const IntroducaoPorQuePegarDados({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 38.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Conhecendo seus gastos:',
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
-          const SizedBox(height: 30),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Para calcular os custos, é precisamos saber quais são os gastos energético da sua casa.',
-                style: Theme.of(context).textTheme.labelLarge,
-              ),
-              Text(
-                'Preencha os dados com a maior precisão possível.',
-                style: Theme.of(context).textTheme.labelLarge,
-              ),
-            ],
-          ),
-        ],
       ),
     );
   }

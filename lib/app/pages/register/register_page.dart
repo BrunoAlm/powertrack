@@ -13,7 +13,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final registerStore = Modular.get<RegisterStore>();
+  final RegisterStore registerStore = Modular.get();
 
   void _registerErrorDialog(String message, int code) => showDialog(
         context: context,

@@ -52,11 +52,18 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
+  void dispose() {
+    loginStore.emailEC;
+    loginStore.passwordEC;
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: SizedBox(
-          width: 310,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 310),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

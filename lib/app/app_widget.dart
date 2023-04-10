@@ -7,6 +7,7 @@ class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Modular.get<AppwriteAuth>().initClient();
+    
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Meu App',
