@@ -18,7 +18,6 @@ class _SearchTextFieldState extends State<SearchTextField> {
   void initState() {
     widget.equipmentsStore.searchEC.addListener(() {
       widget.equipmentsStore.performSearch();
-      print(widget.equipmentsStore.state.value);
     });
     super.initState();
   }

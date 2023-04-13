@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:uitcc/app/pages/home/cadastrar_dados/api/equipments_api.dart';
@@ -8,7 +7,8 @@ import 'package:uitcc/app/pages/home/cadastrar_dados/states/search_equipment_sta
 
 class EquipmentsStore extends ChangeNotifier {
   final List<EquipmentModel> equipments = [];
-  final filteredEquipments = ValueNotifier<List<String>>(equipmentsApi);
+
+  final filteredEquipmentsName = ValueNotifier<List<String>>(equipmentsApi);
   var state =
       ValueNotifier<SearchEquipmentState>(PendingSearchEquipmentState());
   final searchEC = TextEditingController();
@@ -21,7 +21,6 @@ class EquipmentsStore extends ChangeNotifier {
   }) {
     equipments.add(
       EquipmentModel(
-        id: Random().nextInt(1000),
         name: name,
         qty: qty,
         time: time,
@@ -31,17 +30,11 @@ class EquipmentsStore extends ChangeNotifier {
     notifyListeners();
   }
 
-  void remove(int id) {
-    equipments.removeWhere((equipment) => equipment.id == id);
-    performSearch();
-    notifyListeners();
-  }
-
   Future<void> performSearch() async {
     state.value = LoadingSearchEquipmentState();
 
-    filteredEquipments.value = equipmentsApi.where((equipment) {
-      return equipment
+    filteredEquipmentsName.value = equipmentsApi.where((equipmentName) {
+      return equipmentName
           .toLowerCase()
           .contains(searchEC.value.text.toLowerCase());
     }).toList();
@@ -51,15 +44,10 @@ class EquipmentsStore extends ChangeNotifier {
     if (searchEC.value.text.isEmpty) {
       state.value = PendingSearchEquipmentState();
     }
-    if (filteredEquipments.value.isEmpty) {
+    if (filteredEquipmentsName.value.isEmpty) {
       state.value = FailedSearchEquipmentState();
     }
 
-    notifyListeners();
-  }
-
-  void removeIfExist({required int index}) {
-    filteredEquipments.value.removeAt(index);
     notifyListeners();
   }
 }

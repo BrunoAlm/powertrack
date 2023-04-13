@@ -1,12 +1,11 @@
 import 'package:appwrite/appwrite.dart';
-import 'package:uitcc/app/auth/constants.dart';
+import 'package:uitcc/services/appwrite_constants.dart';
 
 class AppwriteAuth {
   final String endpoint;
   final String projectID;
   Client client = Client();
   late Account account = Account(client);
-  late Databases database = Databases(client);
 
   AppwriteAuth({required this.endpoint, required this.projectID});
 
@@ -18,19 +17,14 @@ class AppwriteAuth {
           status: true,
         ); // For self signed certificates, only use for development
     account = Account(client);
-    print(endpoint);
-
+    
     return client;
   }
 
-  // Future checkIsLoggedIn() async {
-  //   try {
-  //     var res = await account.get();
-  //     print(res.status);
-  //   } on AppwriteException catch (e) {
-  //     print(e.message);
-  //   }
-  // }
+  Future checkIsLoggedIn() async {
+    var res = await account.get();
+    print(res.name);
+  }
 
   Future register({
     required String name,
@@ -56,16 +50,4 @@ class AppwriteAuth {
     await account.deleteSessions();
   }
 
-  void fetchDatabase() async {
-    final result = database.getDocument(
-      databaseId: tccDatabaseId,
-      collectionId: collectionDocumentsId,
-      documentId: documentId,
-    );
-    result.then((response) {
-      print(response.data);
-    }).catchError((error) {
-      print(error);
-    });
-  }
 }

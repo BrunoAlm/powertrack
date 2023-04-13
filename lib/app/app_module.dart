@@ -1,7 +1,8 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:uitcc/app/pages/login/login_module.dart';
-import 'package:uitcc/app/auth/appwrite_auth.dart';
-import 'package:uitcc/app/auth/constants.dart';
+import 'package:uitcc/services/auth/appwrite_auth.dart';
+import 'package:uitcc/services/appwrite_constants.dart';
+import 'package:uitcc/services/database/appwrite_db.dart';
 
 class AppModule extends Module {
   @override

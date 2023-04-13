@@ -13,7 +13,6 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   LoginStore loginStore = Modular.get();
 
-
   void _logoutErrorDialog(String message, int code) => showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -35,10 +34,9 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       );
 
-
   @override
   void initState() {
-     loginStore.state.addListener(
+    loginStore.state.addListener(
       () {
         final state = loginStore.state.value;
         if (state is SuccessLoginState) {
@@ -72,7 +70,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ElevatedButton(
                   onPressed: () {
                     loginStore.logout();
-                    Modular.to.popUntil(ModalRoute.withName('/login'));
+                    Modular.to.popUntil(ModalRoute.withName('/'));
                   },
                   child: const Text('Desconectar'),
                 ),

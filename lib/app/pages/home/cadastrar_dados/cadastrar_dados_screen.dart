@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:uitcc/app/pages/home/cadastrar_dados/pages/equipments_introduction_page.dart';
 import 'package:uitcc/app/pages/home/cadastrar_dados/pages/register_equipments_page.dart';
+import 'package:uitcc/app/pages/home/store/equipments_store.dart';
+import 'package:uitcc/services/database/appwrite_db.dart';
 
 class CadastrarDadosScreen extends StatefulWidget {
   const CadastrarDadosScreen({Key? key}) : super(key: key);
@@ -14,6 +16,8 @@ class _CadastrarDadosScreenState extends State<CadastrarDadosScreen> {
   int paginaAtual = 0;
   final Duration _duration = const Duration(milliseconds: 100);
   final Curve _curve = Curves.ease;
+  final EquipmentsStore _equipments = Modular.get();
+  final AppwriteDB _appwriteDB = Modular.get();
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +96,11 @@ class _CadastrarDadosScreenState extends State<CadastrarDadosScreen> {
                   paginaAtual == _paginas.length - 1
                       ? FloatingActionButton.extended(
                           heroTag: 'ok',
-                          onPressed: () {},
+                          onPressed: () {
+                            for (var element in _equipments.equipments) {
+                              _appwriteDB.createDocument(element.toMap());
+                            }
+                          },
                           label: const Text('OK'),
                         )
                       : FloatingActionButton.extended(

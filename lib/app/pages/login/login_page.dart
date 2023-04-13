@@ -37,6 +37,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
+    loginStore.isLoggedIn();
     loginStore.state.addListener(
       () {
         final state = loginStore.state.value;

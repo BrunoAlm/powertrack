@@ -1,8 +1,8 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
 import 'package:uitcc/app/pages/register/states/register_states.dart';
-import 'package:uitcc/app/auth/appwrite_auth.dart';
-import 'package:uitcc/app/translate/appwrite_message.dart';
+import 'package:uitcc/services/auth/appwrite_auth.dart';
+import 'package:uitcc/services/translate/appwrite_message.dart';
 
 class RegisterStore extends ChangeNotifier {
   final AppwriteAuth _appwrite;
@@ -25,6 +25,7 @@ class RegisterStore extends ChangeNotifier {
       );
       state.value = SuccessRegisterState();
     } on AppwriteException catch (e) {
+      print(e);
       state.value = FailedRegisterState(
         message: _translate.translateMessage(e.message!),
         code: e.code ?? 0,

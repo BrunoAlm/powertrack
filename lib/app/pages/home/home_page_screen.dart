@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:uitcc/app/auth/appwrite_auth.dart';
+import 'package:uitcc/services/auth/appwrite_auth.dart';
 import 'package:uitcc/app/shared/widgets/custom_text_form_field.dart';
+import 'package:uitcc/services/database/appwrite_db.dart';
 
 import 'widgets/explanation_dialog.dart';
 import 'widgets/result_dialog.dart';
@@ -14,6 +15,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   AppwriteAuth appwriteAuth = Modular.get();
+  AppwriteDB appwriteDB = Modular.get();
 
   @override
   void initState() {
@@ -51,11 +53,6 @@ class _HomePageState extends State<HomePage> {
             ElevatedButton(
               onPressed: () => Modular.to.pushNamed('cadastrar_dados'),
               child: const Text('Cadastrar dados'),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () => appwriteAuth.fetchDatabase(),
-              child: const Text('fetch'),
             ),
           ],
         ),

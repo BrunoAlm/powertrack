@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uitcc/app/pages/home/cadastrar_dados/api/equipments_api.dart';
 import 'package:uitcc/app/pages/home/store/equipments_store.dart';
 
 class AddedEquipments extends StatefulWidget {
@@ -24,8 +25,6 @@ class _AddedEquipmentsState extends State<AddedEquipments> {
           child: ListView.builder(
               itemCount: widget.equipmentsStore.equipments.length,
               itemBuilder: (BuildContext context, int index) {
-                var equipment = widget.equipmentsStore.equipments[index];
-
                 return Card(
                   margin: const EdgeInsets.all(8),
                   child: Padding(
@@ -41,15 +40,17 @@ class _AddedEquipmentsState extends State<AddedEquipments> {
                             SizedBox(
                               width: 180,
                               child: Text(
-                                equipment.name,
+                                widget.equipmentsStore.equipments[index].name,
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
                             ),
                             IconButton(
                               onPressed: () {
-                                widget.equipmentsStore.filteredEquipments.value
-                                    .add(equipment.name);
-                                widget.equipmentsStore.remove(equipment.id);
+                                equipmentsApi.add(widget
+                                    .equipmentsStore.equipments[index].name);
+                                widget.equipmentsStore.equipments
+                                    .removeAt(index);
+                                widget.equipmentsStore.performSearch();
                               },
                               icon: Icon(
                                 Icons.delete_outline,
@@ -69,9 +70,12 @@ class _AddedEquipmentsState extends State<AddedEquipments> {
                                 children: [
                                   const Text('Quantidade'),
                                   DropdownButton<int>(
-                                    value: equipment.qty,
+                                    value: widget
+                                        .equipmentsStore.equipments[index].qty,
                                     onChanged: (value) {
-                                      equipment.qty = value!;
+                                      widget.equipmentsStore.equipments[index]
+                                          .qty = value!;
+                                      setState(() {});
                                     },
                                     underline: const SizedBox(),
                                     menuMaxHeight: 260,
@@ -99,7 +103,8 @@ class _AddedEquipmentsState extends State<AddedEquipments> {
                                   const SizedBox(height: 18),
                                   TextButton(
                                     onPressed: () async {
-                                      equipment.time = await showTimePicker(
+                                      widget.equipmentsStore.equipments[index]
+                                          .time = await showTimePicker(
                                         context: context,
                                         initialTime: const TimeOfDay(
                                             hour: 00, minute: 00),
@@ -115,7 +120,9 @@ class _AddedEquipmentsState extends State<AddedEquipments> {
                                       setState(() {});
                                     },
                                     child: Text(
-                                      equipment.time?.format(context) ??
+                                      widget.equipmentsStore.equipments[index]
+                                              .time
+                                              ?.format(context) ??
                                           '00:00',
                                     ),
                                     style: TextButton.styleFrom(

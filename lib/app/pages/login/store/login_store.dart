@@ -1,8 +1,8 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
 import 'package:uitcc/app/pages/login/states/login_state.dart';
-import 'package:uitcc/app/auth/appwrite_auth.dart';
-import 'package:uitcc/app/translate/appwrite_message.dart';
+import 'package:uitcc/services/auth/appwrite_auth.dart';
+import 'package:uitcc/services/translate/appwrite_message.dart';
 
 class LoginStore extends ChangeNotifier {
   final AppwriteAuth _appwrite;
@@ -23,6 +23,15 @@ class LoginStore extends ChangeNotifier {
         message: _translate.translateMessage(e.message!),
         code: e.code ?? 0,
       );
+    }
+  }
+
+  Future isLoggedIn() async {
+    try {
+      await _appwrite.checkIsLoggedIn();
+      print('ja ta');
+    } catch (e) {
+      print(e);
     }
   }
 
