@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:appwrite/appwrite.dart';
+import 'package:appwrite/models.dart';
 import 'package:uitcc/services/auth/appwrite_auth.dart';
 
 class AppwriteDB {
@@ -17,5 +18,22 @@ class AppwriteDB {
       documentId: documentId,
       data: data,
     );
+  }
+
+  Future<DocumentList> listDocuments() async {
+    var result = await database.listDocuments(
+      databaseId: databaseId,
+      collectionId: collectionId,
+    );
+    return result;
+  }
+
+  Future deleteDocument(String document) async {
+    await database.deleteDocument(
+      databaseId: databaseId,
+      collectionId: collectionId,
+      documentId: document,
+    );
+    print('deletou?');
   }
 }

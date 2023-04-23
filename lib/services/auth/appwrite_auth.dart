@@ -1,5 +1,6 @@
 import 'package:appwrite/appwrite.dart';
-import 'package:uitcc/services/appwrite_constants.dart';
+import 'package:uitcc/app/data/dtos/user_dto.dart';
+import 'package:uitcc/app/ui/entities/user_entity.dart';
 
 class AppwriteAuth {
   final String endpoint;
@@ -17,13 +18,12 @@ class AppwriteAuth {
           status: true,
         ); // For self signed certificates, only use for development
     account = Account(client);
-    
+
     return client;
   }
 
   Future checkIsLoggedIn() async {
-    var res = await account.get();
-    print(res.name);
+    await account.get();
   }
 
   Future register({
@@ -32,7 +32,7 @@ class AppwriteAuth {
     required String password,
   }) async {
     // Create user account
-    final user = await account.create(
+    await account.create(
       userId: ID.unique(),
       name: name,
       email: email,
@@ -50,4 +50,9 @@ class AppwriteAuth {
     await account.deleteSessions();
   }
 
+  Future<UserEntity> getUser() async {
+    var result = await account.get();
+    UserEntity parse = UserDto.fromJson(result.toMap());
+    return parse;
+  }
 }

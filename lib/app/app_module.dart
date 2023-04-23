@@ -1,5 +1,7 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:uitcc/app/pages/login/login_module.dart';
+import 'package:uitcc/app/ui/pages/login/login_module.dart';
+import 'package:uitcc/app/ui/stores/equipments_store.dart';
+import 'package:uitcc/app/ui/stores/login_store.dart';
 import 'package:uitcc/services/auth/appwrite_auth.dart';
 import 'package:uitcc/services/appwrite_constants.dart';
 import 'package:uitcc/services/database/appwrite_db.dart';
@@ -9,6 +11,9 @@ class AppModule extends Module {
   List<Bind> get binds => [
         Bind.singleton(
             (i) => AppwriteAuth(endpoint: endpoint, projectID: projectId)),
+        Bind.singleton((i) => AppwriteDB(i(), databaseId, collectionId)),
+        Bind.singleton((i) => LoginStore(i())),
+        Bind.singleton((i) => EquipmentsStore(i())),
       ];
 
   @override

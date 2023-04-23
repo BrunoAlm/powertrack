@@ -16,6 +16,10 @@ class AppwriteMessage {
         return 'Sem conexão com o servidor!';
       case 'A user with the same email already exists in your project.':
         return 'Email já registrado!';
+      case '':
+        return 'Falha ao comunicar com o servidor!';
+      case 'Rate limit for the current endpoint has been exceeded. Please try again after some time.':
+        return 'Muitas tentativas. Tente novamente mais tarde.';
       default:
     }
     return messageTranslated;
