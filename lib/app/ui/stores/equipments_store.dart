@@ -17,7 +17,6 @@ class EquipmentsStore extends ChangeNotifier {
   var addState = ValueNotifier<AddEquipmentState>(PendingAddEquipmentState());
 
   final searchEC = TextEditingController();
-
   EquipmentsStore(this._appwriteDb);
 
   void add({
@@ -75,6 +74,7 @@ class EquipmentsStore extends ChangeNotifier {
     } on AppwriteException catch (e) {
       print(e.message);
     }
+    notifyListeners();
   }
 
   Future<void> deleteAllDocuments() async {
@@ -84,9 +84,48 @@ class EquipmentsStore extends ChangeNotifier {
         await _appwriteDb.deleteDocument(doc.$id);
         print(doc.$id);
       }
-      listDocuments();
+      await listDocuments();
     } catch (e) {
       print(e);
     }
+    notifyListeners();
+  }
+
+  int totalPower() {
+    int result = 0;
+    // se minha lista de equipamentos não está vazia
+    if (equipments.isNotEmpty) {
+      // percorro ela e verifico se a quantidade de cada item é maior que 1
+      for (var i = 0; i < equipments.length; i++) {
+        if (equipments[i].qty > 1) {
+          // se for maior que um eu percorro essa lista somando cada 'power' na variável result
+          for (var j = 0; j < equipments[i].qty; j++) {
+            int power = int.parse(equipments[i].power.text);
+            result += power;
+          }
+        } else {
+          // se não foi maior que um, somente somo o 'power' na variável result
+          int power = int.parse(equipments[i].power.text);
+          result += power;
+        }
+      }
+      return result;
+    }
+    return result;
+  }
+
+  int totalEquipments() {
+    int result = 0;
+    // se minha lista de equipamentos não está vazia
+    if (equipments.isNotEmpty) {
+      // percorro ela e verifico se a quantidade de cada item é maior que 1
+      for (var i = 0; i < equipments.length; i++) {
+        int qty;
+        qty = equipments[i].qty;
+        result += qty;
+      }
+      return result;
+    }
+    return result;
   }
 }
