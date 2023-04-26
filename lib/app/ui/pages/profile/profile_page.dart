@@ -13,6 +13,8 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   var loginStore = Modular.get<LoginStore>();
 
+  late Future _data;
+
   void _logoutErrorDialog(String message, int code) => showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -36,6 +38,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   void initState() {
+    _data = loginStore.getUserData();
     loginStore.state.addListener(
       () {
         final state = loginStore.state.value;
@@ -55,36 +58,40 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: AppBar(),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Spacer(),
-            Text(
-              loginStore.userConnected.name,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const Spacer(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    loginStore.logout();
-                    Modular.to.popUntil(ModalRoute.withName('/'));
-                  },
-                  child: const Text('Desconectar'),
-                ),
-                const SizedBox(width: 40),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: const Text('Configurações'),
-                ),
-              ],
-            ),
-            const Spacer(flex: 2),
-          ],
-        ),
+        child: FutureBuilder(
+            future: _data,
+            builder: (context, snapshot) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Spacer(),
+                  Text(
+                    loginStore.userConnected.name,
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  const Spacer(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          loginStore.logout();
+                          Modular.to.popUntil(ModalRoute.withName('/'));
+                        },
+                        child: const Text('Desconectar'),
+                      ),
+                      const SizedBox(width: 40),
+                      ElevatedButton(
+                        onPressed: () {},
+                        child: const Text('Configurações'),
+                      ),
+                    ],
+                  ),
+                  const Spacer(flex: 2),
+                ],
+              );
+            }),
       ),
     );
   }

@@ -19,7 +19,6 @@ class LoginStore extends ChangeNotifier {
     try {
       await _appwrite.login(emailEC.text.trim(), passwordEC.text.trim());
       state.value = SuccessLoginState();
-      
     } on AppwriteException catch (e) {
       print(e.message);
       state.value = FailedLoginState(
@@ -44,6 +43,7 @@ class LoginStore extends ChangeNotifier {
     state.value = LoadingLoginState();
     try {
       await _appwrite.logout();
+      state.value = PendingLoginState();
     } on AppwriteException catch (e) {
       state.value = FailedLoginState(
         message: _translate.translateMessage(e.message!),

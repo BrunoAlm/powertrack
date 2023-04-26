@@ -105,7 +105,7 @@ class _CadastrarDadosScreenState extends State<CadastrarDadosScreen> {
                             equipmentStore
                                 .createDocument(equipmentStore.equipments);
 
-                            Modular.to.pushNamed('home-page');
+                            Modular.to.popUntil(ModalRoute.withName('/home/'));
                           },
                           label: const Text('OK'),
                         )
