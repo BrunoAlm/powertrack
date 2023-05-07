@@ -11,13 +11,15 @@ class AppwriteDB {
 
   AppwriteDB(this._appwrite, this.databaseId, this.collectionId);
 
-  Future<void> createDocument(Map data) async {
+ Future<void> createDocument(Map data) async {
+    print('Creating document with data: $data');
     await database.createDocument(
       databaseId: databaseId,
       collectionId: collectionId,
       documentId: ID.unique(),
       data: data,
     );
+    print('Document created');
   }
 
   Future<List<EquipmentModel>> listDocuments() async {
@@ -29,10 +31,13 @@ class AppwriteDB {
 
     print(
         "listDocuments() - result: ${result.documents.map((e) => e.data['name'])}");
+
     List<EquipmentModel> parse = [];
     result.documents.asMap().forEach((key, value) {
       parse.add(EquipmentModel.fromMap(value.data));
     });
+
+    print("listDocuments() - parse: ${parse.map((e) => e.name)}");
     return parse;
   }
 
@@ -48,12 +53,14 @@ class AppwriteDB {
         'Document $documentId deleted from collection $collectionId in database $databaseId');
   }
 
-  Future<void> updateDocument(String document, Map data) async {
-    await database.updateDocument(
-      databaseId: databaseId,
-      collectionId: collectionId,
-      documentId: document,
-      data: data,
-    );
-  }
+ Future<void> updateDocument({required String document, required Map<String, dynamic> data}) async {
+  print('Updating document: $document');
+  await database.updateDocument(
+    databaseId: databaseId,
+    collectionId: collectionId,
+    documentId: document,
+    data: data,
+  );
+  print('Document updated: $document');
+}
 }

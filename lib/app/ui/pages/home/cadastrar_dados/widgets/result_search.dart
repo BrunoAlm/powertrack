@@ -1,9 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:uitcc/app/ui/pages/home/cadastrar_dados/equipments_raw_list.dart';
 import 'package:uitcc/app/ui/stores/equipments_store.dart';
-import 'package:uitcc/services/database/appwrite_db.dart';
 
 class ResultSearch extends StatefulWidget {
   final EquipmentsStore equipmentStore;
@@ -17,7 +15,7 @@ class ResultSearch extends StatefulWidget {
 }
 
 class _ResultSearchState extends State<ResultSearch> {
-  final AppwriteDB appwriteDB = Modular.get();
+
   @override
   Widget build(BuildContext context) {
     List<String> filteredEquipmentsName =

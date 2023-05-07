@@ -20,11 +20,6 @@ class _CadastrarDadosScreenState extends State<CadastrarDadosScreen> {
   final LoginStore loginStore = Modular.get();
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     double _largura = MediaQuery.of(context).size.width;
     double _altura = MediaQuery.of(context).size.height;

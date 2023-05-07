@@ -20,10 +20,10 @@ class DashboardNavigationpageState extends State<DashboardNavigationpage> {
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          // Text(
-          //     'Total de equipamentos: ${widget.equipmentsStore.totalEquipments()}'),
-          // Text('Total de consumo: ${widget.equipmentsStore.totalPower()}'),
+        children: [
+          Text(
+              'Total de equipamentos: ${widget.equipmentsStore.totalEquipments()}'),
+          Text('Total de consumo: ${widget.equipmentsStore.totalPower()}'),
         ],
       ),
     );

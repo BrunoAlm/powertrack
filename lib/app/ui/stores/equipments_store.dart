@@ -13,7 +13,7 @@ class EquipmentsStore extends ChangeNotifier {
   List<EquipmentModel> equipments = [];
   List<EquipmentModel> searchedEquipments = [];
 
-
+  // For search box
   final filteredEquipmentsName = ValueNotifier<List<String>>(equipmentsRawList);
   var searchState =
       ValueNotifier<SearchEquipmentState>(PendingSearchEquipmentState());
@@ -89,18 +89,48 @@ class EquipmentsStore extends ChangeNotifier {
     try {
       // Get a list of all documents in the collection
       await listDocuments();
+      print('deleting all documents');
       // Delete each document
       for (var doc in equipments) {
-        print(doc.id);
+        print('deleting document ${doc.id}');
         await _appwriteDb.deleteDocument(doc.id);
       }
-
+      print('done deleting');
       // Refresh the list of documents
       await listDocuments();
     } on AppwriteException catch (e) {
-      print('ue');
+      print(e.message);
+    } catch (e) {
+      print(e.toString());
+    }
+    notifyListeners();
+  }
+
+  Future<void> updateDocument({
+    required String documentId,
+    required String id,
+    required String name,
+    required int qty,
+    required TimeOfDay? time,
+    required TextEditingController power,
+  }) async {
+    try {
+      await _appwriteDb.updateDocument(
+          document: documentId,
+          data: EquipmentModel(
+            id: id,
+            name: name,
+            qty: qty,
+            time: time,
+            power: power,
+          ).toMap());
+    } on AppwriteException catch (e) {
+      // Print the error message from Appwrite
       print(e.message);
     }
+    // Refresh the list of documents
+    listDocuments();
+    // Notify any listeners that the data has changed
     notifyListeners();
   }
 
