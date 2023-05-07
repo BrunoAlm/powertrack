@@ -17,6 +17,16 @@ SOFTWARE; que nos traz o consumo em media de uma residência em kw por pessoas, 
 # Ideias
 [Projeto do figma](https://www.figma.com/file/AbDKwkdldqYcpz7TNqrwTx/Untitled?node-id=0%3A1&t=1Y7qSEVoSF1rwQT6-1) 
 
+Tela de conheça o APP
+
+Tela inicial com botão para novo calculo
+novo calculo - cadastro de Região, custo do kw, gasto de energia atual
+msg final com equipamento que mais gasta, horário de pico horario com maior gasto.
+equipamento gasta tantos RS
+
+menu com cadastrar novos equipamentos, historicos, novo calculo, novo usuário, energias renováveis, como economizar mais energia
+
+
 ## Usuário
 #### Conta de Usuário
 Vai precisar de:

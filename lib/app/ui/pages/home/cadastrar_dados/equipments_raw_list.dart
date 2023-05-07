@@ -55,5 +55,8 @@ final List<String> equipmentsRawList = [
   "Torradeira",
   "TV",
   "Ventilador",
-  "Videogame",
+  "Vídeo cassete",
+  "Vídeo game",
+  "Aparelho de barbear",
+  
 ];

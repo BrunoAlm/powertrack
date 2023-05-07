@@ -2,12 +2,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 class EquipmentModel {
+  String id;
   String name;
   int qty;
   TimeOfDay? time;
   TextEditingController power;
 
   EquipmentModel({
+    required this.id,
     required this.name,
     required this.qty,
     this.time = const TimeOfDay(hour: 0, minute: 0),
@@ -25,6 +27,7 @@ class EquipmentModel {
 
   factory EquipmentModel.fromMap(Map<String, dynamic> map) {
     return EquipmentModel(
+      id: map['\$id'] as String,  
       name: map['name'] as String,
       qty: map['qty'] as int,
       time: TimeOfDay(

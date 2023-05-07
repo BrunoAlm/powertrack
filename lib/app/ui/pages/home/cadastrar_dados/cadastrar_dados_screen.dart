@@ -30,9 +30,10 @@ class _CadastrarDadosScreenState extends State<CadastrarDadosScreen> {
     double _altura = MediaQuery.of(context).size.height;
     PageController _controller = PageController();
 
+
     List<Widget> _paginas = [
       const EquipmentsIntroduction(),
-      const RegisterEquipments(),
+      RegisterEquipments(equipmentsStore: equipmentStore, widgetHeight: _altura,),
     ];
 
     return Material(

@@ -16,6 +16,14 @@ class AddedEquipments extends StatefulWidget {
 
 class _AddedEquipmentsState extends State<AddedEquipments> {
   @override
+  void setState(VoidCallback fn) {
+    widget.equipmentsStore.addListener(() {
+      setState(() {});
+    });
+    super.setState(fn);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Padding(
