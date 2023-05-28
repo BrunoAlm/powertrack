@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:uitcc/app/ui/states/register_state.dart';
-import 'package:uitcc/app/ui/stores/register_store.dart';
+import 'package:uitcc/app/ui/controllers/register_store.dart';
 import 'package:uitcc/app/shared/widgets/custom_text_form_field.dart';
 
 class RegisterPage extends StatefulWidget {

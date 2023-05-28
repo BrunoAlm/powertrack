@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: avoid_print
 import 'package:appwrite/appwrite.dart';
 import 'package:uitcc/app/ui/pages/home/cadastrar_dados/model/equipment_model.dart';
 import 'package:uitcc/services/auth/appwrite_auth.dart';
@@ -28,7 +28,6 @@ class AppwriteDB {
       databaseId: databaseId,
       collectionId: collectionId,
     );
-
     print(
         "listDocuments() - result: ${result.documents.map((e) => e.data['name'])}");
 

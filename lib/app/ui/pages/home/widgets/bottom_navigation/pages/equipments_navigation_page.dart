@@ -1,11 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:uitcc/app/ui/controllers/equipments_controller.dart';
 import 'package:uitcc/app/ui/pages/home/cadastrar_dados/pages/register_equipments_page.dart';
-import 'package:uitcc/app/ui/stores/equipments_store.dart';
 
 class EquipmentsNavigationPage extends StatefulWidget {
-  final EquipmentsStore equipmentsStore;
+  final EquipmentsController equipmentsStore;
   const EquipmentsNavigationPage({
     Key? key,
     required this.equipmentsStore,
@@ -19,23 +19,24 @@ class EquipmentsNavigationPage extends StatefulWidget {
 class _EquipmentsNavigationPageState extends State<EquipmentsNavigationPage> {
   @override
   void initState() {
-    // widget.equipmentsStore.addListener(() {
-    //   setState(() {});
-    // });
+    if (widget.equipmentsStore.equipmentsToBeAdded.isEmpty) {
+      widget.equipmentsStore.equipmentsToBeAdded =
+          widget.equipmentsStore.loadedEquipments;
+    }
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    var equipments = widget.equipmentsStore.equipments;
+    var equipments = widget.equipmentsStore.loadedEquipments;
     return Expanded(
       child: Center(
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Row(
-                children: const [
+              const Row(
+                children: [
                   Text('Nome do equipamento'),
                   SizedBox(width: 20),
                   Text('Quantidade'),
@@ -77,26 +78,9 @@ class _EquipmentsNavigationPageState extends State<EquipmentsNavigationPage> {
               ElevatedButton(
                 onPressed: () => showDialog(
                   context: context,
-                  builder: (context) {
-                    return Material(
-                      child: Column(
-                        children: [
-                          RegisterEquipments(
-                            equipmentsStore: widget.equipmentsStore,
-                            widgetHeight: 780,
-                          ),
-                          BackButton(
-                            onPressed: () {
-                              Modular.to.pop();
-                              widget.equipmentsStore.createDocument(equipments);
-                            },
-                          ),
-                        ],
-                      ),
-                    );
-                  },
+                  builder: (context) => const RegisterEquipments(),
                 ),
-                child: const Text('Adicionar Equipamentos'),
+                child: const Text('Editar Equipamentos'),
               ),
               const SizedBox(height: 10),
             ],

@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:uitcc/app/ui/stores/home_store.dart';
+import 'package:uitcc/app/ui/controllers/home_store.dart';
 
 class BottomNavigation extends StatefulWidget {
   final HomeStore homeStore;

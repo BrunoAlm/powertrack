@@ -1,9 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:uitcc/app/ui/stores/equipments_store.dart';
+import 'package:uitcc/app/ui/controllers/equipments_controller.dart';
 
 class SearchTextField extends StatefulWidget {
-  final EquipmentsStore equipmentsStore;
+  final EquipmentsController equipmentsStore;
   const SearchTextField({
     Key? key,
     required this.equipmentsStore,

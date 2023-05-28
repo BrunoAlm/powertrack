@@ -1,10 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:uitcc/app/ui/pages/home/cadastrar_dados/equipments_raw_list.dart';
-import 'package:uitcc/app/ui/stores/equipments_store.dart';
+import 'package:uitcc/app/ui/controllers/equipments_controller.dart';
 
 class ResultSearch extends StatefulWidget {
-  final EquipmentsStore equipmentStore;
+  final EquipmentsController equipmentStore;
   const ResultSearch({
     Key? key,
     required this.equipmentStore,
@@ -15,13 +15,14 @@ class ResultSearch extends StatefulWidget {
 }
 
 class _ResultSearchState extends State<ResultSearch> {
-
   @override
   Widget build(BuildContext context) {
     List<String> filteredEquipmentsName =
         widget.equipmentStore.filteredEquipmentsName.value;
     return SizedBox(
-      height: 200,
+      height: (50 * filteredEquipmentsName.length.toDouble())
+          .clamp(0, 250)
+          .toDouble(),
       width: 300,
       child: ListView.builder(
         itemCount: filteredEquipmentsName.length,

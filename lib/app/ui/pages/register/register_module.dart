@@ -1,6 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:uitcc/app/ui/pages/register/register_page.dart';
-import 'package:uitcc/app/ui/stores/register_store.dart';
+import 'package:uitcc/app/ui/controllers/register_store.dart';
 
 class RegisterModule extends Module {
   @override

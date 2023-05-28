@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:uitcc/app/ui/states/login_state.dart';
-import 'package:uitcc/app/ui/stores/login_store.dart';
+import 'package:uitcc/app/ui/controllers/login_store.dart';
 import 'package:uitcc/app/shared/widgets/custom_text_form_field.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
   @override
-  _LoginPageState createState() => _LoginPageState();
+  LoginPageState createState() => LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class LoginPageState extends State<LoginPage> {
   final LoginStore loginStore = Modular.get();
   bool isLoggedIn = false;
   void _loginErrorDialog(String message, int code) => showDialog(
