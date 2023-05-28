@@ -9,10 +9,10 @@ class ExplanationDialog extends StatelessWidget {
       titlePadding:
           const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
       title: const Text('Como funciona?'),
-      content: Column(
+      content: const Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
+        children: [
           Text("Para o cálculo é necessário as seguintes informações:"),
           SizedBox(height: 10),
           Text("1. A leitura atual do medidor de energia."),
