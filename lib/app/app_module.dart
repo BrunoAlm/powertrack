@@ -1,6 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:uitcc/app/ui/pages/login/login_module.dart';
-import 'package:uitcc/app/ui/stores/login_store.dart';
+import 'package:uitcc/app/ui/controllers/login_store.dart';
 import 'package:uitcc/services/auth/appwrite_auth.dart';
 import 'package:uitcc/services/appwrite_constants.dart';
 
