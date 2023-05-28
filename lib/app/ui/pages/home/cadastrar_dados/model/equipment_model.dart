@@ -20,14 +20,14 @@ class EquipmentModel {
     return <String, dynamic>{
       'name': name,
       'qty': qty,
-      'time': (time!.hour.toString() + ":" + time!.minute.toString()),
+      'time': ("${time!.hour}:${time!.minute}"),
       'power': power.text.trim(),
     };
   }
 
   factory EquipmentModel.fromMap(Map<String, dynamic> map) {
     return EquipmentModel(
-      id: map['\$id'] as String,  
+      id: map['\$id'] as String,
       name: map['name'] as String,
       qty: map['qty'] as int,
       time: TimeOfDay(
