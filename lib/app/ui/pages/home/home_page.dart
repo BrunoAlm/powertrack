@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:uitcc/app/ui/controllers/user_prefs_controller.dart';
 import 'package:uitcc/app/ui/pages/home/widgets/bottom_navigation/bottom_navigation.dart';
 import 'package:uitcc/app/ui/pages/home/widgets/bottom_navigation/pages/dashboard_navigation_page.dart';
 import 'package:uitcc/app/ui/pages/home/widgets/bottom_navigation/pages/equipments_navigation_page.dart';
@@ -17,12 +18,17 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   final LoginStore _loginStore = Modular.get();
   final EquipmentsController _equipmentsStore = Modular.get();
+  final UserPrefsController _userPrefs = Modular.get();
   final HomeStore _homeStore = Modular.get();
 
   @override
   void initState() {
     _equipmentsStore.listDocuments();
+    _userPrefs.getUserPrefs();
     _loginStore.getUserData();
+    _userPrefs.addListener(() {
+      setState(() {});
+    });
     _homeStore.addListener(() {
       setState(() {});
     });
@@ -48,6 +54,7 @@ class HomePageState extends State<HomePage> {
       SettingsNavigationPage(
         loginStore: _loginStore,
         equipmentsStore: _equipmentsStore,
+        userPrefs: _userPrefs,
       ),
     ];
 

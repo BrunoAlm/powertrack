@@ -17,13 +17,13 @@ class DashboardNavigationpage extends StatefulWidget {
 class DashboardNavigationpageState extends State<DashboardNavigationpage> {
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return const Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-              'Total de equipamentos: ${widget.equipmentsStore.totalEquipments()}'),
-          Text('Total de consumo: ${widget.equipmentsStore.totalPower()}'),
+          // Text(
+          //     'Total de equipamentos: ${widget.equipmentsStore.totalEquipments()}'),
+          // Text('Total de consumo: ${widget.equipmentsStore.totalPower()}'),
         ],
       ),
     );
