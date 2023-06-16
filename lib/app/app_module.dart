@@ -1,4 +1,5 @@
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:uitcc/app/ui/controllers/user_prefs_controller.dart';
 import 'package:uitcc/app/ui/pages/login/login_module.dart';
 import 'package:uitcc/app/ui/controllers/login_store.dart';
 import 'package:uitcc/services/auth/appwrite_auth.dart';
@@ -10,6 +11,7 @@ class AppModule extends Module {
         Bind.singleton(
             (i) => AppwriteAuth(endpoint: endpoint, projectID: projectId)),
         Bind.singleton((i) => LoginStore(i())),
+        Bind.singleton((i) => UserPrefsController(i())),
       ];
 
   @override
