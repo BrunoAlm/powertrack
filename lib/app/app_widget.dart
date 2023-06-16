@@ -23,11 +23,23 @@ class _AppWidgetState extends State<AppWidget> {
   @override
   Widget build(BuildContext context) {
     Modular.get<AppwriteAuth>().initClient();
-
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Meu App',
-      theme: ThemeService().returnThemeData(),
+      theme: ThemeData(
+          useMaterial3: true,
+          colorSchemeSeed: const Color.fromARGB(255, 10, 144, 222),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              shape: ContinuousRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 40,
+                vertical: 25,
+              ),
+            ),
+          )),
+      // theme: ThemeService().returnThemeData(),
       routeInformationParser: Modular.routeInformationParser,
       routerDelegate: Modular.routerDelegate,
     ); //added by extension
