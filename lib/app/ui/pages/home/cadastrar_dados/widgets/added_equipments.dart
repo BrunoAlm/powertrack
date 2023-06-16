@@ -59,19 +59,26 @@ class AddedEquipmentsState extends State<AddedEquipments> {
                           IconButton(
                             onPressed: () {
                               // só adiciona se não tiver na lista
-                              if (!equipmentsRawList.contains(widget
+                              if (widget.equipmentsStore
+                                      .equipmentsToBeAdded[index].name ==
+                                  widget.equipmentsStore.loadedEquipments[index]
+                                      .name) {
+                                widget.equipmentsStore.deleteDocument(widget
+                                    .equipmentsStore
+                                    .loadedEquipments[index]
+                                    .id);
+                              }
+                              // se não tem na lista de busca, adiciona
+                              if (!equipmentsRawList[index].contains(widget
                                   .equipmentsStore
                                   .equipmentsToBeAdded[index]
                                   .name)) {
                                 equipmentsRawList.add(widget.equipmentsStore
                                     .equipmentsToBeAdded[index].name);
-                                widget.equipmentsStore.equipmentsToBeAdded
-                                    .removeAt(index);
-                                widget.equipmentsStore.performSearch();
                               }
-
                               widget.equipmentsStore.equipmentsToBeAdded
                                   .removeAt(index);
+
                               widget.equipmentsStore.performSearch();
                             },
                             icon: Icon(

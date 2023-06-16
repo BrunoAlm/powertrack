@@ -44,8 +44,11 @@ class EquipmentsController extends ChangeNotifier {
 
     filteredEquipmentsName.value = equipmentsRawList.where((equipmentName) {
       return equipmentName
-          .toLowerCase()
-          .contains(searchEC.value.text.toLowerCase());
+              .toLowerCase()
+              .contains(searchEC.value.text.toLowerCase()) &&
+          equipmentsToBeAdded.any(
+            (element) => element.name != equipmentName,
+          );
     }).toList();
 
     searchState.value = SuccessSearchEquipmentState();
@@ -109,6 +112,15 @@ class EquipmentsController extends ChangeNotifier {
       print(e.message);
     }
     listDocuments();
+  }
+
+  Future<void> deleteDocument(String documentId) async {
+    try {
+      await _appwriteDb.deleteDocument(documentId);
+      print('deletou o $documentId');
+    } on AppwriteException catch (e) {
+      print(e.message);
+    }
   }
 
   // delete all documents in the collection
@@ -198,5 +210,24 @@ class EquipmentsController extends ChangeNotifier {
       return result;
     }
     return result;
+  }
+
+  int individualTotalPower(String name) {
+    int totalPower = 0;
+    for (var item
+        in loadedEquipments.where((equipment) => equipment.name == name)) {
+      if (item.qty > 1) {
+        // se for maior que um eu percorro essa lista somando cada 'power' na variável result
+        for (var i = 0; i < item.qty; i++) {
+          var power = int.parse(item.power.text);
+          totalPower += power;
+        }
+      } else {
+        // se não foi maior que um, somente somo o 'power' na variável result
+        var power = int.parse(item.power.text);
+        totalPower += power;
+      }
+    }
+    return totalPower;
   }
 }
