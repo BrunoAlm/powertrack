@@ -2,12 +2,10 @@
 import 'dart:convert';
 
 class UserPrefsEntity {
-  String? id;
-  int? theme;
+  int theme;
 
   UserPrefsEntity({
-    this.id,
-    this.theme = 0,
+    required this.theme,
   });
 
   Map<String, dynamic> toMap() {
@@ -19,7 +17,6 @@ class UserPrefsEntity {
   factory UserPrefsEntity.fromMap(Map<String, dynamic> map) {
     return UserPrefsEntity(
       theme: map['theme'] as int,
-      id: map['\$id'] as String,
     );
   }
 

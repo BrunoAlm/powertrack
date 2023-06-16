@@ -25,6 +25,7 @@ class SettingsNavigationPage extends StatefulWidget {
 class _SettingsNavigationPageState extends State<SettingsNavigationPage> {
   @override
   Widget build(BuildContext context) {
+    var theme = widget.userPrefs.userPrefs?.theme;
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -32,21 +33,16 @@ class _SettingsNavigationPageState extends State<SettingsNavigationPage> {
         children: [
           IconButton.filledTonal(
               onPressed: () {
-                int newTheme;
                 print('isDarkTheme = ${ThemeService().theme.isDarkTheme}');
-                if (ThemeService().theme.isDarkTheme) {
-                  newTheme = 1;
-                } else {
-                  newTheme = 0;
+
+                if (theme != null) {
+                  theme == 0
+                      ? widget.userPrefs
+                          .updateUserPref(UserPrefsEntity(theme: 1))
+                      : widget.userPrefs
+                          .updateUserPref(UserPrefsEntity(theme: 0));
                 }
-                setState(() {
-                  widget.userPrefs.updateUserPrefs(
-                    prefs: UserPrefsEntity(
-                      theme: newTheme,
-                    ),
-                  );
-                  print(ThemeService().theme.isDarkTheme);
-                });
+                print(theme);
               },
               icon: const Icon(Icons.sunny)),
           const Spacer(),

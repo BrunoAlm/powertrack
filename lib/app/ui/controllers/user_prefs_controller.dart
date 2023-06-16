@@ -1,49 +1,36 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
 import 'package:uitcc/app/shared/theme/theme_service.dart';
 import 'package:uitcc/app/ui/entities/user_prefs_entity.dart';
-
-import 'package:uitcc/services/database/appwrite_db.dart';
+import 'package:uitcc/services/auth/appwrite_auth.dart';
 
 class UserPrefsController extends ChangeNotifier {
-  final AppwriteDB _appwriteDb;
-  UserPrefsController(this._appwriteDb);
-  UserPrefsEntity userPrefs = UserPrefsEntity();
+  final AppwriteAuth _appwriteAuth;
+  UserPrefsController(this._appwriteAuth);
+  UserPrefsEntity? userPrefs;
 
-  void getUserPrefs() async {
-    print('Pegou');
+  Future getUserPrefs() async {
     try {
-      userPrefs = await _appwriteDb.getUserPrefs(userPrefs).then((value) {
-        return UserPrefsEntity(id: value.id, theme: value.theme);
-      });
-      print('Tema alterado para: ${userPrefs.theme}');
+      userPrefs = await _appwriteAuth.getUserPref();
+      if (userPrefs != null) {
+        userPrefs = UserPrefsEntity(theme: 0);
+        updateUserPref(userPrefs!);
+        print('new user prefs: $userPrefs');
+      }
     } catch (e) {
-      print(e);
+      print("Ocorreu um erro ao buscar as preferências do usuário: $e");
+      rethrow;
     }
-    ThemeService().changeTheme(userPrefs.theme);
+    notifyListeners();
   }
 
-  Future<void> updateUserPrefs({
-    required UserPrefsEntity prefs,
-  }) async {
-    if (prefs.id != null) {
-      try {
-        await _appwriteDb.updateDocument(
-            document: prefs.id!,
-            data: UserPrefsEntity(
-              theme: prefs.theme,
-              id: prefs.id,
-            ).toMap());
-      } on AppwriteException catch (e) {
-        // Print the error message from Appwrite
-        print(e.message);
-      }
-    } else if (prefs.id == null) {
-      await _appwriteDb.createUserPrefs(prefs.toMap());
+  Future updateUserPref(UserPrefsEntity prefs) async {
+    try {
+      await _appwriteAuth.updateUserPref(prefs);
+      ThemeService().changeTheme(userPrefs!.theme);
+    } catch (e) {
+      print("Ocorreu um erro ao atualizarF as preferências do usuário: $e");
+      rethrow;
     }
-
-    // Refresh the list of documents
-    getUserPrefs();
+    notifyListeners();
   }
 }

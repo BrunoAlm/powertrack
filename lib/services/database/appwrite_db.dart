@@ -1,6 +1,5 @@
 // ignore_for_file: avoid_print
 import 'package:appwrite/appwrite.dart';
-import 'package:uitcc/app/ui/entities/user_prefs_entity.dart';
 import 'package:uitcc/app/ui/pages/home/cadastrar_dados/model/equipment_model.dart';
 import 'package:uitcc/services/auth/appwrite_auth.dart';
 
@@ -64,31 +63,5 @@ class AppwriteDB {
       data: data,
     );
     print('Document updated: $document');
-  }
-
-  Future<UserPrefsEntity> getUserPrefs(UserPrefsEntity prefs) async {
-    print("Tema do banco: ${prefs.theme}");
-
-    var result = await database.listDocuments(
-      databaseId: databaseId,
-      collectionId: userPrefsCollectionId,
-    );
-
-    result.documents.asMap().forEach((key, value) {
-      prefs = (UserPrefsEntity.fromMap(value.data));
-    });
-    print('prefs do banco: $prefs');
-    return prefs;
-  }
-
-  Future<void> createUserPrefs(Map data) async {
-    print('Creating document with data: $data');
-    await database.createDocument(
-      databaseId: databaseId,
-      collectionId: userPrefsCollectionId,
-      documentId: ID.unique(),
-      data: data,
-    );
-    print('Document created');
   }
 }

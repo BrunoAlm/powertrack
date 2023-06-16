@@ -1,6 +1,7 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:uitcc/app/data/dtos/user_dto.dart';
 import 'package:uitcc/app/ui/entities/user_entity.dart';
+import 'package:uitcc/app/ui/entities/user_prefs_entity.dart';
 
 class AppwriteAuth {
   final String endpoint;
@@ -18,7 +19,6 @@ class AppwriteAuth {
           status: true,
         ); // For self signed certificates, only use for development
     account = Account(client);
-
     return client;
   }
 
@@ -54,5 +54,15 @@ class AppwriteAuth {
     var result = await account.get();
     UserEntity parse = UserDto.fromJson(result.toMap());
     return parse;
+  }
+
+  Future<UserPrefsEntity> getUserPref() async {
+    var result = await account.getPrefs();
+    return UserPrefsEntity.fromMap(result.data);
+  }
+
+  Future<void> updateUserPref(UserPrefsEntity prefs) async {
+    UserPrefsEntity userPrefsEntity = UserPrefsEntity(theme: prefs.theme);
+    await account.updatePrefs(prefs: userPrefsEntity.toMap());
   }
 }
