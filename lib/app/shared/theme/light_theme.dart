@@ -8,7 +8,7 @@ class AppThemeLight implements AppTheme {
   @override
   ColorScheme get colorScheme => const ColorScheme.dark()
       .copyWith(
-        primary: Colors.white,
+        primary: const Color(0xFF1e1e1e),
       )
       .copyWith(secondary: Colors.black);
   @override
@@ -22,7 +22,7 @@ class AppThemeLight implements AppTheme {
   @override
   Color get primaryColor => const Color(0xFF0085fe);
   @override
-  Color get primaryText => Colors.white;
+  Color get primaryText => Colors.black;
   //Backgroud Color
   @override
   Color get backgroundColor => Colors.white;
@@ -34,7 +34,7 @@ class AppThemeLight implements AppTheme {
   @override
   BorderRadiusGeometry get borderRadius => BorderRadius.circular(20);
 
-    @override
+  @override
   ButtonStyle get buttonStyle => ElevatedButton.styleFrom(
         shape:
             ContinuousRectangleBorder(borderRadius: BorderRadius.circular(20)),
