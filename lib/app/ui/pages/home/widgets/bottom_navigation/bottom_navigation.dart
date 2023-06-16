@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:uitcc/app/shared/theme/theme_service.dart';
+import 'package:uitcc/app/shared/theme/cores.dart';
 import 'package:uitcc/app/ui/controllers/home_store.dart';
 
 class BottomNavigation extends StatefulWidget {
@@ -16,29 +16,29 @@ class BottomNavigation extends StatefulWidget {
 
 class _BottomNavigationState extends State<BottomNavigation> {
   List<BottomNavigationBarItem> navigationItems = [
-    BottomNavigationBarItem(
-      icon: const Icon(Icons.home_outlined),
-      activeIcon: const Icon(Icons.home),
+    const BottomNavigationBarItem(
+      icon: Icon(Icons.home_outlined),
+      activeIcon: Icon(Icons.home),
       label: 'Dashboard',
-      backgroundColor: ThemeService.of.primaryColor,
+      backgroundColor: primary,
     ),
-    BottomNavigationBarItem(
-      icon: const Icon(Icons.electric_bolt),
-      activeIcon: const Icon(Icons.electric_bolt),
+    const BottomNavigationBarItem(
+      icon: Icon(Icons.electric_bolt),
+      activeIcon: Icon(Icons.electric_bolt),
       label: 'Equipamentos',
-      backgroundColor: ThemeService.of.primaryColor,
+      backgroundColor: primary,
     ),
-    BottomNavigationBarItem(
-      icon: const Icon(Icons.history_outlined),
-      activeIcon: const Icon(Icons.history),
+    const BottomNavigationBarItem(
+      icon: Icon(Icons.history_outlined),
+      activeIcon: Icon(Icons.history),
       label: 'Histórico',
-      backgroundColor: ThemeService.of.primaryColor,
+      backgroundColor: primary,
     ),
-    BottomNavigationBarItem(
-      icon: const Icon(Icons.settings_outlined),
-      activeIcon: const Icon(Icons.settings),
+    const BottomNavigationBarItem(
+      icon: Icon(Icons.settings_outlined),
+      activeIcon: Icon(Icons.settings),
       label: 'Configurações',
-      backgroundColor: ThemeService.of.primaryColor,
+      backgroundColor: primary,
     ),
   ];
 

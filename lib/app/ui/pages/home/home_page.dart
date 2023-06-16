@@ -42,7 +42,10 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     double altura = MediaQuery.of(context).size.height;
     final List<Widget> widgetOptions = <Widget>[
-      DashboardNavigationpage(equipmentsStore: _equipmentsStore),
+      DashboardNavigationpage(
+        equipmentsStore: _equipmentsStore,
+        loginStore: _loginStore,
+      ),
       EquipmentsNavigationPage(
         equipmentsStore: _equipmentsStore,
       ),
@@ -93,7 +96,9 @@ class HomePageState extends State<HomePage> {
                     height: 70,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
-                      child: BottomNavigation(homeStore: _homeStore),
+                      child: BottomNavigation(
+                        homeStore: _homeStore,
+                      ),
                     ),
                   ),
                 ],
