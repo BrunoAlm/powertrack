@@ -86,7 +86,7 @@ class LoginPageState extends State<LoginPage> {
                   'USO DE ENERGIA',
                   style: Theme.of(context)
                       .textTheme
-                      .headlineLarge!
+                      .headlineMedium!
                       .copyWith(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 40),
