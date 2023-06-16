@@ -4,7 +4,7 @@ import 'package:uitcc/app/shared/theme/dark_theme.dart';
 import 'package:uitcc/app/shared/theme/themes.dart';
 
 class ThemeService extends ChangeNotifier {
-  Themes index = Themes.dark;
+  Themes index = Themes.light;
   AppTheme theme = AppThemeDark();
 
   static final ThemeService _singleton = ThemeService._internal();
@@ -19,7 +19,6 @@ class ThemeService extends ChangeNotifier {
 
   void changeTheme([int? value]) {
     index = Themes.values[value ?? 0];
-
     notifyListeners();
   }
 
