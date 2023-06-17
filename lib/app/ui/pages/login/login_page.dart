@@ -77,6 +77,15 @@ class LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Text(
+                  'TCC ENGENHARIA DA COMPUTAÇÃO',
+                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        letterSpacing: 2,
+                        color: Colors.red[900],
+                      ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 40),
                 SvgPicture.asset(
                   'assets/images/svg/tcc_logo.svg',
                   width: 200,
