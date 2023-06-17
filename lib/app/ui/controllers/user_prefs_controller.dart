@@ -9,17 +9,7 @@ class UserPrefsController extends ChangeNotifier {
   UserPrefsEntity? userPrefs;
 
   Future getUserPrefs() async {
-    try {
-      userPrefs = await _appwriteAuth.getUserPref();
-      if (userPrefs != null) {
-        userPrefs = UserPrefsEntity(theme: 0);
-        updateUserPref(userPrefs!);
-        print('new user prefs: $userPrefs');
-      }
-    } catch (e) {
-      print("Ocorreu um erro ao buscar as preferências do usuário: $e");
-      rethrow;
-    }
+    userPrefs = await _appwriteAuth.getUserPref();
     notifyListeners();
   }
 
@@ -28,7 +18,7 @@ class UserPrefsController extends ChangeNotifier {
       await _appwriteAuth.updateUserPref(prefs);
       ThemeService().changeTheme(userPrefs!.theme);
     } catch (e) {
-      print("Ocorreu um erro ao atualizarF as preferências do usuário: $e");
+      print("Ocorreu um erro ao atualizar as preferências do usuário: $e");
       rethrow;
     }
     notifyListeners();

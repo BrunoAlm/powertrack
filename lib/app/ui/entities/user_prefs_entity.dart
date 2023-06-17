@@ -16,7 +16,7 @@ class UserPrefsEntity {
 
   factory UserPrefsEntity.fromMap(Map<String, dynamic> map) {
     return UserPrefsEntity(
-      theme: map['theme'] as int,
+      theme: map['theme'] ?? 0,
     );
   }
 
