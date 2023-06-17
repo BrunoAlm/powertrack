@@ -8,6 +8,7 @@ import 'package:uitcc/app/ui/pages/home/widgets/bottom_navigation/pages/settings
 import 'package:uitcc/app/ui/controllers/equipments_controller.dart';
 import 'package:uitcc/app/ui/controllers/home_store.dart';
 import 'package:uitcc/app/ui/controllers/login_store.dart';
+import 'package:uitcc/app/ui/states/app_state.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -23,18 +24,32 @@ class HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    _equipmentsStore.listDocuments();
-    _userPrefs.getUserPrefs();
-    _loginStore.getUserData();
-    _userPrefs.addListener(() {
-      setState(() {});
-    });
-    _homeStore.addListener(() {
-      setState(() {});
-    });
-    _equipmentsStore.addListener(() {
-      setState(() {});
-    });
+    _homeStore.appState.value = LoadingAppState();
+    try {
+      _userPrefs.addListener(() {
+        setState(() {});
+      });
+      _homeStore.addListener(() {
+        setState(() {});
+      });
+      _equipmentsStore.addListener(() {
+        setState(() {});
+      });
+      Future.wait([
+        _userPrefs.getUserPrefs(),
+        _loginStore.getUserData(),
+        _equipmentsStore.listDocuments(),
+      ]).then((value) {
+        _homeStore.appState.value = SuccessAppState();
+        setState(() {});
+      }).onError((error, stackTrace) {
+        _homeStore.appState.value = FailedAppState(error: error.toString());
+        setState(() {});
+        return null;
+      });
+    } on Exception catch (e) {
+      _homeStore.appState.value = FailedAppState(error: e.toString());
+    }
     super.initState();
   }
 
@@ -62,51 +77,42 @@ class HomePageState extends State<HomePage> {
     ];
 
     return SafeArea(
-      child: Scaffold(
-        // appBar: AppBar(
-        //   title: Text(
-        //     "Consumo de energia",
-        //     style: Theme.of(context).textTheme.titleLarge,
-        //   ),
-        //   centerTitle: true,
-        //   leading: IconButton(
-        //     onPressed: () {
-        //       _loginStore.getUserData();
-        //       Modular.to.pushNamed('profile/');
-        //     },
-        //     style: IconButton.styleFrom(
-        //       backgroundColor: Theme.of(context).colorScheme.primary,
-        //     ),
-        //     icon: Icon(
-        //       Icons.person,
-        //       color: Theme.of(context).colorScheme.background,
-        //     ),
-        //   ),
-        // ),
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: SizedBox(
-              height: altura,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  widgetOptions.elementAt(_homeStore.selectedPage),
-                  SizedBox(
-                    height: 70,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: BottomNavigation(
-                        homeStore: _homeStore,
+      child: _homeStore.appState.value is LoadingAppState
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : _homeStore.appState.value is FailedAppState
+              ? const Center(
+                  child: Text('Erro ao carregar, tente novamente.'),
+                )
+              : _homeStore.appState.value is SuccessAppState
+                  ? Scaffold(
+                      body: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: SizedBox(
+                            height: altura,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                widgetOptions
+                                    .elementAt(_homeStore.selectedPage),
+                                SizedBox(
+                                  height: 70,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: BottomNavigation(
+                                      homeStore: _homeStore,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
+                    )
+                  : const SizedBox(),
     );
   }
 }
