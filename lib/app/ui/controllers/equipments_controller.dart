@@ -44,11 +44,8 @@ class EquipmentsController extends ChangeNotifier {
 
     filteredEquipmentsName.value = equipmentsRawList.where((equipmentName) {
       return equipmentName
-              .toLowerCase()
-              .contains(searchEC.value.text.toLowerCase()) &&
-          equipmentsToBeAdded.any(
-            (element) => element.name != equipmentName,
-          );
+          .toLowerCase()
+          .contains(searchEC.value.text.toLowerCase());
     }).toList();
 
     searchState.value = SuccessSearchEquipmentState();
@@ -229,5 +226,21 @@ class EquipmentsController extends ChangeNotifier {
       }
     }
     return totalPower;
+  }
+
+  int individualTotalQty(String name) {
+    int qty = 0;
+
+    // se minha lista de equipamentos não está vazia
+    if (loadedEquipments.isNotEmpty) {
+      // percorro ela e verifico se a quantidade de cada item é maior que 1
+      for (var i = 0; i < loadedEquipments.length; i++) {
+        qty = loadedEquipments
+            .where((equipment) => equipment.name == name)
+            .first
+            .qty;
+      }
+    }
+    return qty;
   }
 }
