@@ -4,10 +4,12 @@ import 'package:uitcc/app/shared/theme/cores.dart';
 class IndividualConsumptionCard extends StatelessWidget {
   final String equipmentName;
   final String equipmentConsumption;
+  final int qty;
   const IndividualConsumptionCard(
       {super.key,
       required this.equipmentName,
-      required this.equipmentConsumption});
+      required this.equipmentConsumption,
+      required this.qty});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,7 @@ class IndividualConsumptionCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      equipmentName,
+                      '$qty x $equipmentName',
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     Text(

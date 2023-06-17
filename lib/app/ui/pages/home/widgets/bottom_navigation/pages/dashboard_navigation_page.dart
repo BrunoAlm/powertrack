@@ -61,6 +61,8 @@ class DashboardNavigationpageState extends State<DashboardNavigationpage> {
                           .toString(),
                       equipmentName:
                           widget.equipmentsStore.loadedEquipments[index].name,
+                      qty: widget.equipmentsStore.individualTotalQty(
+                          widget.equipmentsStore.loadedEquipments[index].name),
                     ),
                   ),
                 ),
