@@ -50,7 +50,7 @@ class OverallConsumptionCard extends StatelessWidget {
                       ),
                 ),
                 Text(
-                  '19:00 - 21:00',
+                  'temqve',
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
