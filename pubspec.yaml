@@ -1,6 +1,6 @@
 name: uitcc
-description: A new Flutter project.
-version: 1.0.0+1
+description: TCC
+version: 1.2.0
 
 environment:
   sdk: ">=3.0.0 <4.1.0"
