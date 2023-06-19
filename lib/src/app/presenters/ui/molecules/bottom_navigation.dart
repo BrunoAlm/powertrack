@@ -39,20 +39,26 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      unselectedItemColor: Theme.of(context).hintColor,
-      selectedItemColor: Theme.of(context).colorScheme.onBackground,
-      unselectedLabelStyle: TextStyle(
-        color: Theme.of(context).hintColor,
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(width: 2, color: Theme.of(context).dividerColor),
+        ),
       ),
-      type: BottomNavigationBarType.fixed,
-      useLegacyColorScheme: false,
-      enableFeedback: true,
-      items: navigationItems,
-      currentIndex: widget.homeStore.selectedPage,
-      onTap: (value) {
-        widget.homeStore.changeSelectedPage = value;
-      },
+      child: BottomNavigationBar(
+        unselectedItemColor: Theme.of(context).hintColor.withOpacity(.3),
+        selectedItemColor: Theme.of(context).colorScheme.onBackground,
+        showUnselectedLabels: false,
+        selectedFontSize: 12,
+        type: BottomNavigationBarType.fixed,
+        useLegacyColorScheme: false,
+        enableFeedback: true,
+        items: navigationItems,
+        currentIndex: widget.homeStore.selectedPage,
+        onTap: (value) {
+          widget.homeStore.changeSelectedPage = value;
+        },
+      ),
     );
   }
 }

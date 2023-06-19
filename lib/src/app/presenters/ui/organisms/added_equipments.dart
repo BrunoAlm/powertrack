@@ -144,13 +144,19 @@ class AddedEquipmentsState extends State<AddedEquipments> {
                                       initialTime:
                                           const TimeOfDay(hour: 00, minute: 00),
                                       helpText:
-                                          'Quantas horas esse equipamento foi utilizado?',
+                                          'Por quantas horas esse equipamento foi utilizado?',
                                       cancelText: 'Cancelar',
                                       confirmText: 'Confirmar',
                                       hourLabelText: 'Horas',
                                       minuteLabelText: 'Minutos',
-                                      initialEntryMode:
-                                          TimePickerEntryMode.inputOnly,
+                                      builder: (BuildContext context,
+                                          Widget? child) {
+                                        return MediaQuery(
+                                          data: MediaQuery.of(context).copyWith(
+                                              alwaysUse24HourFormat: true),
+                                          child: child!,
+                                        );
+                                      },
                                     );
                                     setState(() {});
                                   },
@@ -178,6 +184,7 @@ class AddedEquipmentsState extends State<AddedEquipments> {
                                         .equipmentsToBeAdded[index].power,
                                     style:
                                         Theme.of(context).textTheme.labelLarge,
+                                        
                                     decoration: InputDecoration(
                                       hintText: 'kWh',
                                       hintStyle:
