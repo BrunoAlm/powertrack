@@ -28,63 +28,91 @@ class _EquipmentsNavigationPageState extends State<EquipmentsNavigationPage> {
   @override
   Widget build(BuildContext context) {
     var equipments = widget.equipmentsStore.loadedEquipments;
-    return Expanded(
-      child: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Row(
+    return SizedBox(
+      height: MediaQuery.of(context).size.height - 58,
+      child: Scaffold(
+        extendBody: true,
+        body: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Theme.of(context).disabledColor),
+            ),
+            padding: const EdgeInsets.all(10),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Nome do equipamento'),
-                  SizedBox(width: 20),
-                  Text('Quantidade'),
-                  SizedBox(width: 20),
-                  Text('Potência'),
-                ],
-              ),
-              const Divider(),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: List.generate(
-                  equipments.length,
-                  (index) => Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                  const Row(
                     children: [
-                      SizedBox(
-                        width: 205,
-                        child: Text(
-                          equipments[index].name,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 65,
-                        child: Text(
-                          equipments[index].qty.toString(),
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Text(
-                        equipments[index].power.text,
-                      ),
+                      Text('Nome do equipamento'),
+                      SizedBox(width: 20),
+                      Text('Quantidade'),
+                      SizedBox(width: 20),
+                      Text('Potência'),
                     ],
                   ),
-                ),
+                  const SizedBox(height: 20),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: List.generate(
+                      equipments.length,
+                      (index) => Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            top: index == 0
+                                ? BorderSide(
+                                    color: Theme.of(context).disabledColor,
+                                  )
+                                : BorderSide.none,
+                            left: BorderSide(
+                              color: Theme.of(context).disabledColor,
+                            ),
+                            right: BorderSide(
+                              color: Theme.of(context).disabledColor,
+                            ),
+                            bottom: BorderSide(
+                              color: Theme.of(context).disabledColor,
+                            ),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: 205,
+                              child: Text(
+                                equipments[index].name,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 65,
+                              child: Text(
+                                equipments[index].qty.toString(),
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Text(
+                              equipments[index].power.text,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              const Divider(),
-              const SizedBox(height: 50),
-              const SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: () => showDialog(
+            ),
+          ),
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+            onPressed: () => showDialog(
                   context: context,
                   builder: (context) => const RegisterEquipments(),
                 ),
-                child: const Text('Editar Equipamentos'),
-              ),
-              const SizedBox(height: 10),
-            ],
-          ),
-        ),
+            label: const Text('Alterar'),
+            icon: const Icon(Icons.edit_rounded)),
       ),
     );
   }
