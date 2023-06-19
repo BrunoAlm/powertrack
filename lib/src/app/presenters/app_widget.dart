@@ -28,7 +28,7 @@ class _AppWidgetState extends State<AppWidget> {
     Modular.get<AppwriteAuth>().initClient();
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      title: 'Meu App',
+      title: 'TCC - Uso de Energia',
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: lightColorScheme,
@@ -58,26 +58,6 @@ class _AppWidgetState extends State<AppWidget> {
         ),
       ),
       themeMode: lCt.changeThemeMode(),
-      // theme: ThemeData(
-      //   useMaterial3: true,
-      //   colorScheme: const ColorScheme.dark().copyWith(
-      //     background: const Color(0xff1e1e1e),
-      //     // onBackground: const Color(0xff2d2d2d),
-      //     primary: const Color(0xff0271ff),
-      //     secondary: const Color(0xff2d2d2d),
-      //   ),
-      //   elevatedButtonTheme: ElevatedButtonThemeData(
-      //     style: ElevatedButton.styleFrom(
-      //       shape: ContinuousRectangleBorder(
-      //           borderRadius: BorderRadius.circular(20)),
-      //       padding: const EdgeInsets.symmetric(
-      //         horizontal: 40,
-      //         vertical: 25,
-      //       ),
-      //     ),
-      //   ),
-      // ),
-      // theme: ThemeService().returnThemeData(),
       routeInformationParser: Modular.routeInformationParser,
       routerDelegate: Modular.routerDelegate,
     ); //added by extension

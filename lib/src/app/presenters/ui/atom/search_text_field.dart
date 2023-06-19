@@ -26,23 +26,20 @@ class _SearchTextFieldState extends State<SearchTextField> {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.equipmentsStore.searchEC,
-      style: const TextStyle(color: Colors.black),
-      cursorColor: Colors.black,
       autofocus: true,
       decoration: InputDecoration(
         hintText: 'Buscar...',
-        hintStyle: const TextStyle(color: Colors.black54),
         suffixIcon: GestureDetector(
           onTap: () => widget.equipmentsStore.searchEC.clear(),
           child: const Icon(Icons.clear),
         ),
         enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Theme.of(context).hintColor),
           borderRadius: BorderRadius.circular(20),
-          borderSide: BorderSide(color: Theme.of(context).primaryColor),
         ),
         focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Theme.of(context).hintColor),
           borderRadius: BorderRadius.circular(20),
-          borderSide: BorderSide(color: Theme.of(context).primaryColor),
         ),
       ),
     );

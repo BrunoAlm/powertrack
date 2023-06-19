@@ -81,15 +81,15 @@ class LoginController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void alternateTheme() {
+  void alternateTheme() async {
     var theme = userPrefs.theme;
     if (theme == 'light') {
-      userPrefs.theme = 'dark';
-      updateUserPref(UserPrefsEntity(theme: theme));
+      theme = 'dark';
     } else {
-      userPrefs.theme = 'light';
-      updateUserPref(UserPrefsEntity(theme: theme));
+      theme = 'light';
     }
+    await updateUserPref(UserPrefsEntity(theme: theme));
+    await getUserPrefs();
     changeThemeMode();
   }
 
@@ -97,14 +97,13 @@ class LoginController extends ChangeNotifier {
     try {
       switch (userPrefs.theme) {
         case 'light':
-          return ThemeMode.dark;
-        case 'dark':
           return ThemeMode.light;
+        case 'dark':
+          return ThemeMode.dark;
         default:
           return ThemeMode.light;
       }
     } catch (e) {
-      print(e);
       return ThemeMode.light;
     }
   }
