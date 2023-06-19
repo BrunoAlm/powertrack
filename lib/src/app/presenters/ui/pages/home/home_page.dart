@@ -30,7 +30,9 @@ class HomePageState extends State<HomePage> {
         setState(() {});
       });
       _equipmentsStore.addListener(() {
-        setState(() {});
+        if (mounted) {
+          setState(() {});
+        }
       });
       Future.wait([
         _loginStore.initUser(),
