@@ -31,7 +31,6 @@ class _ResultSearchState extends State<ResultSearch> {
           return ListTile(
             title: Text(
               filteredEquipmentsName[index],
-              style: const TextStyle(color: Colors.black),
             ),
             trailing: IconButton(
               onPressed: () {
@@ -39,7 +38,7 @@ class _ResultSearchState extends State<ResultSearch> {
                   name: filteredEquipmentsName[index],
                   qty: 1,
                   time: const TimeOfDay(hour: 00, minute: 00),
-                  power: TextEditingController(),
+                  power: TextEditingController(text: '0'),
                 );
                 equipmentsRawList.removeWhere(
                     (element) => element == filteredEquipmentsName[index]);
