@@ -18,7 +18,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
     const BottomNavigationBarItem(
       icon: Icon(Icons.home_outlined),
       activeIcon: Icon(Icons.home),
-      label: 'Dashboard',
+      label: 'Home',
     ),
     const BottomNavigationBarItem(
       icon: Icon(Icons.electric_bolt),
@@ -26,9 +26,9 @@ class _BottomNavigationState extends State<BottomNavigation> {
       label: 'Equipamentos',
     ),
     const BottomNavigationBarItem(
-      icon: Icon(Icons.history_outlined),
-      activeIcon: Icon(Icons.history),
-      label: 'Histórico',
+      icon: Icon(Icons.energy_savings_leaf_outlined),
+      activeIcon: Icon(Icons.energy_savings_leaf_rounded),
+      label: 'Economia',
     ),
     const BottomNavigationBarItem(
       icon: Icon(Icons.settings_outlined),
