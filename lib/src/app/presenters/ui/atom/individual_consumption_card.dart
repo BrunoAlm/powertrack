@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 
-class IndividualConsumptionCard extends StatelessWidget {
-  final String equipmentName;
-  final String equipmentConsumption;
+class IndividualEquipmentCard extends StatelessWidget {
+  final String name;
+  final String data;
   final int qty;
-  const IndividualConsumptionCard(
-      {super.key,
-      required this.equipmentName,
-      required this.equipmentConsumption,
-      required this.qty});
+  final IconData icon;
+  const IndividualEquipmentCard({
+    Key? key,
+    required this.name,
+    required this.data,
+    required this.qty,
+    required this.icon,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +19,7 @@ class IndividualConsumptionCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
       elevation: 10,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
         child: SizedBox(
           height: 150,
           width: 140,
@@ -26,8 +29,8 @@ class IndividualConsumptionCard extends StatelessWidget {
               IconButton.filled(
                 isSelected: false,
                 onPressed: () {},
-                icon: const Icon(
-                  Icons.electric_bolt_rounded,
+                icon: Icon(
+                  icon,
                 ),
               ),
               Expanded(
@@ -36,11 +39,11 @@ class IndividualConsumptionCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      '$qty x $equipmentName',
+                      '$qty x $name',
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     Text(
-                      '$equipmentConsumption kWh',
+                      data,
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ],

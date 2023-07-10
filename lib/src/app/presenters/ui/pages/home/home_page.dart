@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:uitcc/src/app/presenters/ui/molecules/bottom_navigation.dart';
-import 'package:uitcc/src/app/presenters/ui/pages/home/molecules/dashboard_navigation_page.dart';
+import 'package:uitcc/src/app/presenters/ui/pages/home/molecules/home_navigation_page.dart';
 import 'package:uitcc/src/app/presenters/ui/pages/home/molecules/equipments_navigation_page.dart';
+import 'package:uitcc/src/app/presenters/ui/pages/home/molecules/savings_navigation_page.dart';
 import 'package:uitcc/src/app/presenters/ui/pages/home/molecules/settings_navigation_page.dart';
 import 'package:uitcc/src/app/presenters/controllers/equipments_controller.dart';
 import 'package:uitcc/src/app/presenters/controllers/home_store.dart';
 import 'package:uitcc/src/app/presenters/controllers/login_controller.dart';
 import 'package:uitcc/src/app/presenters/ui/states/app_state.dart';
+import 'package:uitcc/src/app/presenters/ui/templates/register_equipments_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -16,8 +18,8 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  final LoginController _loginStore = Modular.get();
-  final EquipmentsController _equipmentsStore = Modular.get();
+  final LoginController _loginCt = Modular.get();
+  final EquipmentsController _equipmentsCt = Modular.get();
   final HomeStore _homeStore = Modular.get();
 
   @override
@@ -29,15 +31,37 @@ class HomePageState extends State<HomePage> {
       _homeStore.addListener(() {
         setState(() {});
       });
-      _equipmentsStore.addListener(() {
+      _equipmentsCt.addListener(() {
         if (mounted) {
           setState(() {});
         }
       });
       Future.wait([
-        _loginStore.initUser(),
-        _equipmentsStore.listDocuments(),
+        _loginCt.initUser(),
+        _equipmentsCt.listDocuments(),
       ]).then((value) {
+        if (_equipmentsCt.loadedEquipments.isEmpty) {
+          showDialog(
+            context: context,
+            builder: (context) => const RegisterEquipments(),
+          );
+        }
+        if (_loginCt.userPrefs.tax == 0.0) {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text('Aviso'),
+              content: const Text(
+                  'Adicione o valor da taxa da sua concessionária de energia na aba de configurações'),
+              actions: [
+                ElevatedButton(
+                  onPressed: () => Modular.to.pop(),
+                  child: const Text('OK'),
+                ),
+              ],
+            ),
+          );
+        }
         _homeStore.appState.value = SuccessAppState();
         setState(() {});
       }).catchError((error) {
@@ -55,7 +79,7 @@ class HomePageState extends State<HomePage> {
     _homeStore.removeListener(() {
       setState(() {});
     });
-    _equipmentsStore.removeListener(() {
+    _equipmentsCt.removeListener(() {
       setState(() {});
     });
     super.dispose();
@@ -65,21 +89,17 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     double altura = MediaQuery.of(context).size.height;
     final List<Widget> widgetOptions = <Widget>[
-      DashboardNavigationpage(
-        equipmentsStore: _equipmentsStore,
-        loginStore: _loginStore,
+      HomeNavigationPage(
+        equipmentsStore: _equipmentsCt,
+        loginController: _loginCt,
       ),
       EquipmentsNavigationPage(
-        equipmentsStore: _equipmentsStore,
+        equipmentsStore: _equipmentsCt,
       ),
-      const Expanded(
-        child: Text(
-          'Index 2: Histórico',
-        ),
-      ),
+      const SavingsNavigationPage(),
       SettingsNavigationPage(
-        loginStore: _loginStore,
-        equipmentsStore: _equipmentsStore,
+        loginCt: _loginCt,
+        equipmentsCt: _equipmentsCt,
       ),
     ];
 
