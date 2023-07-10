@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:uitcc/src/app/presenters/controllers/equipments_controller.dart';
+import 'package:uitcc/src/app/presenters/controllers/login_controller.dart';
+import 'package:uitcc/src/core/services/helpers/helper.dart';
 
 class OverallConsumptionCard extends StatelessWidget {
-  final EquipmentsController ct;
-  const OverallConsumptionCard({super.key, required this.ct});
+  final EquipmentsController equipmentsController;
+  final LoginController loginController;
+  const OverallConsumptionCard({
+    super.key,
+    required this.equipmentsController,
+    required this.loginController,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +26,8 @@ class OverallConsumptionCard extends StatelessWidget {
               children: [
                 Text('kW/h', style: Theme.of(context).textTheme.bodyLarge!),
                 Text(
-                  '${ct.totalPower()}',
+                  Helper.formatDouble(
+                      equipmentsController.calculateTotalConsumption()),
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -36,11 +44,11 @@ class OverallConsumptionCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Pico',
+                  'Valor a pagar',
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(),
                 ),
                 Text(
-                  'temqve',
+                  'R\$${Helper.formatDouble(equipmentsController.totalCost(loginController.userPrefs.tax))}',
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -61,7 +69,7 @@ class OverallConsumptionCard extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(),
                 ),
                 Text(
-                  '${ct.totalEquipments()}',
+                  '${equipmentsController.totalEquipments()}',
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
