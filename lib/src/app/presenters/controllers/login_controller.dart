@@ -66,12 +66,12 @@ class LoginController extends ChangeNotifier {
   Future getUserPrefs() async {
     userPrefs = await _appwrite.getUserPref();
     if (userPrefs.theme.isEmpty) {
-      await updateUserPref(UserPrefsEntity(theme: 'light'));
+      await updateUserPref(UserPrefsEntity(theme: 'light', tax: 0.0));
     }
     notifyListeners();
   }
 
-  Future updateUserPref(UserPrefsEntity prefs) async {
+  Future<void> updateUserPref(UserPrefsEntity prefs) async {
     try {
       await _appwrite.updateUserPref(prefs);
     } catch (e) {
@@ -88,9 +88,20 @@ class LoginController extends ChangeNotifier {
     } else {
       theme = 'light';
     }
-    await updateUserPref(UserPrefsEntity(theme: theme));
+    await updateUserPref(UserPrefsEntity(theme: theme, tax: userPrefs.tax));
     await getUserPrefs();
     changeThemeMode();
+  }
+
+  void updateTax(double tax) async {
+    try {
+      await updateUserPref(UserPrefsEntity(theme: userPrefs.theme, tax: tax));
+      await getUserPrefs();
+      print('adicionado $tax');
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
   }
 
   ThemeMode changeThemeMode() {

@@ -5,12 +5,12 @@ import 'package:uitcc/src/app/presenters/controllers/equipments_controller.dart'
 import 'package:uitcc/src/app/presenters/controllers/login_controller.dart';
 
 class SettingsNavigationPage extends StatefulWidget {
-  final LoginController loginStore;
-  final EquipmentsController equipmentsStore;
+  final LoginController loginCt;
+  final EquipmentsController equipmentsCt;
   const SettingsNavigationPage({
     Key? key,
-    required this.loginStore,
-    required this.equipmentsStore,
+    required this.loginCt,
+    required this.equipmentsCt,
   }) : super(key: key);
 
   @override
@@ -18,6 +18,17 @@ class SettingsNavigationPage extends StatefulWidget {
 }
 
 class _SettingsNavigationPageState extends State<SettingsNavigationPage> {
+  late TextEditingController taxEC;
+
+  @override
+  void initState() {
+    taxEC =
+        TextEditingController(text: widget.loginCt.userPrefs.tax.toString());
+    super.initState();
+  }
+
+  
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -26,12 +37,12 @@ class _SettingsNavigationPageState extends State<SettingsNavigationPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           IconButton.filledTonal(
-            onPressed: () => widget.loginStore.alternateTheme(),
+            onPressed: () => widget.loginCt.alternateTheme(),
             icon: const Icon(Icons.sunny),
           ),
           const Spacer(),
           Text(
-            widget.loginStore.userConnected.name,
+            widget.loginCt.userConnected.name,
             style: Theme.of(context).textTheme.titleLarge,
           ),
           const Spacer(),
@@ -39,7 +50,7 @@ class _SettingsNavigationPageState extends State<SettingsNavigationPage> {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  widget.loginStore.logout();
+                  widget.loginCt.logout();
                   Modular.to.popUntil(ModalRoute.withName('/'));
                 },
                 child: const Text('Desconectar'),
@@ -47,12 +58,59 @@ class _SettingsNavigationPageState extends State<SettingsNavigationPage> {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  widget.equipmentsStore.deleteAllDocuments();
+                  widget.equipmentsCt.deleteAllDocuments();
                   // setState(() {
                   //   widget.equipmentsStore.listDocuments();
                   // });
                 },
                 child: const Text('APAGAR equipamentos cadastrados'),
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * .5,
+                    child: TextFormField(
+                      controller: taxEC,
+                      decoration: InputDecoration(
+                        hintText: 'Taxa de energia',
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Theme.of(context).hintColor),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Theme.of(context).hintColor),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                      onPressed: () {
+                        double? taxValue =
+                            double.tryParse(taxEC.text.replaceAll(',', '.'));
+                        if (taxValue != null) {
+                          widget.loginCt.updateTax(taxValue);
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: const Text('coloque um valor válido'),
+                              actions: [
+                                ElevatedButton(
+                                  onPressed: () => Modular.to.pop(),
+                                  child: const Text('OK'),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                      },
+                      icon: const Icon(Icons.check))
+                ],
               ),
             ],
           ),

@@ -62,7 +62,8 @@ class AppwriteAuth {
   }
 
   Future<void> updateUserPref(UserPrefsEntity prefs) async {
-    UserPrefsEntity userPrefsEntity = UserPrefsEntity(theme: prefs.theme);
+    UserPrefsEntity userPrefsEntity =
+        UserPrefsEntity(theme: prefs.theme, tax: prefs.tax);
     await account.updatePrefs(prefs: userPrefsEntity.toMap());
   }
 }
