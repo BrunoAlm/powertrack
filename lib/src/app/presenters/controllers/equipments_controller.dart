@@ -211,6 +211,17 @@ class EquipmentsController extends ChangeNotifier {
     return result;
   }
 
+  String individualTime(String name) {
+    String totalTime = '';
+    for (var item in loadedEquipments.where(
+      (equipment) => equipment.name == name,
+    )) {
+      var time = item.time!;
+      totalTime = '${time.hour}${time.minute == 0 ? '' : ':${time.minute}'}';
+    }
+    return totalTime;
+  }
+
   int individualTotalPower(String name) {
     int totalPower = 0;
     for (var item
@@ -228,6 +239,40 @@ class EquipmentsController extends ChangeNotifier {
       }
     }
     return totalPower;
+  }
+
+  double calculateIndividualConsumption(String name) {
+    double consumptionKWh = 0.0;
+
+    for (var item
+        in loadedEquipments.where((equipment) => equipment.name == name)) {
+      double powerKW =
+          individualTotalPower(name) / 1000; // Convert to kilowatts
+      double timeHours = item.time!.hour +
+          (item.time!.minute / 60); // Convert TimeOfDay to hours
+      consumptionKWh = powerKW * timeHours; // Calculate consumption in kWh
+    }
+
+    return consumptionKWh;
+  }
+
+  double calculateTotalConsumption() {
+    double total = 0;
+    if (loadedEquipments.isNotEmpty) {
+      for (var i = 0; i < loadedEquipments.length; i++) {
+        double kwh;
+        kwh = calculateIndividualConsumption(loadedEquipments[i].name);
+        total += kwh;
+      }
+      return total;
+    }
+    return total;
+  }
+
+  double totalCost(double kWhRate) {
+    double totalConsumption = calculateTotalConsumption();
+    double totalPayment = totalConsumption * kWhRate;
+    return totalPayment;
   }
 
   int individualTotalQty(String name) {
