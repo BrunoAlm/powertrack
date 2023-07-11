@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:uitcc/src/app/presenters/ui/atom/user_info_appbar.dart';
 import 'package:uitcc/src/app/presenters/ui/molecules/bottom_navigation.dart';
+import 'package:uitcc/src/app/presenters/ui/molecules/settings_drawer.dart';
 import 'package:uitcc/src/app/presenters/ui/pages/home/molecules/home_navigation_page.dart';
 import 'package:uitcc/src/app/presenters/ui/pages/home/molecules/equipments_navigation_page.dart';
 import 'package:uitcc/src/app/presenters/ui/pages/home/molecules/savings_navigation_page.dart';
-import 'package:uitcc/src/app/presenters/ui/pages/home/molecules/settings_navigation_page.dart';
 import 'package:uitcc/src/app/presenters/controllers/equipments_controller.dart';
 import 'package:uitcc/src/app/presenters/controllers/home_store.dart';
 import 'package:uitcc/src/app/presenters/controllers/login_controller.dart';
@@ -25,7 +26,6 @@ class HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-
     _homeStore.appState.value = LoadingAppState();
     try {
       _homeStore.addListener(() {
@@ -62,14 +62,18 @@ class HomePageState extends State<HomePage> {
             ),
           );
         }
+
         _homeStore.appState.value = SuccessAppState();
         setState(() {});
-      }).catchError((error) {
-        _homeStore.appState.value = FailedAppState(error: error.toString());
-        print(error.toString());
-        setState(() {});
-      });
+      }).catchError(
+        (_) {
+          _homeStore.appState.value = FailedAppState(error: 'erro');
+          print(_);
+          setState(() {});
+        },
+      );
     } on Exception catch (e) {
+      print(e);
       _homeStore.appState.value = FailedAppState(error: e.toString());
     }
   }
@@ -87,7 +91,7 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    double altura = MediaQuery.of(context).size.height;
+    double altura = MediaQuery.sizeOf(context).height;
     final List<Widget> widgetOptions = <Widget>[
       HomeNavigationPage(
         equipmentsStore: _equipmentsCt,
@@ -97,26 +101,26 @@ class HomePageState extends State<HomePage> {
         equipmentsStore: _equipmentsCt,
       ),
       const SavingsNavigationPage(),
-      SettingsNavigationPage(
-        loginCt: _loginCt,
-        equipmentsCt: _equipmentsCt,
-      ),
     ];
 
     return SafeArea(
-      child: _homeStore.appState.value is LoadingAppState
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : _homeStore.appState.value is FailedAppState
-              ? const Center(
-                  child: Text('Erro ao carregar, tente novamente.'),
-                )
-              : _homeStore.appState.value is SuccessAppState
-                  ? Scaffold(
-                      body: Center(
-                        child: SizedBox(
+      child: Center(
+        child: _homeStore.appState.value is LoadingAppState
+            ? const CircularProgressIndicator()
+            : _homeStore.appState.value is FailedAppState
+                ? const Text('Erro ao carregar, tente novamente.')
+                : _homeStore.appState.value is SuccessAppState
+                    ? Scaffold(
+                        appBar: AppBar(
+                          automaticallyImplyLeading: false,
+                          centerTitle: false,
+                          titleSpacing: 0,
+                          title: UserInfoAppBar(user: _loginCt.userConnected),
+                          toolbarHeight: 100,
+                        ),
+                        body: Container(
                           height: altura,
+                          padding: const EdgeInsets.only(top: 40),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
@@ -127,9 +131,14 @@ class HomePageState extends State<HomePage> {
                             ],
                           ),
                         ),
-                      ),
-                    )
-                  : const SizedBox(),
+                        endDrawer: SettingsDrawer(
+                          loginCt: _loginCt,
+                          equipmentsCt: _equipmentsCt,
+                        ),
+                        drawerEnableOpenDragGesture: true,
+                      )
+                    : const SizedBox.shrink(),
+      ),
     );
   }
 }

@@ -81,13 +81,10 @@ class LoginController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void alternateTheme() async {
+  void updateTheme(String newTheme) async {
     var theme = userPrefs.theme;
-    if (theme == 'light') {
-      theme = 'dark';
-    } else {
-      theme = 'light';
-    }
+    theme = newTheme;
+
     await updateUserPref(UserPrefsEntity(theme: theme, tax: userPrefs.tax));
     await getUserPrefs();
     changeThemeMode();

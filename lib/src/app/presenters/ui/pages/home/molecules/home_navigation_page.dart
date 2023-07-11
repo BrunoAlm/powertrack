@@ -3,7 +3,6 @@ import 'package:uitcc/src/app/presenters/controllers/equipments_controller.dart'
 import 'package:uitcc/src/app/presenters/controllers/login_controller.dart';
 import 'package:uitcc/src/app/presenters/ui/atom/individual_consumption_card.dart';
 import 'package:uitcc/src/app/presenters/ui/atom/overall_consumption_card.dart';
-import 'package:uitcc/src/app/presenters/ui/atom/user_info_appbar.dart';
 import 'package:uitcc/src/core/services/helpers/helper.dart';
 
 class HomeNavigationPage extends StatefulWidget {
@@ -26,12 +25,6 @@ class HomeNavigationPageState extends State<HomeNavigationPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 16),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: UserInfoAppBar(user: widget.loginController.userConnected),
-          ),
-          const SizedBox(height: 40),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: OverallConsumptionCard(

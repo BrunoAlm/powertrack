@@ -30,11 +30,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
       activeIcon: Icon(Icons.energy_savings_leaf_rounded),
       label: 'Economia',
     ),
-    const BottomNavigationBarItem(
-      icon: Icon(Icons.settings_outlined),
-      activeIcon: Icon(Icons.settings),
-      label: 'Configurações',
-    ),
   ];
 
   @override

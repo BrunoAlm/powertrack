@@ -38,10 +38,6 @@ class UserInfoAppBar extends StatelessWidget {
             ),
           ],
         ),
-        IconButton.filled(
-          onPressed: () {},
-          icon: const Icon(Icons.notifications),
-        ),
       ],
     );
   }
