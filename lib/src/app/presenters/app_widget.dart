@@ -42,6 +42,12 @@ class _AppWidgetState extends State<AppWidget> {
             ),
           ),
         ),
+        appBarTheme: const AppBarTheme(
+          color: Color(0xFFFDFBFF),
+        ),
+        cardTheme: const CardTheme(
+          elevation: 0,
+        ),
       ),
       darkTheme: ThemeData(
         useMaterial3: true,
@@ -55,6 +61,12 @@ class _AppWidgetState extends State<AppWidget> {
               vertical: 25,
             ),
           ),
+        ),
+        appBarTheme: const AppBarTheme(
+          color: Color(0xFF0e0f12),
+        ),
+        cardTheme: const CardTheme(
+          elevation: 0,
         ),
       ),
       themeMode: lCt.changeThemeMode(),
