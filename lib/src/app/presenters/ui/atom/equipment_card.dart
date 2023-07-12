@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uitcc/src/core/services/helpers/helper.dart';
 
 class EquipmentCard extends StatelessWidget {
   final String name;
@@ -17,7 +18,6 @@ class EquipmentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      // color: Theme.of(context).colorScheme.primaryContainer,
       child: Container(
         height: 150,
         width: 260,
