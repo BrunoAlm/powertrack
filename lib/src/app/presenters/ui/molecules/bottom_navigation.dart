@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:uitcc/src/app/presenters/controllers/home_store.dart';
+import 'package:uitcc/src/core/services/helpers/helper.dart';
 
 class BottomNavigation extends StatefulWidget {
   final HomeStore homeStore;
@@ -36,16 +37,16 @@ class _BottomNavigationState extends State<BottomNavigation> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        border: Border(
-          top: BorderSide(width: 2, color: Theme.of(context).dividerColor),
-        ),
+        boxShadow: ThemeHelper.shadow(context),
       ),
       child: BottomNavigationBar(
         unselectedItemColor: Theme.of(context).hintColor.withOpacity(.3),
         selectedItemColor: Theme.of(context).colorScheme.onBackground,
+        backgroundColor: Theme.of(context).colorScheme.surfaceTint,
         showUnselectedLabels: false,
-        selectedFontSize: 12,
-        type: BottomNavigationBarType.fixed,
+        // showSelectedLabels: false,
+        // selectedFontSize: 12,
+        // type: BottomNavigationBarType.fixed,
         useLegacyColorScheme: false,
         enableFeedback: true,
         items: navigationItems,

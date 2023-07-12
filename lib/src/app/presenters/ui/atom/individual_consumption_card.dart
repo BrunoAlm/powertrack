@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uitcc/src/core/services/helpers/helper.dart';
 
 class IndividualEquipmentCard extends StatelessWidget {
   final String name;
@@ -15,41 +16,46 @@ class IndividualEquipmentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
-      elevation: 10,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
-        child: SizedBox(
-          height: 150,
-          width: 140,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              IconButton.filled(
-                isSelected: false,
-                onPressed: () {},
-                icon: Icon(
-                  icon,
+    return Container(
+      decoration: BoxDecoration(
+        boxShadow: ThemeHelper.shadow(context),
+      ),
+      child: Card(
+        margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
+        elevation: 10,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
+          child: SizedBox(
+            height: 150,
+            width: 140,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                IconButton.filled(
+                  isSelected: false,
+                  onPressed: () {},
+                  icon: Icon(
+                    icon,
+                  ),
                 ),
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text(
-                      '$qty x $name',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    Text(
-                      data,
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  ],
-                ),
-              )
-            ],
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        '$qty x $name',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      Text(
+                        data,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
