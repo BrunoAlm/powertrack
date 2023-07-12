@@ -270,9 +270,10 @@ class EquipmentsController extends ChangeNotifier {
   }
 
   double totalCost(double kWhRate) {
+    int days = 30;
     double totalConsumption = calculateTotalConsumption();
     double totalPayment = totalConsumption * kWhRate;
-    return totalPayment;
+    return totalPayment * days;
   }
 
   int individualTotalQty(String name) {
