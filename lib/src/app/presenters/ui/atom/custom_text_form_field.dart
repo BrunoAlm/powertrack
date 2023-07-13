@@ -9,6 +9,8 @@ class CustomTextFormField extends StatefulWidget {
     required this.controller,
     this.prefixIcon,
     this.obscureText = false,
+    this.inputAction,
+    this.onSubmit,
   }) : super(key: key);
   final String hintText;
   final double maxWidth;
@@ -16,6 +18,8 @@ class CustomTextFormField extends StatefulWidget {
   final TextEditingController controller;
   final Widget? prefixIcon;
   final bool obscureText;
+  final TextInputAction? inputAction;
+  final Function(String value)? onSubmit;
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
 }
@@ -27,6 +31,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       controller: widget.controller,
       cursorWidth: 5,
       obscureText: widget.obscureText,
+      textInputAction: widget.inputAction,
+      onFieldSubmitted: widget.onSubmit,
       decoration: InputDecoration(
         prefixIcon: widget.prefixIcon,
         constraints: BoxConstraints(
