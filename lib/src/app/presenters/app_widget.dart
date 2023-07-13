@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:uitcc/src/app/presenters/controllers/login_controller.dart';
 import 'package:uitcc/src/core/services/theme/color_schemes.g.dart';
 // import 'package:uitcc/src/core/services/theme/theme_service.dart';
@@ -31,6 +32,7 @@ class _AppWidgetState extends State<AppWidget> {
       title: 'TCC - Uso de Energia',
       theme: ThemeData(
         useMaterial3: true,
+        fontFamily: GoogleFonts.inter().fontFamily,
         colorScheme: lightColorScheme,
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
@@ -52,6 +54,7 @@ class _AppWidgetState extends State<AppWidget> {
       darkTheme: ThemeData(
         useMaterial3: true,
         colorScheme: darkColorScheme,
+        fontFamily: GoogleFonts.inter().fontFamily,
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             shape: ContinuousRectangleBorder(
