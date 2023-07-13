@@ -13,25 +13,19 @@ class Helper {
 
 class ThemeHelper {
   static List<BoxShadow> lightShadow = [
-    BoxShadow(
-      color: const Color(0xfffefefe).withOpacity(.2),
-      blurRadius: 12.0, // soften the shadow
-      spreadRadius: 0.0, //extend the shadow
-      offset: const Offset(
-        0,
-        -4,
-      ),
+    const BoxShadow(
+      color: Color.fromARGB(12, 255, 255, 255),
+      blurRadius: 6,
+      offset: Offset(0, 1),
+      spreadRadius: 0,
     )
   ];
   static List<BoxShadow> darkShadow = [
-    BoxShadow(
-      color: const Color(0xFF0e0f12).withOpacity(.2),
-      blurRadius: 12.0, // soften the shadow
-      spreadRadius: 0.0, //extend the shadow
-      offset: const Offset(
-        0,
-        -4,
-      ),
+    const BoxShadow(
+      color: Color.fromARGB(43, 0, 0, 0),
+      blurRadius: 6,
+      offset: Offset(0, 1),
+      spreadRadius: 0,
     )
   ];
 
