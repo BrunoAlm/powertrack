@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uitcc/src/app/domain/entities/user_entity.dart';
+import 'package:uitcc/src/core/services/helpers/helper.dart';
 
 class UserInfoAppBar extends StatelessWidget {
   final UserEntity user;
@@ -13,10 +14,18 @@ class UserInfoAppBar extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const CircleAvatar(
-              backgroundImage: NetworkImage(
-                  'https://upload.wikimedia.org/wikipedia/pt/thumb/8/86/Avatar_Aang.png/250px-Avatar_Aang.png'),
-              maxRadius: 28.0,
+            Container(
+              width: 56,
+              height: 56,
+              decoration: ShapeDecoration(
+                image: const DecorationImage(
+                  image: NetworkImage(
+                      "https://icon-library.com/images/avatar-icon-images/avatar-icon-images-4.jpg"),
+                  fit: BoxFit.fitWidth,
+                ),
+                shape: const OvalBorder(),
+                shadows: ThemeHelper.shadow(context),
+              ),
             ),
             const SizedBox(
               width: 10,
