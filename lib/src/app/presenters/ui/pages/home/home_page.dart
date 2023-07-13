@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:uitcc/src/app/presenters/ui/atom/user_info_appbar.dart';
@@ -111,12 +113,25 @@ class HomePageState extends State<HomePage> {
                 ? const Text('Erro ao carregar, tente novamente.')
                 : _homeStore.appState.value is SuccessAppState
                     ? Scaffold(
-                        appBar: AppBar(
-                          automaticallyImplyLeading: false,
-                          centerTitle: false,
-                          titleSpacing: 0,
-                          title: UserInfoAppBar(user: _loginCt.userConnected),
-                          toolbarHeight: 100,
+                        appBar: PreferredSize(
+                          preferredSize:
+                              Size(MediaQuery.sizeOf(context).width, 90),
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(20, 30, 20, 0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                UserInfoAppBar(user: _loginCt.userConnected),
+                                Builder(
+                                  builder: (context) => IconButton(
+                                    icon: const Icon(Icons.settings_sharp),
+                                    onPressed: () =>
+                                        Scaffold.of(context).openEndDrawer(),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                         body: Container(
                           height: altura,
