@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uitcc/src/app/presenters/controllers/equipments_controller.dart';
 import 'package:uitcc/src/app/presenters/controllers/login_controller.dart';
-import 'package:uitcc/src/app/presenters/ui/atom/individual_consumption_card.dart';
+import 'package:uitcc/src/app/presenters/ui/atom/individual_equipment_card.dart';
 import 'package:uitcc/src/app/presenters/ui/atom/overall_consumption_card.dart';
 import 'package:uitcc/src/core/services/helpers/helper.dart';
 
@@ -46,10 +46,11 @@ class HomeNavigationPageState extends State<HomeNavigationPage> {
                     Container(
                       height: 1.5,
                       width: 120,
-                      color: Colors.black,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
                   ],
                 ),
+                const SizedBox(height: 10),
                 SizedBox(
                   height: 180,
                   child: ListView.builder(
@@ -67,7 +68,7 @@ class HomeNavigationPageState extends State<HomeNavigationPage> {
                             widget.equipmentsStore.loadedEquipments[index].name,
                         qty: widget.equipmentsStore.individualTotalQty(widget
                             .equipmentsStore.loadedEquipments[index].name),
-                        icon: Icons.electric_bolt_rounded,
+                        icon: Icons.bolt_rounded,
                       ),
                     ),
                   ),
@@ -89,10 +90,11 @@ class HomeNavigationPageState extends State<HomeNavigationPage> {
                     Container(
                       height: 1.5,
                       width: 160,
-                      color: Colors.black,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
                   ],
                 ),
+                const SizedBox(height: 10),
                 SizedBox(
                   height: 180,
                   child: ListView.builder(
@@ -108,7 +110,7 @@ class HomeNavigationPageState extends State<HomeNavigationPage> {
                             widget.equipmentsStore.loadedEquipments[index].name,
                         qty: widget.equipmentsStore.individualTotalQty(widget
                             .equipmentsStore.loadedEquipments[index].name),
-                        icon: Icons.timer,
+                        icon: Icons.timer_outlined,
                       ),
                     ),
                   ),
