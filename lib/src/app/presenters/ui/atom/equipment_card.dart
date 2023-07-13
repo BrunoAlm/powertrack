@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:uitcc/src/core/services/helpers/helper.dart';
 
 class EquipmentCard extends StatelessWidget {
   final String name;

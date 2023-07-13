@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
 import 'package:uitcc/src/app/presenters/ui/atom/equipments_raw_list.dart';
