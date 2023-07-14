@@ -1,14 +1,17 @@
+import 'dart:io';
+
 import 'package:appwrite/appwrite.dart';
 import 'package:uitcc/src/app/data/dtos/user_dto.dart';
 import 'package:uitcc/src/app/domain/entities/user_entity.dart';
 import 'package:uitcc/src/app/domain/entities/user_prefs_entity.dart';
+import 'package:uitcc/src/core/services/appwrite_constants.dart';
 
 class AppwriteAuth {
   final String endpoint;
   final String projectID;
   Client client = Client();
-  late Account account = Account(client);
-
+  late Account account;
+  late Storage storage;
   AppwriteAuth({required this.endpoint, required this.projectID});
 
   Future<Client> initClient() async {
@@ -19,6 +22,7 @@ class AppwriteAuth {
           status: true,
         ); // For self signed certificates, only use for development
     account = Account(client);
+    storage = Storage(client);
     return client;
   }
 
@@ -45,9 +49,9 @@ class AppwriteAuth {
     await account.createEmailSession(email: email, password: password);
   }
 
-  Future logout() async {
+  Future logout(String id) async {
     // delete account session
-    await account.deleteSessions();
+    await account.deleteSession(sessionId: id);
   }
 
   Future<UserEntity> getUser() async {
@@ -65,5 +69,21 @@ class AppwriteAuth {
     UserPrefsEntity userPrefsEntity =
         UserPrefsEntity(theme: prefs.theme, tax: prefs.tax);
     await account.updatePrefs(prefs: userPrefsEntity.toMap());
+  }
+
+  // Future<File> createAvatar(String path) async {
+  //   return await storage.createFile(
+  //     bucketId: avatarBucket,
+  //     fileId: ID.unique(),
+  //     file: InputFile.fromPath(path: path, filename: 'avatar.jpg'),
+  //   );
+  // }
+
+  Future<File> getUserAvatar(String id) async {
+    var result = await storage.getFileView(
+      bucketId: avatarBucket,
+      fileId: ID.unique(),
+    );
+    return File.fromRawPath(result);
   }
 }
