@@ -34,19 +34,6 @@ class _AppWidgetState extends State<AppWidget> {
         useMaterial3: true,
         fontFamily: GoogleFonts.inter().fontFamily,
         colorScheme: lightColorScheme,
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            shape: ContinuousRectangleBorder(
-                borderRadius: BorderRadius.circular(20)),
-            padding: const EdgeInsets.symmetric(
-              horizontal: 40,
-              vertical: 25,
-            ),
-          ),
-        ),
-        appBarTheme: const AppBarTheme(
-          color: Color(0xFFFDFBFF),
-        ),
         cardTheme: const CardTheme(
           elevation: 0,
         ),
@@ -55,19 +42,6 @@ class _AppWidgetState extends State<AppWidget> {
         useMaterial3: true,
         colorScheme: darkColorScheme,
         fontFamily: GoogleFonts.inter().fontFamily,
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            shape: ContinuousRectangleBorder(
-                borderRadius: BorderRadius.circular(20)),
-            padding: const EdgeInsets.symmetric(
-              horizontal: 40,
-              vertical: 25,
-            ),
-          ),
-        ),
-        appBarTheme: const AppBarTheme(
-          color: Color(0xFF0e0f12),
-        ),
         cardTheme: const CardTheme(
           elevation: 0,
         ),
