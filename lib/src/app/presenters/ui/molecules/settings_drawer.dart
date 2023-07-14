@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:uitcc/src/app/presenters/controllers/equipments_controller.dart';
 import 'package:uitcc/src/app/presenters/controllers/login_controller.dart';
 import 'package:uitcc/src/core/services/helpers/helper.dart';
@@ -27,6 +30,21 @@ class SettingsDrawerState extends State<SettingsDrawer> {
         TextEditingController(text: widget.loginCt.userPrefs.tax.toString());
   }
 
+  final _imagePicker = ImagePicker();
+  XFile? _pickedImage;
+
+  Future<void> _pickImage() async {
+    try {
+      final pickedImage =
+          await _imagePicker.pickImage(source: ImageSource.gallery);
+      setState(() {
+        _pickedImage = pickedImage;
+      });
+    } catch (e) {
+      // Trate o erro, se ocorrer
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -37,18 +55,55 @@ class SettingsDrawerState extends State<SettingsDrawer> {
           children: [
             Column(
               children: [
-                Container(
-                  width: 140,
-                  height: 140,
-                  decoration: ShapeDecoration(
-                    image: const DecorationImage(
-                      image: NetworkImage(
-                          "https://icon-library.com/images/avatar-icon-images/avatar-icon-images-4.jpg"),
-                      fit: BoxFit.fitWidth,
-                    ),
-                    shape: const OvalBorder(),
-                    shadows: ThemeHelper.shadow(context),
-                  ),
+                Stack(
+                  children: [
+                    _pickedImage != null
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: SizedBox(
+                              width: 140,
+                              height: 140,
+                              child: Image.file(
+                                fit: BoxFit.cover,
+                                File(_pickedImage!.path),
+                              ),
+                            ),
+                          )
+                        : Container(
+                            width: 140,
+                            height: 140,
+                            decoration: ShapeDecoration(
+                              // image: const DecorationImage(
+                              //   image: NetworkImage(
+                              //       "https://icon-library.com/images/avatar-icon-images/avatar-icon-images-4.jpg"),
+                              //   fit: BoxFit.fitWidth,
+                              // ),
+                              shape: const OvalBorder(),
+                              shadows: ThemeHelper.shadow(context),
+                            ),
+                            child: Image.file(widget.loginCt.userAvatar)),
+                    Positioned(
+                      bottom: 10,
+                      right: 10,
+                      child: GestureDetector(
+                        onTap: () async {
+                          await _pickImage();
+                        },
+                        child: Container(
+                          decoration: ShapeDecoration(
+                            shape: const CircleBorder(),
+                            color: Theme.of(context).colorScheme.onBackground,
+                            shadows: ThemeHelper.shadow(context),
+                          ),
+                          padding: const EdgeInsets.all(8),
+                          child: Icon(
+                            Icons.camera_alt,
+                            color: Theme.of(context).colorScheme.background,
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
                 ),
                 const SizedBox(
                   height: 20,
@@ -76,12 +131,12 @@ class SettingsDrawerState extends State<SettingsDrawer> {
                   onTap: () => showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
-                            title: const Text('Alerar taxa'),
+                            title: const Text('Alterar taxa'),
                             content: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 const Text(
-                                  'Essa é a taxa que a sua concessionária de energia cobra por kWh consumido',
+                                  'A taxa é o valor que a sua distribuidora de energia cobra por kWh consumido.',
                                 ),
                                 const SizedBox(height: 20),
                                 TextField(
@@ -94,6 +149,7 @@ class SettingsDrawerState extends State<SettingsDrawer> {
                                       ),
                                       borderRadius: BorderRadius.circular(20),
                                     ),
+                                    prefixIcon: const Icon(Icons.receipt),
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Theme.of(context).hintColor,
@@ -107,32 +163,51 @@ class SettingsDrawerState extends State<SettingsDrawer> {
                             actions: [
                               ElevatedButton(
                                 onPressed: () => Navigator.pop(context),
-                                child: const Text('Cancelar'),
+                                child: Text(
+                                  'Cancelar',
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
                               ),
-                              ElevatedButton(
-                                onPressed: () {
-                                  double? taxValue = double.tryParse(
-                                      taxEC.text.replaceAll(',', '.'));
-                                  if (taxValue != null) {
-                                    widget.loginCt.updateTax(taxValue);
-                                    Navigator.pop(context);
-                                  } else {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) => AlertDialog(
-                                        title: const Text(
-                                            'coloque um valor válido'),
-                                        actions: [
-                                          ElevatedButton(
-                                            onPressed: () => Modular.to.pop(),
-                                            child: const Text('OK'),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  }
-                                },
-                                child: const Text('Alterar'),
+                              Container(
+                                decoration: ShapeDecoration(
+                                  shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(22))),
+                                  shadows: ThemeHelper.shadow(context),
+                                ),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    double? taxValue = double.tryParse(
+                                        taxEC.text.replaceAll(',', '.'));
+                                    if (taxValue != null) {
+                                      widget.loginCt.updateTax(taxValue);
+                                      Navigator.pop(context);
+                                    } else {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) => AlertDialog(
+                                          title: const Text(
+                                              'coloque um valor válido'),
+                                          actions: [
+                                            ElevatedButton(
+                                              onPressed: () => Modular.to.pop(),
+                                              child: Text(
+                                                'OK',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  child: Text('Alterar',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium),
+                                ),
                               ),
                             ],
                           )),
@@ -151,7 +226,61 @@ class SettingsDrawerState extends State<SettingsDrawer> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    widget.equipmentsCt.deleteAllDocuments();
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text('Remover dados'),
+                        content: RichText(
+                          text: TextSpan(
+                            text: 'Ao clicar em confirmar, você vai ',
+                            style: Theme.of(context).textTheme.bodyMedium,
+                            children: [
+                              TextSpan(
+                                text: 'remover',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      color:
+                                          Theme.of(context).colorScheme.error,
+                                    ),
+                              ),
+                              TextSpan(
+                                text: ' seus equipamentos cadastrados',
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              )
+                            ],
+                          ),
+                        ),
+                        actions: [
+                          ElevatedButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: Text(
+                              'Cancelar',
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                          ),
+                          Container(
+                            decoration: ShapeDecoration(
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(22))),
+                              shadows: ThemeHelper.shadow(context),
+                            ),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                widget.equipmentsCt.deleteAllDocuments();
+                                Modular.to.pop();
+                              },
+                              child: Text(
+                                'Confirmar',
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
