@@ -12,6 +12,8 @@ dependencies:
   flutter_svg: ^2.0.6
   appwrite: ^9.0.0
   google_fonts: ^5.1.0
+  image_picker: ^1.0.1
+  permission_handler: ^10.4.3
 
 dev_dependencies:
   flutter_test:
