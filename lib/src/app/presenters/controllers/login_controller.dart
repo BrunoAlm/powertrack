@@ -1,4 +1,5 @@
 // ignore_for_file: avoid_print
+import 'dart:io';
 
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,8 @@ class LoginController extends ChangeNotifier {
   LoginController(this._appwrite);
   late UserEntity userConnected;
   late UserPrefsEntity userPrefs;
+  File userAvatar = File.fromUri(Uri.parse(
+      'https://icon-library.com/images/avatar-icon-images/avatar-icon-images-4.jpg'));
 
   Future initUser() async {
     await getUserData();
@@ -49,7 +52,7 @@ class LoginController extends ChangeNotifier {
   void logout() async {
     state.value = LoadingLoginState();
     try {
-      await _appwrite.logout();
+      await _appwrite.logout(userConnected.id);
       state.value = PendingLoginState();
     } on AppwriteException catch (e) {
       state.value = FailedLoginState(
@@ -113,6 +116,14 @@ class LoginController extends ChangeNotifier {
       }
     } catch (e) {
       return ThemeMode.light;
+    }
+  }
+
+  void getUserAvatar(String path) async {
+    try {
+      userAvatar = await _appwrite.getUserAvatar(path);
+    } catch (e) {
+      print(e);
     }
   }
 }
