@@ -293,4 +293,10 @@ class EquipmentsController extends ChangeNotifier {
     }
     return qty;
   }
+
+  bool equipmentIsValid(List<EquipmentModel> list) {
+    return list.any((element) => int.parse(element.power.text) == 0) ||
+        list.any(
+            (element) => element.time!.hour == 0 && element.time!.minute == 0);
+  }
 }
