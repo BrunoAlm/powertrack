@@ -41,7 +41,7 @@ class UserInfoAppBar extends StatelessWidget {
                 ),
                 Text(
                   user.email,
-                  style: Theme.of(context).textTheme.bodyLarge,
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ],
             ),

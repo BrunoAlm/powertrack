@@ -29,7 +29,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.controller,
-      cursorWidth: 5,
+      cursorWidth: 3,
+      cursorColor: Theme.of(context).colorScheme.onSurfaceVariant,
       obscureText: widget.obscureText,
       textInputAction: widget.inputAction,
       onFieldSubmitted: widget.onSubmit,
@@ -39,7 +40,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           maxWidth: widget.maxWidth,
           maxHeight: widget.maxHeight,
         ),
+        contentPadding: const EdgeInsets.all(6),
         hintText: widget.hintText,
+        hintStyle: Theme.of(context).textTheme.bodyMedium,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
         ),

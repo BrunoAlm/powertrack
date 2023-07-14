@@ -27,7 +27,7 @@ class IndividualEquipmentCard extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
           child: SizedBox(
-            height: 150,
+            height: 120,
             width: 140,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
