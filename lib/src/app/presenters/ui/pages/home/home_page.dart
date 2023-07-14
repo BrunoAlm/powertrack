@@ -113,6 +113,8 @@ class HomePageState extends State<HomePage> {
                 ? const Text('Erro ao carregar, tente novamente.')
                 : _homeStore.appState.value is SuccessAppState
                     ? Scaffold(
+                        backgroundColor:
+                            Theme.of(context).colorScheme.background,
                         appBar: PreferredSize(
                           preferredSize:
                               Size(MediaQuery.sizeOf(context).width, 90),
@@ -135,7 +137,7 @@ class HomePageState extends State<HomePage> {
                         ),
                         body: Container(
                           height: altura,
-                          padding: const EdgeInsets.only(top: 40),
+                          margin: const EdgeInsets.only(top: 20),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
