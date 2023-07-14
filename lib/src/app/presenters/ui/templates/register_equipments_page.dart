@@ -70,8 +70,26 @@ class RegisterEquipmentsState extends State<RegisterEquipments> {
                 child: BackButton(
                   onPressed: () {
                     var toBeAdded = ct.equipmentsToBeAdded;
-                    ct.compareAndCreateDocument(toBeAdded);
-                    Modular.to.pop();
+                    if (!ct.equipmentIsValid(toBeAdded)) {
+                      ct.compareAndCreateDocument(toBeAdded);
+                      Modular.to.pop();
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: Text(
+                            'Preencha corretamente os campos',
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
+                          actions: [
+                            ElevatedButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: const Text('Ok'),
+                            )
+                          ],
+                        ),
+                      );
+                    }
                   },
                 ),
               ),
