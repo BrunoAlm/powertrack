@@ -47,6 +47,10 @@ A ideia é fazer uma média geral de consumo energético da pessoa
 
 #### Resultado
 1. Formas de economizar energia
-2. Horários de pico
-3. Mostrar consumo total em Kw/h ou Kw
+2. Valor gasto individual e total
+3. Mostrar consumo total em Kw/h
 4. Gráficos com a economia em R$
+
+#### Melhorias
+O que pode ser melhorado:
+1. Integração de dispositivos IOT com a API do banco, para atualização de consumo (kWh) e tempo de uso do dispositivo em tempo real ou diário.
