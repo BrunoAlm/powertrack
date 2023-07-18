@@ -1,18 +1,16 @@
-// ignore_for_file: avoid_print
-
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:uitcc/src/app/presenters/ui/atom/user_info_appbar.dart';
 import 'package:uitcc/src/app/presenters/ui/molecules/bottom_navigation.dart';
+import 'package:uitcc/src/app/presenters/ui/molecules/equipments_navigation_page.dart';
+import 'package:uitcc/src/app/presenters/ui/molecules/home_navigation_page.dart';
+import 'package:uitcc/src/app/presenters/ui/molecules/savings_navigation_page.dart';
 import 'package:uitcc/src/app/presenters/ui/molecules/settings_drawer.dart';
-import 'package:uitcc/src/app/presenters/ui/pages/home/molecules/home_navigation_page.dart';
-import 'package:uitcc/src/app/presenters/ui/pages/home/molecules/equipments_navigation_page.dart';
-import 'package:uitcc/src/app/presenters/ui/pages/home/molecules/savings_navigation_page.dart';
 import 'package:uitcc/src/app/presenters/controllers/equipments_controller.dart';
 import 'package:uitcc/src/app/presenters/controllers/home_store.dart';
 import 'package:uitcc/src/app/presenters/controllers/login_controller.dart';
 import 'package:uitcc/src/app/presenters/ui/states/app_state.dart';
-import 'package:uitcc/src/app/presenters/ui/templates/register_equipments_page.dart';
+import 'package:uitcc/src/app/presenters/ui/organisms/register_equipments_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

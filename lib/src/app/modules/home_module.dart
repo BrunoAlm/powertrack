@@ -1,7 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:uitcc/src/app/presenters/ui/templates/register_equipments_page.dart';
-// import 'package:uitcc/app/ui/pages/home/cadastrar_dados/cadastrar_dados_screen.dart';
-import 'package:uitcc/src/app/presenters/ui/pages/home/home_page.dart';
+import 'package:uitcc/src/app/presenters/ui/organisms/register_equipments_page.dart';
+import 'package:uitcc/src/app/presenters/ui/pages/home_page.dart';
 import 'package:uitcc/src/app/presenters/controllers/equipments_controller.dart';
 import 'package:uitcc/src/app/presenters/controllers/home_store.dart';
 import 'package:uitcc/src/core/services/appwrite_constants.dart';
@@ -23,7 +22,5 @@ class HomeModule extends Module {
           '/register-equipments/',
           child: (context, args) => const RegisterEquipments(),
         ),
-        // ChildRoute('/cadastrar-dados',
-        //     child: (context, args) => const CadastrarDadosScreen()),
       ];
 }

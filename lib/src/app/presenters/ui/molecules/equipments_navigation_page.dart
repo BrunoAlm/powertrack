@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uitcc/src/app/presenters/controllers/equipments_controller.dart';
 import 'package:uitcc/src/app/presenters/ui/atom/equipment_card.dart';
-import 'package:uitcc/src/app/presenters/ui/templates/register_equipments_page.dart';
+import 'package:uitcc/src/app/presenters/ui/organisms/register_equipments_page.dart';
 
 class EquipmentsNavigationPage extends StatefulWidget {
   final EquipmentsController equipmentsStore;
@@ -35,19 +35,25 @@ class _EquipmentsNavigationPageState extends State<EquipmentsNavigationPage> {
             const SizedBox(height: 20),
             Text(
               'Equipamentos cadastrados',
-              style: Theme.of(context).textTheme.headlineSmall,
+              style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
             ),
             const SizedBox(height: 20),
             Expanded(
-              child: ListView.builder(
-                padding: const EdgeInsets.fromLTRB(50, 10, 50, 100),
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 5,
+                  mainAxisSpacing: 5,
+                ),
+                padding: const EdgeInsets.fromLTRB(15, 0, 15, 80),
                 itemCount: equipments.length,
                 itemBuilder: (context, index) {
                   return EquipmentCard(
                     name: equipments[index].name,
                     qty: equipments[index].qty,
-                    time:
-                        '${equipments[index].time!.hour}.${equipments[index].time!.minute}',
+                    time: equipments[index].time!,
                     power: int.parse(equipments[index].power.text),
                   );
                 },
@@ -55,13 +61,14 @@ class _EquipmentsNavigationPageState extends State<EquipmentsNavigationPage> {
             ),
           ],
         ),
+        // floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         floatingActionButton: FloatingActionButton.extended(
             onPressed: () => showDialog(
                   context: context,
                   builder: (context) => const RegisterEquipments(),
                 ),
-            label: const Text('Alterar'),
-            icon: const Icon(Icons.edit_rounded)),
+            label: const Text('Adicionar'),
+            icon: const Icon(Icons.add_circle_outline_rounded)),
       ),
     );
   }

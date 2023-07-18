@@ -1,8 +1,8 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:uitcc/src/app/presenters/ui/modules/home_module.dart';
-import 'package:uitcc/src/app/presenters/ui/modules/recover_password_module.dart';
-import 'package:uitcc/src/app/presenters/ui/modules/register_module.dart';
-import '../pages/login_page.dart';
+import 'package:uitcc/src/app/modules/home_module.dart';
+import 'package:uitcc/src/app/modules/recover_password_module.dart';
+import 'package:uitcc/src/app/modules/register_module.dart';
+import '../presenters/ui/pages/login_page.dart';
 
 class LoginModule extends Module {
   @override
