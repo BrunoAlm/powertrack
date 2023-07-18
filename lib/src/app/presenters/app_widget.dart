@@ -37,6 +37,15 @@ class _AppWidgetState extends State<AppWidget> {
         cardTheme: const CardTheme(
           elevation: 0,
         ),
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          backgroundColor: Color(0xff7efae0),
+          // shape: RoundedRectangleBorder(
+          //   borderRadius: BorderRadius.only(
+          //     topLeft: Radius.circular(50),
+          //     bottomLeft: Radius.circular(50),
+          //   ),
+          // ),
+        ),
       ),
       darkTheme: ThemeData(
         useMaterial3: true,
@@ -44,6 +53,9 @@ class _AppWidgetState extends State<AppWidget> {
         fontFamily: GoogleFonts.inter().fontFamily,
         cardTheme: const CardTheme(
           elevation: 0,
+        ),
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          backgroundColor: Color(0xff7efae0),
         ),
       ),
       themeMode: lCt.changeThemeMode(),
