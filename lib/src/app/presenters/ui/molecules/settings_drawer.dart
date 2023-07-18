@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:image_picker/image_picker.dart';
@@ -57,37 +55,34 @@ class SettingsDrawerState extends State<SettingsDrawer> {
               children: [
                 Stack(
                   children: [
-                    _pickedImage != null
-                        ? ClipRRect(
-                            borderRadius: BorderRadius.circular(100),
-                            child: SizedBox(
-                              width: 140,
-                              height: 140,
-                              child: Image.file(
-                                fit: BoxFit.cover,
-                                File(_pickedImage!.path),
-                              ),
-                            ),
-                          )
-                        : Container(
-                            width: 140,
-                            height: 140,
-                            decoration: ShapeDecoration(
-                              // image: const DecorationImage(
-                              //   image: NetworkImage(
-                              //       "https://icon-library.com/images/avatar-icon-images/avatar-icon-images-4.jpg"),
-                              //   fit: BoxFit.fitWidth,
-                              // ),
-                              shape: const OvalBorder(),
-                              shadows: ThemeHelper.shadow(context),
-                            ),
-                            child: Image.file(widget.loginCt.userAvatar)),
+                    Container(
+                      width: 140,
+                      height: 140,
+                      decoration: ShapeDecoration(
+                        image: const DecorationImage(
+                          image: NetworkImage(
+                              "https://icon-library.com/images/avatar-icon-images/avatar-icon-images-4.jpg"),
+                          fit: BoxFit.fitWidth,
+                        ),
+                        shape: const OvalBorder(),
+                        shadows: ThemeHelper.shadow(context),
+                      ),
+                    ),
                     Positioned(
                       bottom: 10,
                       right: 10,
                       child: GestureDetector(
                         onTap: () async {
-                          await _pickImage();
+                          Navigator.pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.error,
+                              content: const Text(
+                                'Alteração de foto não implementada',
+                              ),
+                            ),
+                          );
                         },
                         child: Container(
                           decoration: ShapeDecoration(
