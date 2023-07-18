@@ -243,7 +243,7 @@ class EquipmentsController extends ChangeNotifier {
     return totalPower;
   }
 
-  double calculateIndividualConsumption(String name) {
+  double individualConsumption(String name) {
     double consumptionKWh = 0.0;
 
     for (var item
@@ -258,12 +258,12 @@ class EquipmentsController extends ChangeNotifier {
     return consumptionKWh;
   }
 
-  double calculateTotalConsumption() {
+  double totalConsumption() {
     double total = 0;
     if (loadedEquipments.isNotEmpty) {
       for (var i = 0; i < loadedEquipments.length; i++) {
         double kwh;
-        kwh = calculateIndividualConsumption(loadedEquipments[i].name);
+        kwh = individualConsumption(loadedEquipments[i].name);
         total += kwh;
       }
       return total;
@@ -273,8 +273,15 @@ class EquipmentsController extends ChangeNotifier {
 
   double totalCost(double kWhRate) {
     int days = 30;
-    double totalConsumption = calculateTotalConsumption();
-    double totalPayment = totalConsumption * kWhRate;
+    double result = totalConsumption();
+    double totalPayment = result * kWhRate;
+    return totalPayment * days;
+  }
+
+  double individualCost(String name, double kWhRate) {
+    int days = 30;
+    double result = individualConsumption(name);
+    double totalPayment = result * kWhRate;
     return totalPayment * days;
   }
 
@@ -296,7 +303,8 @@ class EquipmentsController extends ChangeNotifier {
 
   bool equipmentIsValid(List<EquipmentModel> list) {
     return list.any((element) => int.parse(element.power.text) == 0) ||
-        list.any(
-            (element) => element.time!.hour == 0 && element.time!.minute == 0);
+        list.any((element) =>
+            ((element.time?.hour == 0) || element.time?.hour == null) &&
+            ((element.time?.minute == 0) || element.time?.minute == null));
   }
 }
