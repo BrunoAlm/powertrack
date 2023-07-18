@@ -33,7 +33,7 @@ class OverallConsumptionCard extends StatelessWidget {
                   Text('kW/h', style: Theme.of(context).textTheme.bodyLarge!),
                   Text(
                     Helper.formatDouble(
-                        equipmentsController.calculateTotalConsumption()),
+                        equipmentsController.totalConsumption()),
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
