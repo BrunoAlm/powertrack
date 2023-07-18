@@ -18,8 +18,6 @@ class LoginController extends ChangeNotifier {
   LoginController(this._appwrite);
   late UserEntity userConnected;
   late UserPrefsEntity userPrefs;
-  File userAvatar = File.fromUri(Uri.parse(
-      'https://icon-library.com/images/avatar-icon-images/avatar-icon-images-4.jpg'));
 
   Future initUser() async {
     await getUserData();
@@ -119,11 +117,4 @@ class LoginController extends ChangeNotifier {
     }
   }
 
-  void getUserAvatar(String path) async {
-    try {
-      userAvatar = await _appwrite.getUserAvatar(path);
-    } catch (e) {
-      print(e);
-    }
-  }
 }

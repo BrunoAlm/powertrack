@@ -71,19 +71,4 @@ class AppwriteAuth {
     await account.updatePrefs(prefs: userPrefsEntity.toMap());
   }
 
-  // Future<File> createAvatar(String path) async {
-  //   return await storage.createFile(
-  //     bucketId: avatarBucket,
-  //     fileId: ID.unique(),
-  //     file: InputFile.fromPath(path: path, filename: 'avatar.jpg'),
-  //   );
-  // }
-
-  Future<File> getUserAvatar(String id) async {
-    var result = await storage.getFileView(
-      bucketId: avatarBucket,
-      fileId: ID.unique(),
-    );
-    return File.fromRawPath(result);
-  }
 }
