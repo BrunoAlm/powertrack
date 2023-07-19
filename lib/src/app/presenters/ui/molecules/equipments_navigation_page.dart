@@ -30,45 +30,47 @@ class _EquipmentsNavigationPageState extends State<EquipmentsNavigationPage> {
     var equipments = widget.equipmentsStore.loadedEquipments;
     return Expanded(
       child: Scaffold(
-        body: Column(
-          children: [
-            const SizedBox(height: 20),
-            Text(
-              'Equipamentos cadastrados',
-              style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                    fontWeight: FontWeight.w700,
-                  ),
-            ),
-            const SizedBox(height: 20),
-            Expanded(
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 5,
-                  mainAxisSpacing: 5,
-                ),
-                padding: const EdgeInsets.fromLTRB(15, 0, 15, 80),
-                itemCount: equipments.length,
-                itemBuilder: (context, index) {
-                  return EquipmentCard(
-                    name: equipments[index].name,
-                    qty: equipments[index].qty,
-                    time: equipments[index].time!,
-                    power: int.parse(equipments[index].power.text),
-                  );
-                },
+        body: Center(
+          child: Column(
+            children: [
+              Text(
+                'Equipamentos cadastrados',
+                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
               ),
-            ),
-          ],
+              const SizedBox(height: 20),
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.fromLTRB(15, 5, 15, 100),
+                  child: Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    direction: Axis.horizontal,
+                    children: List.generate(
+                      equipments.length,
+                      (index) => EquipmentCard(
+                        name: equipments[index].name,
+                        qty: equipments[index].qty,
+                        time: equipments[index].time!,
+                        power: int.parse(equipments[index].power.text),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
         // floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         floatingActionButton: FloatingActionButton.extended(
-            onPressed: () => showDialog(
-                  context: context,
-                  builder: (context) => const RegisterEquipments(),
-                ),
-            label: const Text('Adicionar'),
-            icon: const Icon(Icons.add_circle_outline_rounded)),
+          onPressed: () => showDialog(
+            context: context,
+            builder: (context) => const RegisterEquipments(),
+          ),
+          label: const Text('Adicionar'),
+          icon: const Icon(Icons.add_circle_outline_rounded),
+        ),
       ),
     );
   }
