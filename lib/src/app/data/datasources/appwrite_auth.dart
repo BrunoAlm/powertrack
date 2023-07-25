@@ -17,10 +17,8 @@ class AppwriteAuth {
   Future<Client> initClient() async {
     client
         .setEndpoint(endpoint) // Your Appwrite Endpoint
-        .setProject(projectID) // Your project ID
-        .setSelfSigned(
-          status: true,
-        ); // For self signed certificates, only use for development
+        .setProject(projectID); // Your project ID
+
     account = Account(client);
     storage = Storage(client);
     return client;
@@ -70,5 +68,4 @@ class AppwriteAuth {
         UserPrefsEntity(theme: prefs.theme, tax: prefs.tax);
     await account.updatePrefs(prefs: userPrefsEntity.toMap());
   }
-
 }
