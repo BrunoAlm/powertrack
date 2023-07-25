@@ -39,12 +39,6 @@ class _AppWidgetState extends State<AppWidget> {
         ),
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
           backgroundColor: Color(0xff7efae0),
-          // shape: RoundedRectangleBorder(
-          //   borderRadius: BorderRadius.only(
-          //     topLeft: Radius.circular(50),
-          //     bottomLeft: Radius.circular(50),
-          //   ),
-          // ),
         ),
       ),
       darkTheme: ThemeData(
