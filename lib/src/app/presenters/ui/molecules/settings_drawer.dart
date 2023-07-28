@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:uitcc/src/app/presenters/controllers/equipments_controller.dart';
 import 'package:uitcc/src/app/presenters/controllers/login_controller.dart';
 import 'package:uitcc/src/core/services/helpers/helper.dart';
@@ -26,21 +25,6 @@ class SettingsDrawerState extends State<SettingsDrawer> {
     super.initState();
     taxEC =
         TextEditingController(text: widget.loginCt.userPrefs.tax.toString());
-  }
-
-  final _imagePicker = ImagePicker();
-  XFile? _pickedImage;
-
-  Future<void> _pickImage() async {
-    try {
-      final pickedImage =
-          await _imagePicker.pickImage(source: ImageSource.gallery);
-      setState(() {
-        _pickedImage = pickedImage;
-      });
-    } catch (e) {
-      // Trate o erro, se ocorrer
-    }
   }
 
   @override
@@ -198,10 +182,11 @@ class SettingsDrawerState extends State<SettingsDrawer> {
                                       );
                                     }
                                   },
-                                  child: Text('Alterar',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium),
+                                  child: Text(
+                                    'Alterar',
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                  ),
                                 ),
                               ),
                             ],
