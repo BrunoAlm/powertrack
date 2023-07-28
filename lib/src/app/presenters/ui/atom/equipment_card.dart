@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:uitcc/src/app/presenters/ui/molecules/edit_equipment_dialog.dart';
+import 'package:uitcc/src/app/domain/entities/equipment_model.dart';
+import 'package:uitcc/src/app/presenters/controllers/equipments_controller.dart';
+import 'package:uitcc/src/app/presenters/ui/molecules/edit_equipment_bottomsheet.dart';
 import 'package:uitcc/src/core/services/helpers/helper.dart';
 
 class EquipmentCard extends StatelessWidget {
-  final String name;
-  final int qty;
-  final TimeOfDay time;
-  final int power;
+  final EquipmentModel equipment;
+  final EquipmentsController ct;
+  // final String name;
+  // final int qty;
+  // final TimeOfDay time;
+  // final int power;
 
   const EquipmentCard({
     super.key,
-    required this.name,
-    required this.qty,
-    required this.time,
-    required this.power,
+    required this.equipment,
+    required this.ct,
+    // required this.name,
+    // required this.qty,
+    // required this.time,
+    // required this.power,
   });
 
   @override
@@ -38,7 +44,7 @@ class EquipmentCard extends StatelessWidget {
                 children: [
                   Flexible(
                     child: Text(
-                      '${qty}x $name',
+                      '${equipment.qty}x ${equipment.name}',
                       style: Theme.of(context)
                           .textTheme
                           .bodyMedium!
@@ -55,11 +61,11 @@ class EquipmentCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${power}W',
+                        '${equipment.power.text}W',
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                       Text(
-                        '${time.format(context)}h',
+                        '${equipment.time!.format(context)}h',
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ],
@@ -73,12 +79,13 @@ class EquipmentCard extends StatelessWidget {
                     ),
                     child: IconButton(
                       onPressed: () {
-                        showDialog(
+                        showModalBottomSheet(
                           context: context,
-                          builder: (context) => EditEquipmentDialog(
-                            name: name,
-                            power: power.toString(),
-                            time: time.format(context),
+                          isScrollControlled: true,
+                          useSafeArea: true,
+                          builder: (context) => EditEquipmentBottomSheet(
+                            equipmentModel: equipment,
+                            ct: ct,
                           ),
                         );
                       },

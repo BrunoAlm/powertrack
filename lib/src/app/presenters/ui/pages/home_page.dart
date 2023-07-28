@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:uitcc/src/app/presenters/ui/atom/user_info_appbar.dart';
@@ -98,7 +100,7 @@ class HomePageState extends State<HomePage> {
         loginController: _loginCt,
       ),
       EquipmentsNavigationPage(
-        equipmentsStore: _equipmentsCt,
+        equipmentsCt: _equipmentsCt,
       ),
       const SavingsNavigationPage(),
     ];

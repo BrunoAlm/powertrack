@@ -146,23 +146,20 @@ class EquipmentsController extends ChangeNotifier {
   }
 
   Future<void> updateDocument({
+    required EquipmentModel equipment,
     required String documentId,
-    required String id,
-    required String name,
-    required int qty,
-    required TimeOfDay? time,
-    required TextEditingController power,
   }) async {
     try {
       await _appwriteDb.updateDocument(
-          document: documentId,
-          data: EquipmentModel(
-            id: id,
-            name: name,
-            qty: qty,
-            time: time,
-            power: power,
-          ).toMap());
+        document: documentId,
+        data: EquipmentModel(
+          id: equipment.id,
+          name: equipment.name,
+          qty: equipment.qty,
+          time: equipment.time,
+          power: equipment.power,
+        ).toMap(),
+      );
     } on AppwriteException catch (e) {
       // Print the error message from Appwrite
       print(e.message);

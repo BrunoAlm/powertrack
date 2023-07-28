@@ -4,10 +4,10 @@ import 'package:uitcc/src/app/presenters/ui/atom/equipment_card.dart';
 import 'package:uitcc/src/app/presenters/ui/organisms/register_equipments_page.dart';
 
 class EquipmentsNavigationPage extends StatefulWidget {
-  final EquipmentsController equipmentsStore;
+  final EquipmentsController equipmentsCt;
   const EquipmentsNavigationPage({
     Key? key,
-    required this.equipmentsStore,
+    required this.equipmentsCt,
   }) : super(key: key);
 
   @override
@@ -18,16 +18,16 @@ class EquipmentsNavigationPage extends StatefulWidget {
 class _EquipmentsNavigationPageState extends State<EquipmentsNavigationPage> {
   @override
   void initState() {
-    if (widget.equipmentsStore.equipmentsToBeAdded.isEmpty) {
-      widget.equipmentsStore.equipmentsToBeAdded =
-          widget.equipmentsStore.loadedEquipments;
+    if (widget.equipmentsCt.equipmentsToBeAdded.isEmpty) {
+      widget.equipmentsCt.equipmentsToBeAdded =
+          widget.equipmentsCt.loadedEquipments;
     }
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    var equipments = widget.equipmentsStore.loadedEquipments;
+    var equipments = widget.equipmentsCt.loadedEquipments;
     return Expanded(
       child: Scaffold(
         body: Center(
@@ -50,10 +50,12 @@ class _EquipmentsNavigationPageState extends State<EquipmentsNavigationPage> {
                     children: List.generate(
                       equipments.length,
                       (index) => EquipmentCard(
-                        name: equipments[index].name,
-                        qty: equipments[index].qty,
-                        time: equipments[index].time!,
-                        power: int.parse(equipments[index].power.text),
+                        equipment: equipments[index],
+                        ct: widget.equipmentsCt,
+                        // name: equipments[index].name,
+                        // qty: equipments[index].qty,
+                        // time: equipments[index].time!,
+                        // power: int.parse(equipments[index].power.text),
                       ),
                     ),
                   ),
