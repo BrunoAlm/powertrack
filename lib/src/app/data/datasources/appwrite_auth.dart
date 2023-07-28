@@ -1,10 +1,7 @@
-import 'dart:io';
-
 import 'package:appwrite/appwrite.dart';
 import 'package:uitcc/src/app/data/dtos/user_dto.dart';
 import 'package:uitcc/src/app/domain/entities/user_entity.dart';
 import 'package:uitcc/src/app/domain/entities/user_prefs_entity.dart';
-import 'package:uitcc/src/core/services/appwrite_constants.dart';
 
 class AppwriteAuth {
   final String endpoint;
