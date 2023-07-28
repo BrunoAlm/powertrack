@@ -44,8 +44,7 @@ class SettingsDrawerState extends State<SettingsDrawer> {
                       height: 140,
                       decoration: ShapeDecoration(
                         image: const DecorationImage(
-                          image: NetworkImage(
-                              "https://icon-library.com/images/avatar-icon-images/avatar-icon-images-4.jpg"),
+                          image: AssetImage('assets/images/avatar.jpg'),
                           fit: BoxFit.fitWidth,
                         ),
                         shape: const OvalBorder(),
