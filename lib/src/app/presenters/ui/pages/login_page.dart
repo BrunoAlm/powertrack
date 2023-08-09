@@ -142,7 +142,8 @@ class LoginPageState extends State<LoginPage> {
                   Container(
                     decoration: ShapeDecoration(
                       shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(40))),
+                        borderRadius: BorderRadius.all(Radius.circular(32)),
+                      ),
                       shadows: ThemeHelper.shadow(context),
                     ),
                     child: AnimatedBuilder(

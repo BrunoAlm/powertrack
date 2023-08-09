@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:uitcc/src/app/presenters/controllers/equipments_controller.dart';
 
@@ -27,8 +26,11 @@ class _SearchTextFieldState extends State<SearchTextField> {
     return TextFormField(
       controller: widget.equipmentsStore.searchEC,
       autofocus: true,
+      
       decoration: InputDecoration(
         hintText: 'Buscar...',
+        isDense: true,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         suffixIcon: GestureDetector(
           onTap: () => widget.equipmentsStore.searchEC.clear(),
           child: const Icon(Icons.clear),

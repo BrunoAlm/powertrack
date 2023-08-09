@@ -38,7 +38,7 @@ class _AppWidgetState extends State<AppWidget> {
           elevation: 0,
         ),
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
-          backgroundColor: Color(0xff7efae0),
+          backgroundColor: Color(0xFFC5F8FF),
         ),
       ),
       darkTheme: ThemeData(
@@ -49,7 +49,7 @@ class _AppWidgetState extends State<AppWidget> {
           elevation: 0,
         ),
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
-          backgroundColor: Color(0xff7efae0),
+          backgroundColor: Color(0xFFC5F8FF),
         ),
       ),
       themeMode: lCt.changeThemeMode(),
