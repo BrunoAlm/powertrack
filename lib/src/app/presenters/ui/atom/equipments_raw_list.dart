@@ -19,7 +19,6 @@ final List<String> equipmentsRawList = [
   "Espremedor de frutas",
   "Exaustor fogão",
   "Ferro de passar",
-  "Ferro",
   "Fogão",
   "Forno",
   "Micro-ondas",
@@ -58,5 +57,4 @@ final List<String> equipmentsRawList = [
   "Vídeo cassete",
   "Vídeo game",
   "Aparelho de barbear",
-  
 ];
