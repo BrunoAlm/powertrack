@@ -17,15 +17,6 @@ class EquipmentsNavigationPage extends StatefulWidget {
 
 class _EquipmentsNavigationPageState extends State<EquipmentsNavigationPage> {
   @override
-  void initState() {
-    if (widget.equipmentsCt.equipmentsToBeAdded.isEmpty) {
-      widget.equipmentsCt.equipmentsToBeAdded =
-          widget.equipmentsCt.loadedEquipments;
-    }
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     var equipments = widget.equipmentsCt.loadedEquipments;
     return Expanded(
@@ -35,9 +26,10 @@ class _EquipmentsNavigationPageState extends State<EquipmentsNavigationPage> {
             children: [
               Text(
                 'Equipamentos cadastrados',
-                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineSmall!
+                    .copyWith(fontWeight: FontWeight.w700),
               ),
               const SizedBox(height: 20),
               Expanded(
@@ -52,10 +44,14 @@ class _EquipmentsNavigationPageState extends State<EquipmentsNavigationPage> {
                       (index) => EquipmentCard(
                         equipment: equipments[index],
                         ct: widget.equipmentsCt,
-                        // name: equipments[index].name,
-                        // qty: equipments[index].qty,
-                        // time: equipments[index].time!,
-                        // power: int.parse(equipments[index].power.text),
+                        onEditPressed: () => showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          useSafeArea: true,
+                          builder: (context) => Container(
+                            height: 300,
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -64,11 +60,10 @@ class _EquipmentsNavigationPageState extends State<EquipmentsNavigationPage> {
             ],
           ),
         ),
-        // floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () => showDialog(
             context: context,
-            builder: (context) => const RegisterEquipments(),
+            builder: (context) => const RegisterEquipmentsPage(),
           ),
           label: const Text('Adicionar'),
           icon: const Icon(Icons.add_circle_outline_rounded),
