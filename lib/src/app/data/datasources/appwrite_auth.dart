@@ -2,6 +2,7 @@ import 'package:appwrite/appwrite.dart';
 import 'package:uitcc/src/app/data/dtos/user_dto.dart';
 import 'package:uitcc/src/app/domain/entities/user_entity.dart';
 import 'package:uitcc/src/app/domain/entities/user_prefs_entity.dart';
+import 'package:uitcc/src/core/services/helpers/helper.dart';
 
 class AppwriteAuth {
   final String endpoint;
@@ -32,7 +33,7 @@ class AppwriteAuth {
   }) async {
     // Create user account
     await account.create(
-      userId: ID.unique(),
+      userId: Helper.idGenerator(),
       name: name,
       email: email,
       password: password,

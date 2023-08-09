@@ -2,6 +2,7 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:uitcc/src/app/domain/entities/equipment_model.dart';
 import 'package:uitcc/src/app/data/datasources/appwrite_auth.dart';
+import 'package:uitcc/src/core/services/helpers/helper.dart';
 
 class AppwriteDB {
   final AppwriteAuth _appwrite;
@@ -17,7 +18,7 @@ class AppwriteDB {
     await database.createDocument(
       databaseId: databaseId,
       collectionId: documentsCollectionId,
-      documentId: ID.unique(),
+      documentId: Helper.idGenerator(),
       data: data,
     );
     print('Document created');
