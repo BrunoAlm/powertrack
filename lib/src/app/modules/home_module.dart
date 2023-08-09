@@ -20,7 +20,7 @@ class HomeModule extends Module {
         ChildRoute('/', child: (context, args) => const HomePage()),
         ChildRoute(
           '/register-equipments/',
-          child: (context, args) => const RegisterEquipments(),
+          child: (context, args) => const RegisterEquipmentsPage(),
         ),
       ];
 }

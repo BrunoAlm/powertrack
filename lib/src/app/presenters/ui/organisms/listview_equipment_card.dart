@@ -4,7 +4,7 @@ import 'package:uitcc/src/core/services/helpers/helper.dart';
 
 enum CardType { time, consumption, cost }
 
-class ListViewEquipmentsCard extends StatelessWidget {
+class ListViewEquipmentData extends StatelessWidget {
   final String title;
   final int itemCount;
   final IconData cardIcon;
@@ -14,7 +14,7 @@ class ListViewEquipmentsCard extends StatelessWidget {
   final double? tax;
   final Function(String, double)? calcCost;
 
-  const ListViewEquipmentsCard({
+  const ListViewEquipmentData({
     Key? key,
     required this.title,
     required this.itemCount,

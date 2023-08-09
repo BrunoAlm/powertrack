@@ -50,7 +50,7 @@ class HomeNavigationPageState extends State<HomeNavigationPage> {
               child: Column(
                 children: [
                   const SizedBox(height: 20),
-                  ListViewEquipmentsCard(
+                  ListViewEquipmentData(
                     cardType: CardType.cost,
                     title: 'Custo',
                     calcCost: widget.equipmentsStore.individualCost,
@@ -59,7 +59,7 @@ class HomeNavigationPageState extends State<HomeNavigationPage> {
                     cardIcon: Icons.bolt_rounded,
                     equipments: equipments,
                   ),
-                  ListViewEquipmentsCard(
+                  ListViewEquipmentData(
                     cardType: CardType.consumption,
                     calcFunc: widget.equipmentsStore.individualConsumption,
                     title: 'Consumo',
@@ -67,7 +67,7 @@ class HomeNavigationPageState extends State<HomeNavigationPage> {
                     cardIcon: Icons.bolt_rounded,
                     equipments: equipments,
                   ),
-                  ListViewEquipmentsCard(
+                  ListViewEquipmentData(
                     cardType: CardType.time,
                     calcFunc: widget.equipmentsStore.individualTime,
                     title: 'Tempo de uso',
