@@ -1,40 +1,37 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
 
 class EquipmentModel {
   String id;
   String name;
   int qty;
-  TimeOfDay? time;
-  TextEditingController power;
+  DateTime time;
+  int power;
 
   EquipmentModel({
     required this.id,
     required this.name,
     required this.qty,
-    this.time = const TimeOfDay(hour: 0, minute: 0),
+    required this.time,
     required this.power,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'id': id,
       'name': name,
       'qty': qty,
-      'time': ("${time!.hour}:${time!.minute}"),
-      'power': power.text.trim(),
+      'time': time.millisecondsSinceEpoch,
+      'power': power,
     };
   }
 
   factory EquipmentModel.fromMap(Map<String, dynamic> map) {
     return EquipmentModel(
-      id: map['\$id'] as String,
+      id: map['id'] as String,
       name: map['name'] as String,
       qty: map['qty'] as int,
-      time: TimeOfDay(
-        hour: int.parse(map['time'].toString().split(":").first),
-        minute: int.parse(map['time'].toString().split(":").last),
-      ),
-      power: TextEditingController(text: map['power'] as String?),
+      time: DateTime.fromMillisecondsSinceEpoch(map['time']),
+      power: map['power'],
     );
   }
 
