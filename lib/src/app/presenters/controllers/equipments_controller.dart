@@ -1,7 +1,6 @@
-// ignore_for_file: avoid_print
-
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:uitcc/src/app/presenters/ui/atom/equipments_raw_list.dart';
 import 'package:uitcc/src/app/domain/entities/equipment_model.dart';
 import 'package:uitcc/src/app/presenters/ui/states/add_equipment_state.dart';
@@ -13,6 +12,7 @@ class EquipmentsController extends ChangeNotifier {
   List<EquipmentModel> loadedEquipments = [];
   List<EquipmentModel> searchedEquipments = [];
   List<EquipmentModel> equipmentsToBeAdded = [];
+  var logger = Logger();
 
   // For search box
   final filteredEquipmentsName = ValueNotifier<List<String>>(equipmentsRawList);
@@ -24,14 +24,15 @@ class EquipmentsController extends ChangeNotifier {
   EquipmentsController(this._appwriteDb);
 
   void add({
+    required String id,
     required String name,
     required int qty,
-    required TimeOfDay? time,
-    required TextEditingController power,
+    required DateTime time,
+    required int power,
   }) {
     equipmentsToBeAdded.add(
       EquipmentModel(
-        id: ID.unique(),
+        id: id,
         name: name,
         qty: qty,
         time: time,
@@ -41,10 +42,14 @@ class EquipmentsController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Pesquisa na lista `equipmentsRawList` e adiciona na lista `filteredEquipmentsName`
   Future<void> performSearch() async {
     searchState.value = LoadingSearchEquipmentState();
     equipmentsRawList.removeWhere(
-        (raw) => equipmentsToBeAdded.any((tobe) => tobe.name == raw));
+      (raw) =>
+          equipmentsToBeAdded.any((tobe) => tobe.name == raw) ||
+          loadedEquipments.any((loaded) => loaded.name == raw),
+    );
 
     filteredEquipmentsName.value = equipmentsRawList.where((equipmentName) {
       return equipmentName.toLowerCase().contains(
@@ -69,7 +74,7 @@ class EquipmentsController extends ChangeNotifier {
     try {
       loadedEquipments = await _appwriteDb.listDocuments();
     } catch (e) {
-      print(e);
+      logger.e(e);
     }
     // Notify listeners to redraw the UI.
     notifyListeners();
@@ -82,7 +87,7 @@ class EquipmentsController extends ChangeNotifier {
         await _appwriteDb.createDocument(equipment.toMap());
       }
     } on AppwriteException catch (e) {
-      print(e.message);
+      logger.e(e.message);
     }
     listDocuments();
   }
@@ -92,25 +97,25 @@ class EquipmentsController extends ChangeNotifier {
       List<EquipmentModel> equipmentsToBeAdded) async {
     // Create a new document in the collection.
     try {
-      for (var equipment in equipmentsToBeAdded) {
+      for (var toBeAdded in equipmentsToBeAdded) {
         // Get a list of all documents in the collection
         await listDocuments();
         // Check if the document already exists
-        if (loadedEquipments.any((doc) => doc.name == equipment.name)) {
-          print('document ${equipment.name} already exists');
+        if (loadedEquipments.any((doc) => doc.name == toBeAdded.name)) {
+          logger.i('document ${toBeAdded.name} already exists');
           // If it does, update the document
           await _appwriteDb.updateDocument(
               document: loadedEquipments
-                  .firstWhere((doc) => doc.name == equipment.name)
+                  .firstWhere((doc) => doc.name == toBeAdded.name)
                   .id,
-              data: equipment.toMap());
+              data: toBeAdded.toMap());
         } else {
-          print('creating document ${equipment.name}');
-          await _appwriteDb.createDocument(equipment.toMap());
+          logger.i('creating document ${toBeAdded.name}');
+          await _appwriteDb.createDocument(toBeAdded.toMap());
         }
       }
     } on AppwriteException catch (e) {
-      print(e.message);
+      logger.e(e.message);
     }
     listDocuments();
   }
@@ -118,9 +123,9 @@ class EquipmentsController extends ChangeNotifier {
   Future<void> deleteDocument(String documentId) async {
     try {
       await _appwriteDb.deleteDocument(documentId);
-      print('deletou o $documentId');
+      logger.i('deletou o $documentId');
     } on AppwriteException catch (e) {
-      print(e.message);
+      logger.e(e.message);
     }
   }
 
@@ -129,19 +134,19 @@ class EquipmentsController extends ChangeNotifier {
     try {
       // Get a list of all documents in the collection
       await listDocuments();
-      print('deleting all documents');
+      logger.i('deleting all documents');
       // Delete each document
       for (var doc in loadedEquipments) {
-        print('deleting document ${doc.id}');
+        logger.i('deleting document ${doc.id}');
         await _appwriteDb.deleteDocument(doc.id);
       }
-      print('done deleting');
+      logger.i('done deleting');
       // Refresh the list of documents
       await listDocuments();
     } on AppwriteException catch (e) {
-      print(e.message);
+      logger.e(e.message);
     } catch (e) {
-      print(e.toString());
+      logger.e(e.toString());
     }
   }
 
@@ -162,7 +167,7 @@ class EquipmentsController extends ChangeNotifier {
       );
     } on AppwriteException catch (e) {
       // Print the error message from Appwrite
-      print(e.message);
+      logger.e(e.message);
     }
     // Refresh the list of documents
     listDocuments();
@@ -177,13 +182,11 @@ class EquipmentsController extends ChangeNotifier {
         if (item.qty > 1) {
           // se for maior que um eu percorro essa lista somando cada 'power' na variável result
           for (var i = 0; i < item.qty; i++) {
-            var power = int.parse(item.power.text);
-            totalPower += power;
+            totalPower += item.power;
           }
         } else {
           // se não foi maior que um, somente somo o 'power' na variável result
-          var power = int.parse(item.power.text);
-          totalPower += power;
+          totalPower += item.power;
         }
       }
       return totalPower;
@@ -215,7 +218,7 @@ class EquipmentsController extends ChangeNotifier {
     for (var item in loadedEquipments.where(
       (equipment) => equipment.name == name,
     )) {
-      var time = item.time!;
+      var time = item.time;
       totalTime = '${time.hour}${time.minute == 0 ? '' : ':${time.minute}'}';
     }
     return totalTime;
@@ -228,13 +231,11 @@ class EquipmentsController extends ChangeNotifier {
       if (item.qty > 1) {
         // se for maior que um eu percorro essa lista somando cada 'power' na variável result
         for (var i = 0; i < item.qty; i++) {
-          var power = int.parse(item.power.text);
-          totalPower += power;
+          totalPower += item.power;
         }
       } else {
         // se não foi maior que um, somente somo o 'power' na variável result
-        var power = int.parse(item.power.text);
-        totalPower += power;
+        totalPower += item.power;
       }
     }
     return totalPower;
@@ -247,8 +248,8 @@ class EquipmentsController extends ChangeNotifier {
         in loadedEquipments.where((equipment) => equipment.name == name)) {
       double powerKW =
           individualTotalPower(name) / 1000; // Convert to kilowatts
-      double timeHours = item.time!.hour +
-          (item.time!.minute / 60); // Convert TimeOfDay to hours
+      double timeHours = item.time.hour +
+          (item.time.minute / 60); // Convert TimeOfDay to hours
       consumptionKWh = powerKW * timeHours; // Calculate consumption in kWh
     }
 
@@ -299,9 +300,8 @@ class EquipmentsController extends ChangeNotifier {
   }
 
   bool equipmentIsValid(List<EquipmentModel> list) {
-    return list.any((element) => int.parse(element.power.text) == 0) ||
+    return list.any((element) => element.power == 0) ||
         list.any((element) =>
-            ((element.time?.hour == 0) || element.time?.hour == null) &&
-            ((element.time?.minute == 0) || element.time?.minute == null));
+            (element.time.hour == 0) && (element.time.minute == 0));
   }
 }
