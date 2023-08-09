@@ -33,3 +33,5 @@ doc/api/
 *.lock
 *.bin
 *.java
+*.cc
+*.cmake
