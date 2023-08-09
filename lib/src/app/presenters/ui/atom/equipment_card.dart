@@ -1,25 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:uitcc/src/app/domain/entities/equipment_model.dart';
 import 'package:uitcc/src/app/presenters/controllers/equipments_controller.dart';
-import 'package:uitcc/src/app/presenters/ui/molecules/edit_equipment_bottomsheet.dart';
 import 'package:uitcc/src/core/services/helpers/helper.dart';
 
 class EquipmentCard extends StatelessWidget {
   final EquipmentModel equipment;
   final EquipmentsController ct;
-  // final String name;
-  // final int qty;
-  // final TimeOfDay time;
-  // final int power;
+  final Function() onEditPressed;
 
   const EquipmentCard({
     super.key,
     required this.equipment,
     required this.ct,
-    // required this.name,
-    // required this.qty,
-    // required this.time,
-    // required this.power,
+    required this.onEditPressed,
   });
 
   @override
@@ -61,11 +54,11 @@ class EquipmentCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${equipment.power.text}W',
+                        '${equipment.power}W',
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                       Text(
-                        '${equipment.time!.format(context)}h',
+                        '${equipment.time.hour}:${equipment.time.minute}h',
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ],
@@ -78,17 +71,7 @@ class EquipmentCard extends StatelessWidget {
                       color: Theme.of(context).colorScheme.background,
                     ),
                     child: IconButton(
-                      onPressed: () {
-                        showModalBottomSheet(
-                          context: context,
-                          isScrollControlled: true,
-                          useSafeArea: true,
-                          builder: (context) => EditEquipmentBottomSheet(
-                            equipmentModel: equipment,
-                            ct: ct,
-                          ),
-                        );
-                      },
+                      onPressed: onEditPressed,
                       icon: const Icon(Icons.edit),
                       iconSize: 20,
                     ),
