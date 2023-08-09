@@ -31,21 +31,26 @@ class HomePageState extends State<HomePage> {
     _homeStore.appState.value = LoadingAppState();
     try {
       _homeStore.addListener(() {
-        setState(() {});
+        if (mounted) {
+          setState(() {});
+        }
       });
       _equipmentsCt.addListener(() {
         if (mounted) {
           setState(() {});
         }
       });
+
       Future.wait([
         _loginCt.initUser(),
         _equipmentsCt.listDocuments(),
       ]).then((value) {
+        print(_loginCt.userPrefs.tax);
+        print(_loginCt.userPrefs.theme);
         if (_equipmentsCt.loadedEquipments.isEmpty) {
           showDialog(
             context: context,
-            builder: (context) => const RegisterEquipments(),
+            builder: (context) => const RegisterEquipmentsPage(),
           );
         }
         if (_loginCt.userPrefs.tax == 0.0) {
@@ -66,12 +71,18 @@ class HomePageState extends State<HomePage> {
         }
 
         _homeStore.appState.value = SuccessAppState();
-        setState(() {});
+        if (mounted) {
+          setState(() {});
+        }
       }).catchError(
         (_) {
           _homeStore.appState.value = FailedAppState(error: 'erro');
           print(_);
-          setState(() {});
+          print('aqui');
+
+          if (mounted) {
+            setState(() {});
+          }
         },
       );
     } on Exception catch (e) {
@@ -149,9 +160,15 @@ class HomePageState extends State<HomePage> {
                           ),
                         ),
                         endDrawer: SettingsDrawer(
+                          homeStore: _homeStore,
                           loginCt: _loginCt,
                           equipmentsCt: _equipmentsCt,
                         ),
+                        onEndDrawerChanged: (isOpened) {
+                          if (!isOpened) {
+                            setState(() {});
+                          }
+                        },
                         drawerEnableOpenDragGesture: true,
                       )
                     : const SizedBox.shrink(),
