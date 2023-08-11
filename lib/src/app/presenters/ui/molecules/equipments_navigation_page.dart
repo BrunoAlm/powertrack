@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:uitcc/src/app/presenters/controllers/equipments_controller.dart';
+import 'package:uitcc/src/app/presenters/ui/atom/active_button.dart';
 import 'package:uitcc/src/app/presenters/ui/atom/equipment_card.dart';
+import 'package:uitcc/src/app/presenters/ui/molecules/edit_equipment_bottomsheet.dart';
 import 'package:uitcc/src/app/presenters/ui/organisms/register_equipments_page.dart';
 
 class EquipmentsNavigationPage extends StatefulWidget {
@@ -16,6 +18,16 @@ class EquipmentsNavigationPage extends StatefulWidget {
 }
 
 class _EquipmentsNavigationPageState extends State<EquipmentsNavigationPage> {
+  @override
+  void initState() {
+    widget.equipmentsCt.addListener(() {
+      if (mounted) {
+        setState(() {});
+      }
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var equipments = widget.equipmentsCt.loadedEquipments;
@@ -48,8 +60,9 @@ class _EquipmentsNavigationPageState extends State<EquipmentsNavigationPage> {
                           context: context,
                           isScrollControlled: true,
                           useSafeArea: true,
-                          builder: (context) => Container(
-                            height: 300,
+                          builder: (context) => EditEquipmentBottomSheet(
+                            equip: equipments[index],
+                            ct: widget.equipmentsCt,
                           ),
                         ),
                       ),
@@ -60,13 +73,24 @@ class _EquipmentsNavigationPageState extends State<EquipmentsNavigationPage> {
             ],
           ),
         ),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () => showDialog(
-            context: context,
-            builder: (context) => const RegisterEquipmentsPage(),
+        bottomNavigationBar: Container(
+          padding: const EdgeInsets.only(bottom: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              ActiveButton(
+                onTap: () => showDialog(
+                  context: context,
+                  builder: (context) => RegisterEquipmentsPage(
+                    equipmentCt: widget.equipmentsCt,
+                  ),
+                ),
+                text: 'Adicionar',
+                icon: Icons.add_circle_outline,
+                position: ActiveButtonPosition.right,
+              ),
+            ],
           ),
-          label: const Text('Adicionar'),
-          icon: const Icon(Icons.add_circle_outline_rounded),
         ),
       ),
     );
