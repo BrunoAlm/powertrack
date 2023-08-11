@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:uitcc/src/app/presenters/ui/atom/active_button.dart';
 import 'package:uitcc/src/app/presenters/ui/organisms/added_equipments.dart';
 import 'package:uitcc/src/app/presenters/ui/organisms/result_search.dart';
@@ -9,8 +8,10 @@ import 'package:uitcc/src/app/presenters/ui/states/search_equipment_state.dart';
 import 'package:uitcc/src/app/presenters/controllers/equipments_controller.dart';
 
 class RegisterEquipmentsPage extends StatefulWidget {
+  final EquipmentsController equipmentCt;
   const RegisterEquipmentsPage({
     Key? key,
+    required this.equipmentCt,
   }) : super(key: key);
   @override
   RegisterEquipmentsPageState createState() => RegisterEquipmentsPageState();
@@ -18,8 +19,14 @@ class RegisterEquipmentsPage extends StatefulWidget {
 
 class RegisterEquipmentsPageState extends State<RegisterEquipmentsPage> {
   @override
+  void dispose() {
+    widget.equipmentCt.equipmentsToBeAdded.clear();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var equipmentCt = Modular.get<EquipmentsController>();
+    var ct = widget.equipmentCt;
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -39,7 +46,7 @@ class RegisterEquipmentsPageState extends State<RegisterEquipmentsPage> {
               ),
               const SizedBox(height: 20),
               ValueListenableBuilder(
-                valueListenable: equipmentCt.searchState,
+                valueListenable: ct.searchState,
                 builder: (context, SearchEquipmentState state, child) =>
                     Container(
                   padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
@@ -57,12 +64,12 @@ class RegisterEquipmentsPageState extends State<RegisterEquipmentsPage> {
                       SizedBox(
                         width: 300,
                         child: SearchTextField(
-                          equipmentsStore: equipmentCt,
+                          equipmentsStore: ct,
                         ),
                       ),
                       state is SuccessSearchEquipmentState
                           ? ResultSearch(
-                              ct: equipmentCt,
+                              ct: ct,
                             )
                           : state is FailedSearchEquipmentState
                               ? const Padding(
@@ -75,7 +82,7 @@ class RegisterEquipmentsPageState extends State<RegisterEquipmentsPage> {
                 ),
               ),
               const SizedBox(height: 10),
-              AddedEquipments(equipmentsCt: equipmentCt),
+              AddedEquipments(equipmentsCt: ct),
             ],
           ),
         ),
@@ -94,16 +101,14 @@ class RegisterEquipmentsPageState extends State<RegisterEquipmentsPage> {
               ),
               ActiveButton(
                 onTap: () {
-                  equipmentCt
-                      .compareAndCreateDocument(equipmentCt.equipmentsToBeAdded)
-                      .then(
+                  ct.compareAndCreateDocument(ct.equipmentsToBeAdded).then(
                     (value) {
-                      equipmentCt.equipmentsToBeAdded.clear();
+                      ct.equipmentsToBeAdded.clear();
                       Navigator.of(context).pop();
                     },
                   );
                 },
-                text: 'Salver',
+                text: 'Salvar',
                 position: ActiveButtonPosition.right,
                 icon: Icons.save_outlined,
               )
