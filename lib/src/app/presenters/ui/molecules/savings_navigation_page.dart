@@ -43,13 +43,10 @@ class _SavingsNavigationPageState extends State<SavingsNavigationPage> {
                     'Os sistemas de energia solar podem ajudá-lo a tornar sua casa mais independente da rede elétrica, o que pode torná-la mais resiliente a apagões.',
               ),
               const SizedBox(height: 16.0),
-              Text(
-                'Quanto custa instalar um sistema de energia solar?',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              const SizedBox(height: 8.0),
-              const Text(
-                'O custo de instalação de um sistema de energia solar varia de acordo com uma série de fatores, como o tamanho do sistema, o tipo de painel e a localização da sua casa. No entanto, os sistemas de energia solar estão se tornando cada vez mais acessíveis.',
+              const ElevatedListTile(
+                title: 'Quanto custa instalar um sistema de energia solar?',
+                subtitle:
+                    'O custo de instalação de um sistema de energia solar varia de acordo com uma série de fatores, como o tamanho do sistema, o tipo de painel e a localização da sua casa. No entanto, os sistemas de energia solar estão se tornando cada vez mais acessíveis.',
               ),
               const Text(
                 'Existem uma série de programas disponíveis para ajudar a financiar a instalação de um sistema de energia solar, como o Programa de Crédito Fiscal para Energia Renovável (ITC) do governo federal.',
