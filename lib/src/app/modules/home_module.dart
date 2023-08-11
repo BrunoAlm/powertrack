@@ -1,5 +1,4 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:uitcc/src/app/presenters/ui/organisms/register_equipments_page.dart';
 import 'package:uitcc/src/app/presenters/ui/pages/home_page.dart';
 import 'package:uitcc/src/app/presenters/controllers/equipments_controller.dart';
 import 'package:uitcc/src/app/presenters/controllers/home_store.dart';
@@ -18,9 +17,5 @@ class HomeModule extends Module {
   @override
   List<ModularRoute> get routes => [
         ChildRoute('/', child: (context, args) => const HomePage()),
-        ChildRoute(
-          '/register-equipments/',
-          child: (context, args) => const RegisterEquipmentsPage(),
-        ),
       ];
 }
