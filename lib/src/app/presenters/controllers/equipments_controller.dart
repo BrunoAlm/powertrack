@@ -123,6 +123,7 @@ class EquipmentsController extends ChangeNotifier {
   Future<void> deleteDocument(String documentId) async {
     try {
       await _appwriteDb.deleteDocument(documentId);
+      listDocuments();
       logger.i('deletou o $documentId');
     } on AppwriteException catch (e) {
       logger.e(e.message);
@@ -152,18 +153,11 @@ class EquipmentsController extends ChangeNotifier {
 
   Future<void> updateDocument({
     required EquipmentModel equipment,
-    required String documentId,
   }) async {
     try {
       await _appwriteDb.updateDocument(
-        document: documentId,
-        data: EquipmentModel(
-          id: equipment.id,
-          name: equipment.name,
-          qty: equipment.qty,
-          time: equipment.time,
-          power: equipment.power,
-        ).toMap(),
+        document: equipment.id,
+        data: equipment.toMap(),
       );
     } on AppwriteException catch (e) {
       // Print the error message from Appwrite
@@ -243,14 +237,21 @@ class EquipmentsController extends ChangeNotifier {
 
   double individualConsumption(String name) {
     double consumptionKWh = 0.0;
+    var items =
+        loadedEquipments.where((equipment) => equipment.name == name).toList();
 
-    for (var item
-        in loadedEquipments.where((equipment) => equipment.name == name)) {
-      double powerKW =
-          individualTotalPower(name) / 1000; // Convert to kilowatts
-      double timeHours = item.time.hour +
-          (item.time.minute / 60); // Convert TimeOfDay to hours
-      consumptionKWh = powerKW * timeHours; // Calculate consumption in kWh
+    if (items.isNotEmpty) {
+      double powerKW = double.parse(individualTotalPower(name).toString());
+
+      // Somamos o tempo de uso de todos os equipamentos
+      double totalUsageHours = 0.0;
+      for (var item in items) {
+        double timeHours = item.time.hour + (item.time.minute / 60);
+        totalUsageHours += timeHours;
+      }
+
+      // Calculamos o consumo mensal em kWh
+      consumptionKWh = (powerKW * totalUsageHours * 30) / 1000;
     }
 
     return consumptionKWh;
@@ -270,17 +271,15 @@ class EquipmentsController extends ChangeNotifier {
   }
 
   double totalCost(double kWhRate) {
-    int days = 30;
     double result = totalConsumption();
     double totalPayment = result * kWhRate;
-    return totalPayment * days;
+    return totalPayment;
   }
 
   double individualCost(String name, double kWhRate) {
-    int days = 30;
     double result = individualConsumption(name);
     double totalPayment = result * kWhRate;
-    return totalPayment * days;
+    return totalPayment;
   }
 
   int individualTotalQty(String name) {
