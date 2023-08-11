@@ -108,11 +108,33 @@ class SettingsDrawerState extends State<SettingsDrawer> {
                       loginCt: widget.loginCt,
                     ),
                   ),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Alterar taxa'),
-                      Icon(Icons.arrow_forward_rounded),
+                      Text(
+                        'Alterar taxa',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      const Icon(Icons.arrow_forward_rounded),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 25),
+                GestureDetector(
+                  onTap: () => showDialog(
+                    context: context,
+                    builder: (context) => ChangeTaxDialog(
+                      loginCt: widget.loginCt,
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Melhorias no app',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      const Icon(Icons.arrow_forward_rounded),
                     ],
                   ),
                 ),
@@ -135,7 +157,7 @@ class SettingsDrawerState extends State<SettingsDrawer> {
                     children: [
                       Text(
                         'Apagar equipametos',
-                        style: TextStyle(
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                             color: Theme.of(context).colorScheme.error),
                       ),
                       Icon(Icons.arrow_forward_rounded,
@@ -180,8 +202,8 @@ class SettingsDrawerState extends State<SettingsDrawer> {
                 const SizedBox(height: 30),
                 GestureDetector(
                   onTap: () {
-                    widget.loginCt.logout();
                     Modular.to.popUntil(ModalRoute.withName('/'));
+                    widget.loginCt.logout();
                   },
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
