@@ -27,7 +27,7 @@ class EquipmentModel {
 
   factory EquipmentModel.fromMap(Map<String, dynamic> map) {
     return EquipmentModel(
-      id: map['id'] as String,
+      id: map['\$id'] as String,
       name: map['name'] as String,
       qty: map['qty'] as int,
       time: DateTime.fromMillisecondsSinceEpoch(map['time']),
