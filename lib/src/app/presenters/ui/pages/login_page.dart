@@ -19,13 +19,11 @@ class LoginPageState extends State<LoginPage> {
         context: context,
         builder: (context) => AlertDialog(
           title: const Text('Erro'),
-          content: SizedBox(
-            height: 100,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [Text('Mensagem: $message'), Text('Código: $code')],
-            ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [Text('Mensagem: $message'), Text('Código: $code')],
           ),
           actions: [
             ElevatedButton(
