@@ -130,7 +130,7 @@ class _AddEquipmentBottomSheetState extends State<AddEquipmentBottomSheet> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            'Tempo de uso',
+                            'Tempo de uso (mês)',
                             style: Theme.of(context)
                                 .textTheme
                                 .titleMedium!
@@ -138,6 +138,8 @@ class _AddEquipmentBottomSheetState extends State<AddEquipmentBottomSheet> {
                                   fontWeight: FontWeight.bold,
                                 ),
                           ),
+                          Text('horas / dia',
+                              style: Theme.of(context).textTheme.titleSmall),
                           const SizedBox(height: 8),
                           SizedBox(
                             width: MediaQuery.sizeOf(context).width * .5,
