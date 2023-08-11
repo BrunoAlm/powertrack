@@ -20,6 +20,8 @@ class AppwriteMessage {
         return 'Falha ao comunicar com o servidor!';
       case 'Rate limit for the current endpoint has been exceeded. Please try again after some time.':
         return 'Muitas tentativas. Tente novamente mais tarde.';
+      case 'The current user session could not be found.':
+        return 'Erro inexplicável 🤣';
       default:
     }
     return messageTranslated;
