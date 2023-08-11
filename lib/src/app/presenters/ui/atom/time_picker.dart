@@ -42,6 +42,7 @@ class _TimePickerState extends State<TimePicker> {
           spacing: 0,
           itemHeight: 30,
           alignment: Alignment.center,
+          time: widget.equiModel.time,
           isForce2Digits: true,
           onTimeChange: (time) {
             setState(() {
@@ -61,7 +62,7 @@ class _TimePickerState extends State<TimePicker> {
               ),
               color: Theme.of(context).colorScheme.background,
             ),
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
             child: Text(
               'Tempo não pode ser 0',
               style: TextStyle(color: Theme.of(context).colorScheme.error),
