@@ -31,6 +31,7 @@ class _AppWidgetState extends State<AppWidget> {
       debugShowCheckedModeBanner: false,
       title: 'TCC - Uso de Energia',
       theme: ThemeData(
+        brightness: Brightness.light,
         useMaterial3: true,
         fontFamily: GoogleFonts.inter().fontFamily,
         colorScheme: lightColorScheme,
@@ -42,8 +43,10 @@ class _AppWidgetState extends State<AppWidget> {
         ),
       ),
       darkTheme: ThemeData(
+        brightness: Brightness.dark,
         useMaterial3: true,
-        colorScheme: darkColorScheme,
+        colorScheme: darkColorScheme.copyWith(
+            background: const Color.fromARGB(30, 30, 30, 80)),
         fontFamily: GoogleFonts.inter().fontFamily,
         cardTheme: const CardTheme(
           elevation: 0,
