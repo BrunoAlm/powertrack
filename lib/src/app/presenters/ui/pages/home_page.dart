@@ -50,7 +50,9 @@ class HomePageState extends State<HomePage> {
         if (_equipmentsCt.loadedEquipments.isEmpty) {
           showDialog(
             context: context,
-            builder: (context) => const RegisterEquipmentsPage(),
+            builder: (context) => RegisterEquipmentsPage(
+              equipmentCt: _equipmentsCt,
+            ),
           );
         }
         if (_loginCt.userPrefs.tax == 0.0) {
@@ -137,7 +139,7 @@ class HomePageState extends State<HomePage> {
                                 UserInfoAppBar(user: _loginCt.userConnected),
                                 Builder(
                                   builder: (context) => IconButton(
-                                    icon: const Icon(Icons.settings_sharp),
+                                    icon: const Icon(Icons.settings, size: 29),
                                     onPressed: () =>
                                         Scaffold.of(context).openEndDrawer(),
                                   ),
@@ -147,7 +149,7 @@ class HomePageState extends State<HomePage> {
                           ),
                         ),
                         body: Container(
-                          height: altura,
+                          height: altura - 90,
                           margin: const EdgeInsets.only(top: 20),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
