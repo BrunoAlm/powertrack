@@ -22,7 +22,12 @@ class AppwriteMessage {
         return 'Muitas tentativas. Tente novamente mais tarde.';
       case 'The current user session could not be found.':
         return 'Erro inexplicável 🤣';
+      case 'Invalid password: Password must be at least 8 characters and should not be one of the commonly used password.':
+        return 'Senha precisa de pelo menos 8 caracteres e não pode ser comum.';
+      case "Failed host lookup: 'console.brunoalm.online'":
+        return 'Sem conexão com a internet';
       default:
+        messageTranslated = 'Erro não tratado 😅';
     }
     return messageTranslated;
   }
