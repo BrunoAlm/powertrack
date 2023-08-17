@@ -53,12 +53,22 @@ class OverallConsumptionCard extends StatelessWidget {
                     'Valor a pagar',
                     style: Theme.of(context).textTheme.bodyLarge!.copyWith(),
                   ),
-                  Text(
-                    'R\$${Helper.formatDouble(equipmentsController.totalCost(loginController.userPrefs.tax))}',
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  Visibility(
+                      visible: loginController.userPrefs.tax == 0.0,
+                      replacement: Text(
+                        'R\$${Helper.formatDouble(equipmentsController.totalCost(loginController.userPrefs.tax))}',
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                      child: const Text(
+                        'Taxa não pode ser 0',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.red,
                           fontWeight: FontWeight.bold,
                         ),
-                  ),
+                      )),
                 ],
               ),
               Container(
