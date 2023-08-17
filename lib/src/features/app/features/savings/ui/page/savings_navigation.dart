@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:uitcc/src/features/app/features/equipments/presenters/controllers/equipments_controller.dart';
+import 'package:uitcc/src/features/app/features/savings/ui/atoms/elevated_list_tile.dart';
 
 class SavingsNavigation extends StatefulWidget {
-  const SavingsNavigation({super.key});
+  final EquipmentsController equipCt;
+  const SavingsNavigation({super.key, required this.equipCt});
 
   @override
   State<SavingsNavigation> createState() => _SavingsNavigationState();
@@ -15,6 +18,7 @@ class _SavingsNavigationState extends State<SavingsNavigation> {
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: SingleChildScrollView(
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
@@ -23,8 +27,10 @@ class _SavingsNavigationState extends State<SavingsNavigation> {
                     .textTheme
                     .titleLarge!
                     .copyWith(fontWeight: FontWeight.w600),
+                textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 8.0),
+              const SizedBox(height: 18.0),
+
               const ElevatedListTile(
                 title: 'Economizar dinheiro',
                 subtitle:
@@ -48,61 +54,17 @@ class _SavingsNavigationState extends State<SavingsNavigation> {
                 subtitle:
                     'O custo de instalação de um sistema de energia solar varia de acordo com uma série de fatores, como o tamanho do sistema, o tipo de painel e a localização da sua casa. No entanto, os sistemas de energia solar estão se tornando cada vez mais acessíveis.',
               ),
-              const Text(
-                'Existem uma série de programas disponíveis para ajudar a financiar a instalação de um sistema de energia solar, como o Programa de Crédito Fiscal para Energia Renovável (ITC) do governo federal.',
+              const SizedBox(height: 16.0),
+              const ElevatedListTile(
+                title: 'Financiamento na instalação',
+                subtitle:
+                    'Existem uma série de programas disponíveis para ajudar a financiar a instalação de um sistema de energia solar, como o Programa de Crédito Fiscal para Energia Renovável (ITC) do governo federal.',
               ),
               const SizedBox(height: 16.0),
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text('Obter uma cotação'),
-              ),
             ],
           ),
         ),
       ),
     );
-  }
-}
-
-class ElevatedListTile extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  const ElevatedListTile({
-    super.key,
-    required this.title,
-    required this.subtitle,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      tileColor: Theme.of(context).colorScheme.inverseSurface.withOpacity(.2),
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(12),
-        ),
-      ),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-      title: Text(
-        title,
-        style: Theme.of(context)
-            .textTheme
-            .titleMedium!
-            .copyWith(fontWeight: FontWeight.w600),
-      ),
-      subtitle: Text(
-        subtitle,
-        textAlign: TextAlign.justify,
-      ),
-    );
-  }
-}
-
-class MyWidget extends StatelessWidget {
-  const MyWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }
