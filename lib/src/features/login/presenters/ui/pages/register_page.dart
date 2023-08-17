@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:uitcc/src/core/services/helpers/helper.dart';
 import 'package:uitcc/src/features/login/presenters/controllers/register_controller.dart';
 import 'package:uitcc/src/features/login/presenters/states/register_state.dart';
 import 'package:uitcc/src/features/app/ui/atoms/custom_text_form_field.dart';
@@ -89,8 +89,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      SvgPicture.asset(
-                        'assets/images/svg/tcc_logo.svg',
+                      const Image(
+                        image: AssetImage('assets/images/tcc_logo.png'),
                         width: 200,
                       ),
                       const SizedBox(height: 40),
@@ -124,13 +124,21 @@ class _RegisterPageState extends State<RegisterPage> {
                         obscureText: true,
                       ),
                       const SizedBox(height: 40),
-                      ElevatedButton(
-                        onPressed: () {
-                          registerStore.register();
-                          // se der certo faz push pra /home
-                          // se der erro mostra popup de usuário e/ou senha incorretos
-                        },
-                        child: const Text('Criar'),
+                      Container(
+                        decoration: ShapeDecoration(
+                          shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(22))),
+                          shadows: ThemeHelper.shadow(context),
+                        ),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            registerStore.register();
+                            // se der certo faz push pra /home
+                            // se der erro mostra popup de usuário e/ou senha incorretos
+                          },
+                          child: const Text('Criar'),
+                        ),
                       ),
                       const SizedBox(height: 55),
                       const Text("Usando energia da forma correta"),
