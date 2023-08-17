@@ -41,6 +41,24 @@ class ImprovementsDialog extends StatelessWidget {
               ],
             ),
           ),
+          RichText(
+            text: TextSpan(
+              text: '2. ',
+              style: Theme.of(context).textTheme.bodyMedium,
+              children: [
+                TextSpan(
+                  text: 'Adição de gráficos: ',
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        decoration: TextDecoration.underline,
+                      ),
+                ),
+                TextSpan(
+                  text: 'Gráficos para facilitar a visualização dos dados',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                )
+              ],
+            ),
+          ),
         ],
       ),
       actions: [
