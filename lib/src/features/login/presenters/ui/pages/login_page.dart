@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:uitcc/src/features/login/presenters/states/login_state.dart';
 import 'package:uitcc/src/features/login/presenters/controllers/login_controller.dart';
 import 'package:uitcc/src/features/app/ui/atoms/custom_text_form_field.dart';
@@ -66,25 +65,17 @@ class LoginPageState extends State<LoginPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    'TCC\nENG. DA COMPUTAÇÃO',
-                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                          color: Theme.of(context).colorScheme.error,
-                        ),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: MediaQuery.sizeOf(context).width * .07),
-                  SvgPicture.asset(
-                    'assets/images/svg/tcc_logo.svg',
+                  const Image(
+                    image: AssetImage('assets/images/tcc_logo.png'),
                     width: 200,
                   ),
                   SizedBox(height: MediaQuery.sizeOf(context).width * .07),
                   Text(
                     'USO DE ENERGIA',
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineMedium!
-                        .copyWith(fontWeight: FontWeight.w900),
+                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                          fontWeight: FontWeight.w900,
+                          shadows: ThemeHelper.shadow(context),
+                        ),
                   ),
                   SizedBox(height: MediaQuery.sizeOf(context).width * .07),
                   CustomTextFormField(
@@ -117,8 +108,7 @@ class LoginPageState extends State<LoginPage> {
                       const Spacer(),
                       TextButton(
                         onPressed: () {
-                          // Modular.to.pushNamed('/recover-password/');
-                          Helper.notImplementedSnackbar(context);
+                          Modular.to.pushNamed('/recover-password/');
                         },
                         child: Text(
                           'Esqueci a senha',
