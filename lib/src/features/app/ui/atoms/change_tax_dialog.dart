@@ -2,18 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:uitcc/src/features/login/presenters/controllers/login_controller.dart';
 import 'package:uitcc/src/core/services/helpers/helper.dart';
 
-class ChangeTaxDialog extends StatelessWidget {
+class ChangeTaxDialog extends StatefulWidget {
   final LoginController loginCt;
-  final TextEditingController taxEC = TextEditingController();
 
-  ChangeTaxDialog({
+  const ChangeTaxDialog({
     super.key,
     required this.loginCt,
   });
 
   @override
+  State<ChangeTaxDialog> createState() => _ChangeTaxDialogState();
+}
+
+class _ChangeTaxDialogState extends State<ChangeTaxDialog> {
+  final TextEditingController taxEC = TextEditingController();
+
+  @override
+  void dispose() {
+    taxEC.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    taxEC.text = loginCt.userPrefs.tax.toString();
+    taxEC.text = widget.loginCt.userPrefs.tax.toString();
     return AlertDialog(
       title: const Text('Alterar taxa'),
       content: Column(
@@ -25,6 +37,7 @@ class ChangeTaxDialog extends StatelessWidget {
           const SizedBox(height: 20),
           TextField(
             controller: taxEC,
+            keyboardType: TextInputType.number,
             decoration: InputDecoration(
               hintText: 'Insira o valor',
               enabledBorder: OutlineInputBorder(
@@ -63,7 +76,7 @@ class ChangeTaxDialog extends StatelessWidget {
               String taxToAdd = taxEC.text.replaceAll(',', '.');
               double? taxValue = double.tryParse(taxToAdd);
               if (taxValue != null && taxValue >= 0.0 && taxValue <= 20.0) {
-                loginCt.updateTax(taxValue);
+                widget.loginCt.updateTax(taxValue);
                 Navigator.pop(context);
               } else {
                 String errorMessage =
