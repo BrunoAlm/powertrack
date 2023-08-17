@@ -80,18 +80,6 @@ class EquipmentsController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> createDocument(List<EquipmentModel> equipments) async {
-    // Create a new document in the collection.
-    try {
-      for (var equipment in equipments) {
-        await _appwriteDb.createDocument(equipment.toMap());
-      }
-    } on AppwriteException catch (e) {
-      logger.e(e.message);
-    }
-    listDocuments();
-  }
-
   // compare and create if doesn't exist
   Future<void> compareAndCreateDocument(
       List<EquipmentModel> equipmentsToBeAdded) async {
@@ -145,7 +133,6 @@ class EquipmentsController extends ChangeNotifier {
       // Refresh the list of documents
       await listDocuments();
     } on AppwriteException catch (e) {
-      
       logger.e(e.message);
     } catch (e) {
       logger.e(e.toString());
@@ -168,31 +155,6 @@ class EquipmentsController extends ChangeNotifier {
     listDocuments();
   }
 
-  int totalPower() {
-    int totalPower = 0;
-    // se minha lista de equipamentos não está vazia
-    if (loadedEquipments.isNotEmpty) {
-      // percorro ela e verifico se a quantidade de cada item é maior que 1
-      for (var item in loadedEquipments) {
-        if (item.qty > 1) {
-          // se for maior que um eu percorro essa lista somando cada 'power' na variável result
-          for (var i = 0; i < item.qty; i++) {
-            totalPower += item.power;
-          }
-        } else {
-          // se não foi maior que um, somente somo o 'power' na variável result
-          totalPower += item.power;
-        }
-      }
-      return totalPower;
-    }
-    return totalPower;
-  }
-
-  // função que mostra a quantidade total de equipamentos que o usuário possui
-  // ela percorre a lista de equipamentos e soma a quantidade de cada item
-  // caso não tenha nenhum item, a função retorna 0
-
   int totalEquipments() {
     int result = 0;
     // se minha lista de equipamentos não está vazia
@@ -207,20 +169,6 @@ class EquipmentsController extends ChangeNotifier {
     }
     return result;
   }
-
-  // String? individualTime(String name) {
-  //   String? totalTime;
-  //   for (var item in loadedEquipments.where(
-  //     (equipment) => equipment.name == name,
-  //   )) {
-  //     var time = item.time;
-  //     totalTime = '${time.hour}${time.minute == 0 ? '' : ':${time.minute}'}h';
-  //     if (time.hour == 0) {
-  //       totalTime = '${time.minute}min';
-  //     }
-  //   }
-  //   return totalTime;
-  // }
 
   int individualTotalPower(String name) {
     int totalPower = 0;
@@ -286,25 +234,4 @@ class EquipmentsController extends ChangeNotifier {
     return totalPayment;
   }
 
-  int individualTotalQty(String name) {
-    int qty = 0;
-
-    // se minha lista de equipamentos não está vazia
-    if (loadedEquipments.isNotEmpty) {
-      // percorro ela e verifico se a quantidade de cada item é maior que 1
-      for (var i = 0; i < loadedEquipments.length; i++) {
-        qty = loadedEquipments
-            .where((equipment) => equipment.name == name)
-            .first
-            .qty;
-      }
-    }
-    return qty;
-  }
-
-  bool equipmentIsValid(List<EquipmentModel> list) {
-    return list.any((element) => element.power == 0) ||
-        list.any((element) =>
-            (element.time.hour == 0) && (element.time.minute == 0));
-  }
 }
