@@ -79,6 +79,9 @@ class _EditEquipmentBottomSheetState extends State<EditEquipmentBottomSheet> {
                           if (value == null || value.isEmpty) {
                             return 'Preencha o campo';
                           }
+                          if (value.length >= 30) {
+                            return 'Não pode ser maior que 30 caracteres';
+                          }
                           return null;
                         },
                       ),
