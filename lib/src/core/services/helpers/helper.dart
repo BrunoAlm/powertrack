@@ -32,13 +32,11 @@ class Helper {
   }
 
   static ScaffoldFeatureController notImplementedSnackbar(
-          BuildContext context) =>
+          BuildContext context, String text) =>
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           backgroundColor: Theme.of(context).colorScheme.error,
-          content: const Text(
-            'Alteração de foto não implementada',
-          ),
+          content: Text(text),
         ),
       );
 
