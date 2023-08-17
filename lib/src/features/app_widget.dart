@@ -28,7 +28,7 @@ class _AppWidgetState extends State<AppWidget> {
     Modular.get<AppwriteAuth>().initClient();
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      title: 'TCC - Uso de Energia',
+      title: 'PowerTrack',
       theme: ThemeData(
         brightness: Brightness.light,
         useMaterial3: true,
