@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:logger/logger.dart';
 import 'package:uitcc/src/core/services/helpers/helper.dart';
+import 'package:uitcc/src/features/app/features/savings/ui/page/savings_navigation.dart';
 import 'package:uitcc/src/features/app/ui/molecules/user_info_appbar.dart';
 import 'package:uitcc/src/features/app/ui/molecules/bottom_navigation.dart';
 import 'package:uitcc/src/features/app/features/equipments/presenters/ui/page/equipments_navigation.dart';
 import 'package:uitcc/src/features/app/features/home/presenter/ui/page/home_page.dart';
-import 'package:uitcc/src/features/app/features/savings/ui/page/savings_navigation.dart';
 import 'package:uitcc/src/features/app/ui/molecules/settings_drawer.dart';
 import 'package:uitcc/src/features/app/features/equipments/presenters/controllers/equipments_controller.dart';
 import 'package:uitcc/src/features/app/features/home/presenter/store/home_store.dart';
@@ -33,12 +33,27 @@ class HomePageState extends State<HomePage> {
 
     _appStore.appState.addListener(() {
       final appState = _appStore.appState.value;
-      if (appState is FailedAppState) {
-        Helper.appwriteErrorDialog(
-          message: appState.message,
-          code: appState.code,
-          context: context,
-        );
+
+      switch (appState) {
+        case FailedAppState():
+          Helper.appwriteErrorDialog(
+            message: appState.message,
+            code: appState.code,
+            context: context,
+          );
+          break;
+        // case SuccessAppState():
+        //   if (_loginCt.userPrefs.tax == 0.0) {
+        //     showDialog(
+        //       context: context,
+        //       builder: (context) {
+        //         return const SimpleDialog(
+        //           title: Text('data'),
+        //         );
+        //       },
+        //     );
+        //   }
+        //   break;
       }
     });
 
@@ -74,13 +89,37 @@ class HomePageState extends State<HomePage> {
           ),
         );
       }
-      if (_loginCt.userPrefs.tax == 0.0) {
+      if (_equipmentsCt.loadedEquipments.isNotEmpty &&
+          _loginCt.userPrefs.tax == 0.0) {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
             title: const Text('Aviso'),
-            content: const Text(
-                'Adicione o valor da taxa da sua concessionária de energia na aba de configurações'),
+            content: const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'É preciso alterar a taxa para poder calcular os valores.',
+                ),
+                SizedBox(height: 10),
+                Text(
+                  'A taxa é o valor que a sua distribuidora de energia cobra por kWh consumido.',
+                ),
+                SizedBox(height: 10),
+                Wrap(
+                  direction: Axis.horizontal,
+                  children: [
+                    Text('Você pode alterar clicando no ícone'),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      child: Icon(Icons.settings),
+                    ),
+                    Text('e depois em "Alterar taxa"'),
+                  ],
+                )
+              ],
+            ),
             actions: [
               ElevatedButton(
                 onPressed: () => Modular.to.pop(),
@@ -128,7 +167,8 @@ class HomePageState extends State<HomePage> {
       EquipmentsNavigation(
         equipmentsCt: _equipmentsCt,
       ),
-      const SavingsNavigation(),
+      SavingsNavigation(equipCt: _equipmentsCt),
+      // GanttChart(equipmentsList: _equipmentsCt.loadedEquipments)
     ];
 
     return SafeArea(
