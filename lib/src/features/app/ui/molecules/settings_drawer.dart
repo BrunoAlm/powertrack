@@ -54,7 +54,7 @@ class SettingsDrawerState extends State<SettingsDrawer> {
                       child: GestureDetector(
                         onTap: () async {
                           Navigator.pop(context);
-                          Helper.notImplementedSnackbar(context);
+                          Helper.notImplementedSnackbar(context, 'Alteração de foto não implementada');
                         },
                         child: Container(
                           decoration: ShapeDecoration(
