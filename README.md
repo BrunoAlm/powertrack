@@ -54,3 +54,4 @@ A ideia é fazer uma média geral de consumo energético da pessoa
 #### Melhorias
 O que pode ser melhorado:
 1. Integração de dispositivos IOT com a API do banco, para atualização de consumo (kWh) e tempo de uso do dispositivo em tempo real ou diário.
+2. Adição de gráficos para facilitar a visualização dos dados.
