@@ -193,21 +193,29 @@ class HomePageState extends State<HomePage> {
                               child: Padding(
                                 padding:
                                     const EdgeInsets.fromLTRB(20, 30, 20, 0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    UserInfoAppBar(
-                                        user: _loginCt.userConnected),
-                                    Builder(
-                                      builder: (context) => IconButton(
-                                        icon: const Icon(Icons.settings,
-                                            size: 29),
-                                        onPressed: () => Scaffold.of(context)
-                                            .openEndDrawer(),
-                                      ),
+                                child: Center(
+                                  child: ConstrainedBox(
+                                    constraints: const BoxConstraints(
+                                      maxWidth: 800,
                                     ),
-                                  ],
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        UserInfoAppBar(
+                                            user: _loginCt.userConnected),
+                                        Builder(
+                                          builder: (context) => IconButton(
+                                            icon: const Icon(Icons.settings,
+                                                size: 29),
+                                            onPressed: () =>
+                                                Scaffold.of(context)
+                                                    .openEndDrawer(),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),

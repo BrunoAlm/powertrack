@@ -22,18 +22,24 @@ class HomeNavigationPage extends StatefulWidget {
 class HomeNavigationPageState extends State<HomeNavigationPage> {
   @override
   Widget build(BuildContext context) {
-    var equipments = widget.equipmentsStore.loadedEquipments;
     return Expanded(
       child: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 10, 16, 0),
-              child: OverallConsumptionCard(
-                equipmentsController: widget.equipmentsStore,
-                loginController: widget.loginController,
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 10, 16, 0),
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(
+                    maxWidth: 500,
+                  ),
+                  child: OverallConsumptionCard(
+                    equipmentsController: widget.equipmentsStore,
+                    loginController: widget.loginController,
+                  ),
+                ),
               ),
             ),
             Visibility(
