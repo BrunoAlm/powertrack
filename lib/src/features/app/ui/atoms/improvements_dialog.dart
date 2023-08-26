@@ -16,6 +16,7 @@ class ImprovementsDialog extends StatelessWidget {
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             'Melhorias pensadas para versões futuras:',
@@ -28,32 +29,33 @@ class ImprovementsDialog extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyMedium,
               children: [
                 TextSpan(
-                  text: 'Integração de dispositivos IOT: ',
+                  text: 'Integração de dispositivos IOT',
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         decoration: TextDecoration.underline,
                       ),
                 ),
                 TextSpan(
                   text:
-                      'Coleta de consumo (kWh) e tempo de uso em tempo real ou diário.',
+                      ': Coleta de consumo (kWh) e tempo de uso em tempo real ou diário.',
                   style: Theme.of(context).textTheme.bodyMedium,
                 )
               ],
             ),
           ),
+          const SizedBox(height: 5),
           RichText(
             text: TextSpan(
               text: '2. ',
               style: Theme.of(context).textTheme.bodyMedium,
               children: [
                 TextSpan(
-                  text: 'Adição de gráficos: ',
+                  text: 'Adição de gráficos',
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         decoration: TextDecoration.underline,
                       ),
                 ),
                 TextSpan(
-                  text: 'Gráficos para facilitar a visualização dos dados',
+                  text: ': Gráficos para facilitar a visualização dos dados',
                   style: Theme.of(context).textTheme.bodyMedium,
                 )
               ],
