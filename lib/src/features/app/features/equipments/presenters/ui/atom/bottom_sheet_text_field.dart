@@ -6,6 +6,8 @@ class BottomSheetTextField extends StatelessWidget {
   final TextInputType? inputType;
   final TextEditingController textController;
   final String? Function(String? value)? validator;
+  final TextInputAction? inputAction;
+  final Function(String value)? onSubmit;
   const BottomSheetTextField({
     Key? key,
     required this.icon,
@@ -13,6 +15,8 @@ class BottomSheetTextField extends StatelessWidget {
     this.validator,
     this.inputType = TextInputType.text,
     this.labelText,
+    this.inputAction,
+    this.onSubmit,
   }) : super(key: key);
 
   @override
@@ -23,31 +27,27 @@ class BottomSheetTextField extends StatelessWidget {
         controller: textController,
         keyboardType: inputType,
         validator: validator,
+        textInputAction: inputAction,
+        onFieldSubmitted: onSubmit,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         decoration: InputDecoration(
-          errorStyle: Theme.of(context)
-              .textTheme
-              .bodyMedium!
-              .copyWith(color: Colors.red),
           labelText: labelText,
-          labelStyle: Theme.of(context)
-              .textTheme
-              .bodyMedium!
-              .copyWith(color: Colors.grey),
+          labelStyle: Theme.of(context).textTheme.labelLarge,
           contentPadding:
               const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-          prefixIcon: Icon(icon),
+          prefixIcon: Padding(
+            padding: const EdgeInsets.only(left: 20, right: 10),
+            child: Icon(icon),
+          ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(25),
             borderSide: BorderSide(
-              width: 2,
               color: Theme.of(context).colorScheme.onSurface,
             ),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(25),
             borderSide: BorderSide(
-              width: 2,
               color: Theme.of(context).colorScheme.onSurface,
             ),
           ),
@@ -55,14 +55,12 @@ class BottomSheetTextField extends StatelessWidget {
             borderRadius: BorderRadius.circular(25),
             borderSide: BorderSide(
               color: Theme.of(context).colorScheme.error,
-              width: 2,
             ),
           ),
           focusedErrorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(25),
             borderSide: BorderSide(
               color: Theme.of(context).colorScheme.error,
-              width: 2,
             ),
           ),
         ),
