@@ -12,38 +12,41 @@ class QtyDropdown extends StatefulWidget {
 class _QtyDropdownState extends State<QtyDropdown> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: ShapeDecoration(
-        shape: RoundedRectangleBorder(
-          borderRadius: const BorderRadius.all(Radius.circular(25)),
-          side: BorderSide(
-            width: 2,
+    return InputDecorator(
+      decoration: InputDecoration(
+        labelText: 'Quant.',
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(25),
+          borderSide: BorderSide(
             color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
+        contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
       ),
-      padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-      child: DropdownButton<int>(
-        value: widget.equipment.qty,
-        onChanged: (value) {
-          widget.equipment.qty = value!;
-          setState(() {});
-        },
-        underline: const SizedBox(),
-        menuMaxHeight: 260,
-        borderRadius: BorderRadius.circular(12),
-        padding: EdgeInsets.zero,
-        items: List.generate(
-          10,
-          (index) {
-            return DropdownMenuItem(
-              value: index + 1,
-              child: Text(
-                (index + 1).toString(),
-                style: Theme.of(context).textTheme.labelLarge,
-              ),
-            );
+      child: ButtonTheme(
+        materialTapTargetSize: MaterialTapTargetSize.padded,
+        child: DropdownButton<int>(
+          value: widget.equipment.qty,
+          onChanged: (value) {
+            widget.equipment.qty = value!;
+            setState(() {});
           },
+          underline: const SizedBox(),
+          menuMaxHeight: 250,
+          borderRadius: BorderRadius.circular(12),
+          padding: EdgeInsets.zero,
+          items: List.generate(
+            15,
+            (index) {
+              return DropdownMenuItem(
+                value: index + 1,
+                child: Text(
+                  (index + 1).toString(),
+                  style: Theme.of(context).textTheme.labelLarge,
+                ),
+              );
+            },
+          ),
         ),
       ),
     );
