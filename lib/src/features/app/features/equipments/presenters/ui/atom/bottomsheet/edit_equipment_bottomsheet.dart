@@ -73,7 +73,7 @@ class _EditEquipmentBottomSheetState extends State<EditEquipmentBottomSheet> {
                     children: [
                       BottomSheetTextField(
                         textController: nNameEC,
-                        hintText: 'Nome do equipamento',
+                        labelText: 'Nome',
                         icon: Icons.text_fields_rounded,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -85,14 +85,15 @@ class _EditEquipmentBottomSheetState extends State<EditEquipmentBottomSheet> {
                           return null;
                         },
                       ),
-                      const SizedBox(height: 5),
+                      const SizedBox(height: 15),
                       Row(
                         mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Flexible(
                             child: BottomSheetTextField(
                               textController: nPowerEC,
-                              hintText: 'Potência do equipamento (W)',
+                              labelText: 'Potência (W)',
                               icon: Icons.power_input_rounded,
                               inputType: TextInputType.number,
                               validator: (value) {

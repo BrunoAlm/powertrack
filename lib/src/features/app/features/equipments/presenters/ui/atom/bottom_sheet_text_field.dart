@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class BottomSheetTextField extends StatelessWidget {
   final IconData icon;
-  final String hintText;
+  final String? labelText;
   final TextInputType? inputType;
   final TextEditingController textController;
   final String? Function(String? value)? validator;
@@ -12,7 +12,7 @@ class BottomSheetTextField extends StatelessWidget {
     required this.textController,
     this.validator,
     this.inputType = TextInputType.text,
-    required this.hintText,
+    this.labelText,
   }) : super(key: key);
 
   @override
@@ -25,12 +25,17 @@ class BottomSheetTextField extends StatelessWidget {
         validator: validator,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         decoration: InputDecoration(
-          hintText: hintText,
-          hintStyle: Theme.of(context)
+          errorStyle: Theme.of(context)
+              .textTheme
+              .bodyMedium!
+              .copyWith(color: Colors.red),
+          labelText: labelText,
+          labelStyle: Theme.of(context)
               .textTheme
               .bodyMedium!
               .copyWith(color: Colors.grey),
-          contentPadding: EdgeInsets.zero,
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
           prefixIcon: Icon(icon),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(25),

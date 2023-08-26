@@ -75,8 +75,8 @@ class _AddEquipmentBottomSheetState extends State<AddEquipmentBottomSheet> {
                     children: [
                       BottomSheetTextField(
                         textController: nNameEC,
+                        labelText: 'Nome',
                         icon: Icons.text_fields_rounded,
-                        hintText: 'Nome do equipamento',
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Preencha o campo';
@@ -84,15 +84,16 @@ class _AddEquipmentBottomSheetState extends State<AddEquipmentBottomSheet> {
                           return null;
                         },
                       ),
-                      const SizedBox(height: 5),
+                      const SizedBox(height: 15),
                       Row(
                         mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Flexible(
                             child: BottomSheetTextField(
                               textController: nPowerEC,
+                              labelText: 'Potência (W)',
                               inputType: TextInputType.number,
-                              hintText: 'Potência do equipamento (W)',
                               icon: Icons.power_input_rounded,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
