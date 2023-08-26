@@ -75,6 +75,7 @@ class _EditEquipmentBottomSheetState extends State<EditEquipmentBottomSheet> {
                         textController: nNameEC,
                         labelText: 'Nome',
                         icon: Icons.text_fields_rounded,
+                        inputAction: TextInputAction.next,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Preencha o campo';
@@ -87,14 +88,15 @@ class _EditEquipmentBottomSheetState extends State<EditEquipmentBottomSheet> {
                       ),
                       const SizedBox(height: 15),
                       Row(
-                        mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Flexible(
+                          Expanded(
+                            flex: 3,
                             child: BottomSheetTextField(
                               textController: nPowerEC,
                               labelText: 'Potência (W)',
                               icon: Icons.power_input_rounded,
+                              inputAction: TextInputAction.next,
                               inputType: TextInputType.number,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
@@ -115,7 +117,7 @@ class _EditEquipmentBottomSheetState extends State<EditEquipmentBottomSheet> {
                             ),
                           ),
                           const SizedBox(width: 10),
-                          QtyDropdown(equipment: equipment),
+                          Expanded(child: QtyDropdown(equipment: equipment)),
                         ],
                       ),
                       const SizedBox(height: 15),
