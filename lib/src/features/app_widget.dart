@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:uitcc/src/features/app/ui/atoms/scroll_behavior.dart';
 import 'package:uitcc/src/features/login/presenters/controllers/login_controller.dart';
 import 'package:uitcc/src/core/services/theme/color_schemes.g.dart';
 import 'package:uitcc/src/core/data/datasources/appwrite_auth.dart';
@@ -27,6 +28,7 @@ class _AppWidgetState extends State<AppWidget> {
   Widget build(BuildContext context) {
     Modular.get<AppwriteAuth>().initClient();
     return MaterialApp.router(
+      scrollBehavior: MyCustomScrollBehavior(),
       debugShowCheckedModeBanner: false,
       title: 'PowerTrack',
       theme: ThemeData(
