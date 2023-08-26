@@ -77,23 +77,28 @@ class _AddEquipmentBottomSheetState extends State<AddEquipmentBottomSheet> {
                         textController: nNameEC,
                         labelText: 'Nome',
                         icon: Icons.text_fields_rounded,
+                        inputAction: TextInputAction.next,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Preencha o campo';
+                          }
+                          if (value.length >= 30) {
+                            return 'Não pode ser maior que 30 caracteres';
                           }
                           return null;
                         },
                       ),
                       const SizedBox(height: 15),
                       Row(
-                        mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Flexible(
+                          Expanded(
+                            flex: 3,
                             child: BottomSheetTextField(
                               textController: nPowerEC,
                               labelText: 'Potência (W)',
                               inputType: TextInputType.number,
+                              inputAction: TextInputAction.next,
                               icon: Icons.power_input_rounded,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
@@ -114,7 +119,7 @@ class _AddEquipmentBottomSheetState extends State<AddEquipmentBottomSheet> {
                             ),
                           ),
                           const SizedBox(width: 10),
-                          QtyDropdown(equipment: equipment),
+                          Expanded(child: QtyDropdown(equipment: equipment)),
                         ],
                       ),
                       const SizedBox(height: 15),
