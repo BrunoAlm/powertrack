@@ -43,7 +43,7 @@ class _DesktopLoginPageState extends State<DesktopLoginPage> {
                   ),
                   SizedBox(height: MediaQuery.sizeOf(context).width * .03),
                   Text(
-                    'USO DE ENERGIA',
+                    'POWERTRACK',
                     style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                           fontWeight: FontWeight.w900,
                           shadows: ThemeHelper.shadow(context),
