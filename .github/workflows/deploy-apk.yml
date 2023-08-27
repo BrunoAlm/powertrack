@@ -3,7 +3,7 @@ name: Build and Deploy APK
 on:
   push:
     branches:
-      - main  # Ou a branch que você deseja monitorar
+      - main
 
 jobs:
   build:
@@ -16,7 +16,8 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: stable
+            flutter-version: '3.10.7'
+            channel: 'stable'
 
       - name: Install dependencies
         run: flutter pub get
