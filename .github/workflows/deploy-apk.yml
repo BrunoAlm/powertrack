@@ -31,5 +31,4 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            mkdir -p ${{ secrets.APK_PATH }}
             scp ./build/app/outputs/flutter-apk/app-release.apk ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:${{ secrets.APK_PATH }}/powertrack.apk
