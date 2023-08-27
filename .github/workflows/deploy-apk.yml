@@ -18,7 +18,7 @@ jobs:
         with:
             flutter-version: 3.13.0  # Especifica a versão desejada
 
-      - name: Install dependencies
+      - name: Pub get
         run: flutter pub get
 
       - name: Build APK
