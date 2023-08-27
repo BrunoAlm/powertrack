@@ -15,10 +15,9 @@ dependencies:
   appwrite: ^9.0.0
   google_fonts: ^5.1.0
   logger: ^2.0.1
-
-
   flutter_time_picker_spinner:
-    path: ../flutter_time_picker_spinner
+      git:
+        url: https://github.com/brunoalm/flutter_time_picker_spinner.git
 
 dev_dependencies:
   flutter_test:
