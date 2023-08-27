@@ -9,11 +9,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
   flutter_modular: ^5.0.3
   flutter_svg: ^2.0.6
   appwrite: ^9.0.0
   google_fonts: ^5.1.0
   logger: ^2.0.1
+
 
   flutter_time_picker_spinner:
     path: ../flutter_time_picker_spinner
