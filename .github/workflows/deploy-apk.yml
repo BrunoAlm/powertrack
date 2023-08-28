@@ -8,7 +8,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -32,3 +31,5 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             scp ./build/app/outputs/flutter-apk/app-release.apk ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:${{ secrets.APK_PATH }}/powertrack.apk
+        env:
+          SSH_KNOWN_HOSTS_CONTENT: ${{ secrets.SSH_KNOWN_HOSTS_CONTENT }}
