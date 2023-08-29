@@ -26,18 +26,7 @@ jobs:
         run: flutter pub get
 
       - name: Build APK
-        run: flutter build apk --release
-
-      - name: Check APK folder
-        run: |
-          echo 'pwd'
-          pwd
-          echo 'ls'
-          ls
-          echo 'cd flutter-apk'
-          cd build/app/outputs/flutter-apk/
-          echo 'ls'
-          ls
+        # run: flutter build apk --release
 
       - name: Transfer APK to Server
         uses: appleboy/ssh-action@master
@@ -47,6 +36,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
+            pwd
+            ls
             scp ./build/app/outputs/flutter-apk/app-release.apk ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:${{ secrets.APK_PATH }}/powertrack.apk
             scp app-release.apk ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:${{ secrets.APK_PATH }}/powertrack.apk
         env:
