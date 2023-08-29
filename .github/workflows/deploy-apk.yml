@@ -48,7 +48,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
-            wget https://{{ github.workspace }}/artifacts/app-release.apk --output-document app-release.apk
+            wget https://${{ github.workspace }}/artifacts/app-release.apk --output-document app-release.apk
             scp app-release.apk ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:${{ secrets.APK_PATH }}
         
         env:
