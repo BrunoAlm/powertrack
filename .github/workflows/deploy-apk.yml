@@ -28,6 +28,12 @@ jobs:
       - name: Build APK
         run: flutter build apk --release
 
+      - name: Upload APK to Artifactory
+        uses: actions/upload-artifact@v1
+        with:
+          name: app-release.apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+
       - name: Download APK from Artifactory
         uses: actions/download-artifact@v3
         with:
