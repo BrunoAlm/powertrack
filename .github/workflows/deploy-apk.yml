@@ -30,8 +30,8 @@ jobs:
 
       - name: Get APK path
           id: get_apk_path
-          run: |
-            echo "::set-output name=apk_path::$(find build/app/outputs/flutter-apk -type f -name 'app-release.apk')"
+        run: |
+          echo "::set-output name=apk_path::$(find build/app/outputs/flutter-apk -type f -name 'app-release.apk')"
 
       - name: Transfer APK to Server
         uses: appleboy/ssh-action@master
