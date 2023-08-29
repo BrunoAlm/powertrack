@@ -12,24 +12,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       
-      - name: Add known host key
-        run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+      
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
             flutter-version: 3.13.0  # Especifica a versão desejada
 
-     # - name: Pub get
-     #   run: flutter pub get
+      - name: Pub get
+        run: flutter pub get
 
-     # - name: Build APK
-     #   run: flutter build apk --release
+      - name: Build APK
+        run: flutter build apk --release
 
       - name: Upload APK to Artifactory
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v3
         with:
           name: app-release.apk
           path: build/app/outputs/flutter-apk/app-release.apk
@@ -38,7 +35,12 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: app-release.apk
-          path: build/app/outputs/flutter-apk/
+          path: /temp
+
+      - name: Add known host key
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
 
       - name: Transfer APK to Server
         uses: appleboy/ssh-action@master
@@ -48,10 +50,11 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
-            ls -a
-         #   wget https://${{ github.workspace }}/artifacts/app-release.apk --output-document app-release.apk
-         #   scp app-release.apk ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:${{ secrets.APK_PATH }}
-      - name:
-        run: docker ps
+            scp -r /temp/app-release.apk ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:${{ secrets.APK_PATH }}
         env:
           SSH_KNOWN_HOSTS_CONTENT: ${{ secrets.SSH_KNOWN_HOSTS_CONTENT }}
+
+      - name:
+        run: docker ps
+
+        
