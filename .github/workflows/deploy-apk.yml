@@ -28,10 +28,11 @@ jobs:
       - name: Build APK
         run: flutter build apk --release
 
-      - name: Get APK path
-        id: get_apk_path
-        run: |
-          echo "::set-output name=apk_path::$(find build/app/outputs/flutter-apk -type f -name 'app-release.apk')"
+      - name: Upload APK to Artifactory
+        uses: actions/upload-artifact@v1
+        with:
+          name: app-release.apk
+          path: build/app/outputs/flutter-apk/app-release.apk
 
       - name: Transfer APK to Server
         uses: appleboy/ssh-action@master
@@ -41,7 +42,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
-            scp -r ${{ steps.get_apk_path.outputs.apk_path }} ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:${{ secrets.APK_PATH }}
+            curl https://${{ github.workspace }}/artifacts/app-release.apk --output ${{ secrets.APK_PATH }}
         
         env:
           SSH_KNOWN_HOSTS_CONTENT: ${{ secrets.SSH_KNOWN_HOSTS_CONTENT }}
