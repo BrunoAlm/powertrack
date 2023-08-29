@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       
       - name: Add known host key
         run: |
@@ -18,7 +18,7 @@ jobs:
           ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
 
       - name: Setup Flutter
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@v3
         with:
             flutter-version: 3.13.0  # Especifica a versão desejada
 
@@ -27,6 +27,11 @@ jobs:
 
       - name: Build APK
         run: flutter build apk --release
+
+      - name: Check APK folder
+        run: |
+          pwd
+          ls
 
       - name: Transfer APK to Server
         uses: appleboy/ssh-action@master
