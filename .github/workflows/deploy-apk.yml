@@ -29,7 +29,7 @@ jobs:
         run: flutter build apk --release
 
       - name: Get APK path
-          id: get_apk_path
+        id: get_apk_path
         run: |
           echo "::set-output name=apk_path::$(find build/app/outputs/flutter-apk -type f -name 'app-release.apk')"
 
