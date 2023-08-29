@@ -26,11 +26,15 @@ jobs:
         run: flutter pub get
 
       - name: Build APK
-        run: flutter build apk --release
+        run: |
+          mkdir ~/flutter
+          flutter config --build-dir=~/flutter
+          flutter build apk --release
+          ls -a
 
       - name: cade a pasta build
         run: ls -R
-        
+
       - name: Transfer APK to Server
         uses: appleboy/ssh-action@master
         with:
