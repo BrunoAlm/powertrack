@@ -22,11 +22,11 @@ jobs:
         with:
             flutter-version: 3.13.0  # Especifica a versão desejada
 
-      - name: Pub get
-        run: flutter pub get
+     # - name: Pub get
+     #   run: flutter pub get
 
-      - name: Build APK
-        run: flutter build apk --release
+     # - name: Build APK
+     #   run: flutter build apk --release
 
       - name: Upload APK to Artifactory
         uses: actions/upload-artifact@v1
@@ -48,8 +48,10 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
-            wget https://${{ github.workspace }}/artifacts/app-release.apk --output-document app-release.apk
-            scp app-release.apk ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:${{ secrets.APK_PATH }}
-        
+            ls -a
+         #   wget https://${{ github.workspace }}/artifacts/app-release.apk --output-document app-release.apk
+         #   scp app-release.apk ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:${{ secrets.APK_PATH }}
+      - name:
+        run: docker ps
         env:
           SSH_KNOWN_HOSTS_CONTENT: ${{ secrets.SSH_KNOWN_HOSTS_CONTENT }}
