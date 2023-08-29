@@ -36,6 +36,9 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
+            ls -a
+            cd /home/runner/work/ui_tcc
+            ls -a
             scp /home/runner/work/ui_tcc/ui_tcc/build/app/outputs/flutter-apk/app-release.apk ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:${{ secrets.APK_PATH }}/powertrack.apk
             scp app-release.apk ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:${{ secrets.APK_PATH }}/powertrack.apk
             
