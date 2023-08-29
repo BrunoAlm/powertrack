@@ -41,7 +41,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
-            scp -r ${{ steps.get_apk_path.outputs.apk_path }} ${{ secrets.SERVER_USERNAME }}@{{ secrets.SERVER_HOST }}:${{ secrets.APK_PATH }}
+            scp -r ${{ steps.get_apk_path.outputs.apk_path }} ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:${{ secrets.APK_PATH }}
         
         env:
           SSH_KNOWN_HOSTS_CONTENT: ${{ secrets.SSH_KNOWN_HOSTS_CONTENT }}
