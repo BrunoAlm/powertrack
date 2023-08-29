@@ -26,7 +26,7 @@ jobs:
         run: flutter pub get
 
       - name: Build APK
-        # run: flutter build apk --release
+        run: flutter build apk --release
 
       - name: Transfer APK to Server
         uses: appleboy/ssh-action@master
