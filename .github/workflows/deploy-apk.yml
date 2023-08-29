@@ -26,16 +26,12 @@ jobs:
         run: flutter pub get
 
       - name: Build APK
-        run: |
-          mkdir ~/flutter
-          flutter config --build-dir=~/flutter
-          flutter build apk --release
-          ls -a
+        run: flutter build apk --release
 
-      - name: cade a pasta build
-        run: |
-          pwd
-          ls -R
+      - name: Get APK path
+          id: get_apk_path
+          run: |
+            echo "::set-output name=apk_path::$(find build/app/outputs/flutter-apk -type f -name 'app-release.apk')"
 
       - name: Transfer APK to Server
         uses: appleboy/ssh-action@master
@@ -45,11 +41,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
-            pwd
-            cd ~/flutter
-            ls -a
-            scp /home/runner/work/ui_tcc/ui_tcc/build/app/outputs/flutter-apk/app-release.apk ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:${{ secrets.APK_PATH }}/powertrack.apk
-            scp app-release.apk ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:${{ secrets.APK_PATH }}/powertrack.apk
-            
+            scp -r ${{ steps.get_apk_path.outputs.apk_path }} <span class="math-inline">\{\{ secrets\.SERVER\_USERNAME \}\}@</span>{{ secrets.SERVER_HOST }}:${{ secrets.APK_PATH }}/powertrack.apk
+        
         env:
           SSH_KNOWN_HOSTS_CONTENT: ${{ secrets.SSH_KNOWN_HOSTS_CONTENT }}
