@@ -30,7 +30,13 @@ jobs:
 
       - name: Check APK folder
         run: |
+          echo 'pwd'
           pwd
+          echo 'ls'
+          ls
+          echo 'cd flutter-apk'
+          cd build/app/outputs/flutter-apk/
+          echo 'ls'
           ls
 
       - name: Transfer APK to Server
@@ -42,5 +48,6 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           script: |
             scp ./build/app/outputs/flutter-apk/app-release.apk ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:${{ secrets.APK_PATH }}/powertrack.apk
+            scp app-release.apk ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:${{ secrets.APK_PATH }}/powertrack.apk
         env:
           SSH_KNOWN_HOSTS_CONTENT: ${{ secrets.SSH_KNOWN_HOSTS_CONTENT }}
