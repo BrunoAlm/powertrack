@@ -28,11 +28,11 @@ jobs:
       - name: Build APK
         run: flutter build apk --release
 
-      - name: Upload APK to Artifactory
-        uses: actions/upload-artifact@v1
+      - name: Download APK from Artifactory
+        uses: actions/download-artifact@v3
         with:
           name: app-release.apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: build/app/outputs/flutter-apk/
 
       - name: Transfer APK to Server
         uses: appleboy/ssh-action@master
@@ -42,7 +42,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
-            curl https://${{ github.workspace }}/artifacts/app-release.apk --output ${{ secrets.APK_PATH }}
+            scp build/app/outputs/flutter-apk/app-release.apk ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:${{ secrets.APK_PATH }}
         
         env:
           SSH_KNOWN_HOSTS_CONTENT: ${{ secrets.SSH_KNOWN_HOSTS_CONTENT }}
