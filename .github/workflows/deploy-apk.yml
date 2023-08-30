@@ -23,9 +23,6 @@ jobs:
       - name: Build APK
         run: flutter build apk --release
 
-      - name: Rename File
-        run: cp build/app/outputs/flutter-apk/app-release.apk ~/${{ secrets.APK_NAME }}
-
       - name: copy file via ssh
         uses: appleboy/scp-action@v0.1.4
         with:
@@ -33,5 +30,5 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
-          source: "~/${{ secrets.APK_NAME }}"
+          source: "build/app/outputs/flutter-apk/app-release.apk"
           target: ${{ secrets.APK_PATH }}
