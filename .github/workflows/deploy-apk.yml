@@ -25,12 +25,12 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          name: my-artifact
+          name: temp
           path: build/app/outputs/flutter-apk/app-release.apk
   
       - uses: actions/download-artifact@v3
         with:
-          name: my-artifact
+          name: temp
           path: distfiles
 
       - name: Copia arquivo via SSH
