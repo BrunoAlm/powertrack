@@ -40,5 +40,5 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
-          source: apk/*
-          target: ${{ secrets.APK_PATH }}
+          source: apk/app-release.apk
+          target: ${{ secrets.STORAGE_PATH }}
