@@ -20,7 +20,7 @@ jobs:
       - name: Build Projeto
         run: |
           flutter pub get
-          flutter build web
+          flutter build apk --release
 
       - uses: actions/upload-artifact@v3
         with:
@@ -45,8 +45,8 @@ jobs:
       - name: Substitui pelo arquivo em produção
         uses: appleboy/ssh-action@v1.0.0
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
-          port: ${{ secrets.PORT }}
-          script: ${{ secrets. APK_SCRIPT }}
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SERVER_PORT }}
+          script: ${{ secrets.WEB_SCRIPT }}
