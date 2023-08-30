@@ -17,11 +17,10 @@ jobs:
         with:
             flutter-version: 3.13.0
 
-      - name: Pub get
-        run: flutter pub get
-
-      - name: Build APK
-        run: flutter build apk --release
+      - name: Build Projeto
+        run: |
+          flutter pub get
+          flutter build web
 
       - uses: actions/upload-artifact@v3
         with:
@@ -42,3 +41,12 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           source: apk/app-release.apk
           target: ${{ secrets.STORAGE_PATH }}
+
+      - name: Substitui pelo arquivo em produção
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: ${{ secrets. APK_SCRIPT }}
