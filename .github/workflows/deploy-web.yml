@@ -1,4 +1,4 @@
-name: Build and Deploy APK
+name: Build and Deploy Web
 
 on:
   push:
@@ -20,18 +20,18 @@ jobs:
       - name: Pub get
         run: flutter pub get
 
-      - name: Build APK
-        run: flutter build apk --release
+      - name: Build Web
+        run: flutter build web
 
       - uses: actions/upload-artifact@v3
         with:
           name: temp
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: build/web
   
       - uses: actions/download-artifact@v3
         with:
           name: temp
-          path: apk
+          path: web
 
       - name: Copia arquivo via SSH
         uses: appleboy/scp-action@v0.1.4
@@ -40,5 +40,5 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
-          source: apk/*
+          source: web/*
           target: ${{ secrets.APK_PATH }}
